@@ -31,7 +31,7 @@ function ActivityCard({ data, heading }) {
                   )
                 }</h4>
                 <span className="activity-context">
-                  in <Link to="/groups">{activity.group}</Link>
+                  in <Link to={`/groups/${activity.group_id}`}>{activity.group}</Link>
                 </span>
               </div>
             )

@@ -22,7 +22,7 @@ function UserGroups() {
               <li key={i}>
                 <div className="card">
                   <h3>
-                    <Link to="/groups">{group.group}</Link>
+                    <Link to={`/groups/${group.group_id}`}>{group.group}</Link>
                   </h3>
                   { group.activity.length > 0 ?
                   (
