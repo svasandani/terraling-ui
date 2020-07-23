@@ -94,7 +94,8 @@ nav a {
   }
 
   .user-nav * {
-    margin-left: 0;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   #flyout-input:checked+label+.sandwich {
