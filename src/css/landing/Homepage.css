@@ -74,7 +74,7 @@ section, footer {
 
 .cta:hover {
   box-shadow: none;
-  background: var(--light-color);
+  background: var(--highlight-color);
   transition: 0.1s linear;
 }
 
