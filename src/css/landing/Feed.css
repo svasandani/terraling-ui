@@ -15,6 +15,10 @@ aside {
   grid-template-columns: minmax(300px, 5fr) 15fr;
 }
 
+span.new-group-info {
+  color: var(--gray1);
+}
+
 @media (max-width: 1000px) {
   aside {
     border-bottom: 1px solid var(--gray2);

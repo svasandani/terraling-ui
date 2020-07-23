@@ -4,24 +4,20 @@ import '../css/App.css';
 import Header from './Header';
 import Footer from './Footer';
 
-import Groups from './landing/Groups';
-// import Feed from './landing/Feed';
+import Feed from './landing/Feed';
 
 function App() {
-  const [signedin, setSignedIn] = useState(false);
+  const [signedin, setSignedIn] = useState(true);
   return (
     <>
       <Header signedin={signedin} setSignedIn={setSignedIn} />
       { signedin ?
       (
-        <>
-          <Groups />
-          <div />
-        </>
+        <Feed user={{}} />
       ) :
       (
         <div />
-      )}
+      ) }
       <Footer />
     </>
   );
