@@ -4,6 +4,7 @@
   --dark: #161616;
   --light-color: #6ca3ff89;
   --dark-color: #161c2b;
+  --catchy-color: #f3e63f;
   --nav-text: var(--light);
   --nav-bg: var(--dark-color);
   --body-text: var(--dark);
@@ -20,6 +21,7 @@ html {
   font-family: 'Arvo';
   background: var(--body-bg);
   scroll-behavior: smooth;
+  width: 100%;
 }
 
 h1 {
@@ -57,10 +59,14 @@ p {
   line-height: 1.35em;
 }
 
-body {
+strong {
+  font-weight: bold;
+}
+
+#root {
   height: calc(100% + 60px);
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 100vw;
   grid-template-rows: 60px auto 1fr;
   overflow-x: hidden;
 }
@@ -119,5 +125,9 @@ section {
     margin: 0 auto;
     margin-top: 1em;
     border-color: var(--nav-bg);
+  }
+
+  .card {
+    padding: 10px;
   }
 }
