@@ -27,19 +27,25 @@ html {
 h1 {
   font-family: 'Epilogue';
   font-weight: 700;
-  font-size: 2.6em;
+  font-size: 3rem;
   margin-bottom: 0.5em;
 }
 
 h2 {
   font-family: 'Epilogue';
-  font-weight: 500;
-  font-size: 1.7em;
+  font-weight: 600;
+  font-size: 2rem;
   margin-bottom: 0.5em;
 }
 
 h3 {
-  font-size: 1.2em;
+  font-family: 'Epilogue';
+  font-weight: 500;
+  font-size: 1.4rem;
+}
+
+h4 {
+  font-size: 1rem;
 }
 
 a {
@@ -55,12 +61,21 @@ a:hover {
 }
 
 p {
+  font-size: 1rem;
   margin-top: 0.3em;
   line-height: 1.35em;
 }
 
+span {
+  font-size: 1rem;
+}
+
 strong {
   font-weight: bold;
+}
+
+body {
+  overflow-x: hidden;
 }
 
 #root {
@@ -125,9 +140,5 @@ section {
     margin: 0 auto;
     margin-top: 1em;
     border-color: var(--nav-bg);
-  }
-
-  .card {
-    padding: 10px;
   }
 }

@@ -9,7 +9,7 @@ import free from '../../img/free.svg';
 
 function Homepage() {
   return (
-    <main>
+    <main className="homepage">
       <section className="landing">
         <img src={hero} alt="A group of people talking." />
         <div className="capture">

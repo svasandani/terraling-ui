@@ -1,28 +1,14 @@
-h1 {
-  font-weight: 900;
-  font-size: 3em;
-}
-
-h2 {
-  font-weight: 600;
-  font-size: 2em;
+.homepage h3 {
   margin-bottom: 0.5em;
 }
 
-h3 {
-  font-family: 'Epilogue';
-  font-weight: 500;
-  font-size: 1.6em;
-  margin-bottom: 0.5em;
-}
-
-p {
+.homepage p {
   font-size: 1rem;
   margin-top: 0.3em;
   line-height: 1.4em;
 }
 
-.card {
+.homepage .card {
   margin-top: 2em;
   padding: 45px 60px;
 }
@@ -63,7 +49,6 @@ section, footer {
 
 .lede {
   font-size: 1em;
-  margin-top: 1rem;
   line-height: 1.6em;
 }
 

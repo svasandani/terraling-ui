@@ -62,6 +62,10 @@ span.new-group-info {
 }
 
 @media (max-width: 1000px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+
   aside {
     border-bottom: 1px solid var(--gray2);
   }
