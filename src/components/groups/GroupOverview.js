@@ -3,7 +3,7 @@ import React from 'react';
 function GroupOverview({ overviewData }) {
   return (
     <main>
-      <section id="container"></section>
+      <section id="container">hi</section>
     </main>
   );
 }
