@@ -1,13 +1,28 @@
-import React from 'react';
-import logo from '../img/logo.svg';
+import React, { useState } from 'react';
 import '../css/App.css';
 
-import Header from './Header'
+import Header from './Header';
+import Footer from './Footer';
+
+import Groups from './landing/Groups';
+// import Feed from './landing/Feed';
 
 function App() {
+  const [signedin, setSignedIn] = useState(false);
   return (
     <>
-      <Header signedin={true} />
+      <Header signedin={signedin} setSignedIn={setSignedIn} />
+      { signedin ?
+      (
+        <>
+          <Groups />
+          <div />
+        </>
+      ) :
+      (
+        <div />
+      )}
+      <Footer />
     </>
   );
 }
