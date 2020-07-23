@@ -21,15 +21,15 @@ function Groups() {
         <h1>Recent activity</h1>
         { data.recent_activity.past_day.length > 0 ?
         (
-          <ActivityCard data={data.recent_activity.past_day} />
+          <ActivityCard data={data.recent_activity.past_day} heading="In the last 24 hours" />
         ) : null }
         { data.recent_activity.past_week.length > 0 ?
         (
-          <ActivityCard data={data.recent_activity.past_week} />
+          <ActivityCard data={data.recent_activity.past_week} heading="In the last week" />
         ) : null }
         { data.recent_activity.further_back.length > 0 ?
         (
-          <ActivityCard data={data.recent_activity.further_back} />
+          <ActivityCard data={data.recent_activity.further_back} heading="Further back" />
         ) : null }
       </section>
     </main>

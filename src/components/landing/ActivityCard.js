@@ -2,10 +2,10 @@ import React from 'react';
 
 import { ActionToPastTense, TargetToPlural } from '../helpers/Helpers';
 
-function ActivityCard({ data }) {
+function ActivityCard({ data, heading }) {
   return (
     <>
-      <h2>In the last 24 hours</h2>
+      <h2>{heading}</h2>
       <div className="card activity-card" id="past-day">
         { data.map((activity, i, arr) => {
             return (

@@ -22,6 +22,7 @@ span.new-group-info {
 .activity-card {
   display: flex;
   flex-flow: column nowrap;
+  margin-bottom: 2rem;
 }
 
 .activity {
