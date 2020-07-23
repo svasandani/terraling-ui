@@ -24,6 +24,14 @@
   transition: 0.06s linear;
 }
 
+.tab a {
+  box-shadow: none;
+}
+
+.tab a:hover {
+  box-shadow: none;
+}
+
 @media (max-width: 1000px) {
   .sidebar {
     display: grid;

@@ -48,23 +48,23 @@ function Group({ overviewData, setOverviewData, lingData, setLingData }) {
   }, [groupId]);
 
   return (
-    <Router>
-      <Switch>
-        <div className="container">
-          <GroupTabs data={overviewData} />
+    <div className="container">
+      <GroupTabs data={overviewData} />
+      <Router>
+        <Switch>
           <Route path={`${match.path}/overview`}>
             <GroupOverview overviewData={overviewData} />
           </Route>
           <Route path={match.path}>
             <main>
               <section id="no-tab-selected">
-                <h1>No tab selected. Please select a tab.</h1>
+                <h2>No tab selected. Please select a tab.</h2>
               </section>
             </main>
           </Route>
-        </div>
-      </Switch>
-    </Router>
+        </Switch>
+      </Router>
+    </div>
   );
 }
 
