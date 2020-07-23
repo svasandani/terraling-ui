@@ -9,7 +9,7 @@ import '../css/App.css';
 import Header from './Header';
 import Footer from './Footer';
 
-import Group from './group/Group';
+import Groups from './groups/Groups';
 
 import Feed from './landing/Feed';
 import Homepage from './landing/Homepage';
@@ -25,7 +25,7 @@ function App() {
             <div />
           </Route>
           <Route path="/groups">
-            <Group />
+            <Groups />
           </Route>
           <Route path="/">
             { signedin ?

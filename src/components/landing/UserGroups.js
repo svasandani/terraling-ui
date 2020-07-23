@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { ActionToPastTense, TargetToPlural } from '../helpers/Helpers';
 
-function Groups() {
+function UserGroups() {
   const [data, setData] = useState({ groups: [] });
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function Groups() {
               <li key={i}>
                 <div className="card">
                   <h3>
-                    <Link to="/group">{group.group}</Link>
+                    <Link to="/groups">{group.group}</Link>
                   </h3>
                   { group.activity.length > 0 ?
                   (
@@ -53,4 +53,4 @@ function Groups() {
   )
 }
 
-export default Groups;
+export default UserGroups;
