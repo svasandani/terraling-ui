@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
 
 import { ActionToPastTense, TargetToPlural } from '../helpers/Helpers';
 
@@ -21,7 +22,7 @@ function Groups() {
               <li key={i}>
                 <div className="card">
                   <h3>
-                    <a href="PLACEHOLDER">{group.group}</a>
+                    <Link to="/group">{group.group}</Link>
                   </h3>
                   { group.activity.length > 0 ?
                   (

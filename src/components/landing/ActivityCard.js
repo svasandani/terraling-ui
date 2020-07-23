@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 import { ActionToPastTense, TargetToPlural } from '../helpers/Helpers';
 
@@ -30,7 +31,7 @@ function ActivityCard({ data, heading }) {
                   )
                 }</h4>
                 <span className="activity-context">
-                  in <a href="PLACEHOLDER">{activity.group}</a>
+                  in <Link to="/group">{activity.group}</Link>
                 </span>
               </div>
             )
