@@ -88,6 +88,23 @@ body {
   overflow-y: scroll;
 }
 
+aside {
+  border-right: 1px solid var(--gray2);
+}
+
+.sidebar {
+  height: auto;
+  position: sticky;
+  top: 0;
+  padding: 25px;
+}
+
+.container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(300px, 5fr) 15fr;
+}
+
 .logo {
   font-family: 'Lobster Two', serif;
   font-size: 2em;
@@ -142,5 +159,13 @@ section {
     margin: 0 auto;
     margin-top: 1em;
     border-color: var(--nav-bg);
+  }
+
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  aside {
+    border-bottom: 1px solid var(--gray2);
   }
 }

@@ -9,19 +9,20 @@ import {
 } from 'react-router-dom';
 
 import UserGroups from '../landing/UserGroups';
+import GroupOverview from './GroupOverview';
+import GroupTabs from './GroupTabs';
 
 function Groups() {
   let match = useRouteMatch();
 
-  const [data, setData] = useState({ id: 0, lings: [] });
+  const [overviewData, setOverviewData] = useState({ id: 0 });
   const [lingData, setLingData] = useState({ id: 0, lings: [] });
 
   return (
     <Router>
       <Switch>
         <Route path={`${match.path}/:groupId`}>
-          <Group data={data} setData={setData} lingData={lingData} setLingData={setLingData} />
-          <Link to={`${match.path}/8`}>hello</Link>
+          <Group overviewData={overviewData} setOverviewData={setOverviewData} lingData={lingData} setLingData={setLingData} />
         </Route>
         <Route path={match.path}>
           <UserGroups />
@@ -31,20 +32,40 @@ function Groups() {
   )
 }
 
-function Group({ data, setData, lingData, setLingData }) {
+function Group({ overviewData, setOverviewData, lingData, setLingData }) {
+  let match = useRouteMatch();
+
   let { groupId } = useParams();
 
   useEffect(() => {
     fetch("https://ui.terraling.com/api/group/" + groupId)
       .then(response => response.json())
-      .then(data => { setData(data) });
+      .then(overviewD => { setOverviewData(overviewD) });
 
     fetch("https://ui.terraling.com/api/lings/" + groupId)
       .then(response => response.json())
       .then(lingData => { setLingData(lingData) });
   }, [groupId]);
 
-  return <h3>Requested group ID: {JSON.stringify(lingData)}</h3>;
+  return (
+    <Router>
+      <Switch>
+        <div className="container">
+          <GroupTabs data={overviewData} />
+          <Route path={`${match.path}/overview`}>
+            <GroupOverview overviewData={overviewData} />
+          </Route>
+          <Route path={match.path}>
+            <main>
+              <section id="no-tab-selected">
+                <h1>No tab selected. Please select a tab.</h1>
+              </section>
+            </main>
+          </Route>
+        </div>
+      </Switch>
+    </Router>
+  );
 }
 
 export default Groups;
