@@ -14,24 +14,24 @@ function Groups() {
       <div className="sidebar">
         <h1>Your groups</h1>
         <ul>
-          { data.groups.map(group => {
+          { data.groups.map((group, i) => {
             return (
-              <li>
+              <li key={i}>
                 <div className="card">
                   <h3>
-                    <a href="groups">{group.group}</a>
+                    <a href="PLACEHOLDER">{group.group}</a>
                   </h3>
                   { group.activity.length > 0 ?
                   (
                     <>
-                      { group.activity.map(activity => {
-                        return (
-                          <p>
-                            {/* TODO - Add better formatting for this copy */}
-                            <span className="new-group-info">{activity.count} {activity.action} {activity.target}</span>
-                          </p>
-                        )
-                      })}
+                      { group.activity.map((activity, i) => {
+                          return (
+                            <p key={i}>
+                              {/* TODO - Add better formatting for this copy */}
+                              <span className="new-group-info">{activity.count} {activity.action} {activity.target}</span>
+                            </p>
+                          )
+                        })}
                     </>
                   ) : null }
                 </div>

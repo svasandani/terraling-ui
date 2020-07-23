@@ -90,6 +90,10 @@ body {
   box-shadow: none;
 }
 
+section {
+  padding: 25px;
+}
+
 .card {
   margin-bottom: 1em;
   padding: 15px;

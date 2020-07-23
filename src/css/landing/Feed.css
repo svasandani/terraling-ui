@@ -19,6 +19,47 @@ span.new-group-info {
   color: var(--gray1);
 }
 
+.activity-card {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.activity {
+  border-bottom: 1px solid var(--gray2);
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: auto 1fr;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.activity.last {
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  border-bottom: none;
+}
+
+.activity-symbol {
+  font-size: 4em;
+  grid-row: 1 / -1;
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+.activity-symbol img {
+  height: 25px;
+}
+
+.activity-context {
+  color: var(--gray1);
+}
+
 @media (max-width: 1000px) {
   aside {
     border-bottom: 1px solid var(--gray2);

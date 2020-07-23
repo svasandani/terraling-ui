@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import '../../css/landing/Feed.css';
 
 import Groups from './Groups';
+import Activity from './Activity';
 
 function Feed({ user }) {
 
   return (
     <div className="container">
       <Groups user={user} />
-      <div />
+      <Activity user={user} />
     </div>
   )
 }
