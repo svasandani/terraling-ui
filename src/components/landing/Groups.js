@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import { ActionToPastTense, TargetToPlural } from '../helpers/Helpers';
+
 function Groups() {
   const [data, setData] = useState({ groups: [] });
 
@@ -27,8 +29,14 @@ function Groups() {
                       { group.activity.map((activity, i) => {
                           return (
                             <p key={i}>
-                              {/* TODO - Add better formatting for this copy */}
-                              <span className="new-group-info">{activity.count} {activity.action} {activity.target}</span>
+                              <span className="new-group-info">{activity.count} {ActionToPastTense(activity.action)} { activity.target === "ling" ?
+                                (
+                                  TargetToPlural(activity.count, activity.ling_name)
+                                ) :
+                                (
+                                  TargetToPlural(activity.count, activity.target)
+                                )
+                              }</span>
                             </p>
                           )
                         })}

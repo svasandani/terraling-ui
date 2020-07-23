@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { ActionToPastTense, TargetToPlural } from '../helpers/Helpers';
+
 function ActivityCard({ data }) {
   return (
     <>
@@ -10,7 +12,7 @@ function ActivityCard({ data }) {
               <div key={i} className={`activity ${ arr.length - i === 1 ? "last" : "" }`}>
                 <span className="activity-symbol">
                   {/* TODO - Refactor this image, it's ugly */}
-                  <img src={`
+                  <img alt="Symbol for activity action" src={`
                     ${activity.action === "add" ?
                       'https://img.icons8.com/flat_round/50/000000/plus.png' :
                         activity.action === "edit" ?
@@ -19,8 +21,14 @@ function ActivityCard({ data }) {
                     }
                   `} />
                 </span>
-                {/* TODO - Find a way to make this copy look nice! */}
-                <h4>{activity.author} {activity.action} {activity.count} {activity.target}</h4>
+                <h4>{activity.author} {ActionToPastTense(activity.action)} {activity.count} { activity.target === "ling" ?
+                  (
+                    TargetToPlural(activity.count, activity.ling_name)
+                  ) :
+                  (
+                    TargetToPlural(activity.count, activity.target)
+                  )
+                }</h4>
                 <span className="activity-context">
                   in <a href="PLACEHOLDER">{activity.group}</a>
                 </span>
