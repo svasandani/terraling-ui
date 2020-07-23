@@ -75,15 +75,17 @@ strong {
 }
 
 body {
-  overflow-x: hidden;
+  overflow: hidden;
+  height: 100vh;
 }
 
 #root {
-  height: calc(100% + 60px);
+  height: 100%;
   display: grid;
   grid-template-columns: 100vw;
   grid-template-rows: 60px auto 1fr;
   overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .logo {
