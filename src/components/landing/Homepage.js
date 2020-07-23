@@ -20,6 +20,7 @@ function Homepage() {
       </section>
       <section id="what-is">
         <h2>What is TerraLing?</h2>
+        <span className="h-divider"></span>
         <div className="what-is-card">
           <img src={openEnded} alt="A person staring outside a window." />
           <div className="copy">
@@ -61,6 +62,7 @@ function Homepage() {
             </p>
           </div>
         </div>
+        <span className="h-divider"></span>
       </section>
       <section id="teams">
         <div className="card">
@@ -193,6 +195,12 @@ function Homepage() {
               </p>
             </li>
           </ul>
+        </div>
+      </section>
+      <section id="stinger">
+        <div className="card">
+          <h2>Ready to use the next generation of linguistic database?</h2>
+          <a href="sign_up" className="cta">Sign up for Terraling</a>
         </div>
       </section>
     </main>
