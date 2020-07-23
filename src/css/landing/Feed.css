@@ -1,0 +1,22 @@
+aside {
+  border-right: 1px solid var(--gray2);
+}
+
+.sidebar {
+  height: auto;
+  position: sticky;
+  top: 0;
+  padding: 25px;
+}
+
+.container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(300px, 5fr) 15fr;
+}
+
+@media (max-width: 1000px) {
+  aside {
+    border-bottom: 1px solid var(--gray2);
+  }
+}
