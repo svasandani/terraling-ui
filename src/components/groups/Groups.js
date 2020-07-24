@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
   Switch,
   Route,
-  Redirect,
   useRouteMatch,
   useParams
 } from 'react-router-dom';
