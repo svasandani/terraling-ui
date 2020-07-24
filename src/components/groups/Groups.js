@@ -10,6 +10,8 @@ import UserGroups from '../landing/UserGroups';
 import GroupOverview from './GroupOverview';
 import GroupTabs from './GroupTabs';
 
+import Loading from '../shared/Loading';
+
 function Groups() {
   let match = useRouteMatch();
 
@@ -27,6 +29,8 @@ function Groups() {
 
 function Group() {
   let match = useRouteMatch();
+
+  const [ready, setReady] = useState(false);
 
   const [data, setData] = useState({ id: 0, overviewData: {}, lingData: { lings: [] } })
 
@@ -48,9 +52,12 @@ function Group() {
       newData.lingData = values[1];
 
       setData(newData);
+      setReady(true);
     });
 
   }, [groupId]);
+
+  if (!ready) return(<Loading />)
 
   return (
     <div className="container">
