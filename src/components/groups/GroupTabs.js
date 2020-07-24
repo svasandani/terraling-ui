@@ -11,51 +11,42 @@ function GroupTabs({ data }) {
   let arr = window.location.pathname.split("/");
   let activeTab = arr.length >= 4 ? window.location.pathname.split("/")[3].toLowerCase() : "";
 
+  console.log();
+
   return (
     <aside>
       <div className="sidebar">
         <h1>{data.name}</h1>
-        <div className={`tab ${activeTab === "overview" ? "active" : ""}`}>
+        <Link to={`${match.url}/overview`}><div className={`tab ${activeTab === "overview" ? "active" : ""}`}>
           <h2>
-            <Link to={`${match.url}/overview`}>Overview</Link>
+            Overview
           </h2>
-        </div>
-        <div className={`tab ${activeTab === "ling0" ? "active" : ""}`}>
-          <h2>
-            <Link to={`${match.url}/ling`}>{CapitalCase(TargetToPlural(2, data.ling0_name))}</Link>
+        </div></Link>
+        <Link to={`${match.url}/ling`}><div className={`tab ${activeTab === "ling" ? "active" : ""}`}>
+          <h2>{CapitalCase(TargetToPlural(2, data.ling0_name))}
           </h2>
-        </div>
+        </div></Link>
         { data.ling1_name === "not-present" ?
         (
           null
         ) :
         (
-          <div className={`tab ${activeTab === "ling1" ? "active" : ""}`}>
+          <Link to={`${match.url}/linglet`}><div className={`tab ${activeTab === "linglet" ? "active" : ""}`}>
             <h2>
-              <Link to={`${match.url}/overview`}>{CapitalCase(TargetToPlural(2, data.ling1_name))}</Link>
+              {CapitalCase(TargetToPlural(2, data.ling1_name))}
             </h2>
-          </div>
+          </div></Link>
         ) }
-        <div className={`tab ${activeTab === "properties" ? "active" : ""}`}>
+        <Link to={`${match.url}/properties`}><div className={`tab ${activeTab === "properties" ? "active" : ""}`}>
           <h2>
-            <Link to={`${match.url}/properties`}>Properties</Link>
+            Properties
           </h2>
-        </div>
-        <div className={`tab ${activeTab === "members" ? "active" : ""}`}>
+        </div></Link>
+        <Link to={`${match.url}/members`}><div className={`tab ${activeTab === "members" ? "active" : ""}`}>
           <h2>
-            <Link to={`${match.url}/members`}>Members</Link>
+            Members
           </h2>
-        </div>
-        <div className={`tab ${activeTab === "examples" ? "active" : ""}`}>
-          <h2>
-            <Link to={`${match.url}/examples`}>Examples</Link>
-          </h2>
-        </div>
-        <div className={`tab ${activeTab === "values" ? "active" : ""}`}>
-          <h2>
-            <Link to={`${match.url}/values`}>Values</Link>
-          </h2>
-        </div>
+        </div></Link>
       </div>
     </aside>
   );
