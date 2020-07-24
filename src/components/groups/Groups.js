@@ -70,7 +70,7 @@ function Group() {
         <Route path={`${match.path}/overview`}>
           <GroupOverview overviewData={data.overviewData} />
         </Route>
-        <Route path={`${match.path}/ling`}>
+        <Route path={`${match.path}/lings`}>
           <GroupLings lingName={data.overviewData.ling0_name} lingData={data.lingData} />
         </Route>
         <Route exact path={match.path}>

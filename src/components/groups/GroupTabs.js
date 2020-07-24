@@ -22,7 +22,7 @@ function GroupTabs({ data }) {
             Overview
           </h2>
         </div></Link>
-        <Link to={`${match.url}/ling`}><div className={`tab ${activeTab === "ling" ? "active" : ""}`}>
+        <Link to={`${match.url}/lings`}><div className={`tab ${activeTab === "ling" ? "active" : ""}`}>
           <h2>
             {CapitalCase(TargetToPlural(2, data.ling0_name))}
           </h2>
@@ -32,7 +32,7 @@ function GroupTabs({ data }) {
           null
         ) :
         (
-          <Link to={`${match.url}/linglet`}><div className={`tab ${activeTab === "linglet" ? "active" : ""}`}>
+          <Link to={`${match.url}/linglets`}><div className={`tab ${activeTab === "linglet" ? "active" : ""}`}>
             <h2>
               {CapitalCase(TargetToPlural(2, data.ling1_name))}
             </h2>
