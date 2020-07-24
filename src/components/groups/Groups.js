@@ -34,11 +34,11 @@ function Group() {
 
   useEffect(() => {
     const overviewData =
-      fetch("https://ui.terraling.com/api/group/" + groupId)
+      fetch("http://192.168.0.19:4000/groups/" + groupId, { headers:{'accept': 'application/json'} })
         .then(response => response.json());
 
     const lingData =
-      fetch("https://ui.terraling.com/api/lings/" + groupId)
+      fetch("http://192.168.0.19:4000/groups/" + groupId, { headers:{'accept': 'application/json'} })
         .then(response => response.json());
 
     Promise.all([overviewData, lingData]).then((values) => {
