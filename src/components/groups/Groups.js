@@ -7,8 +7,10 @@ import {
 } from 'react-router-dom';
 
 import UserGroups from '../landing/UserGroups';
-import GroupOverview from './GroupOverview';
+
 import GroupTabs from './GroupTabs';
+import GroupOverview from './GroupOverview';
+import GroupLings from './GroupLings';
 
 import Loading from '../shared/Loading';
 
@@ -36,13 +38,14 @@ function Group() {
 
   let { groupId } = useParams();
 
+  // TODO - fetch only active tab? better caching
   useEffect(() => {
     const overviewData =
       fetch("http://192.168.0.19:4000/groups/" + groupId, { headers:{'accept': 'application/json'} })
         .then(response => response.json());
 
     const lingData =
-      fetch("http://192.168.0.19:4000/groups/" + groupId, { headers:{'accept': 'application/json'} })
+      fetch("http://192.168.0.19:4000/groups/" + groupId + "/lings/list", { headers:{'accept': 'application/json'} })
         .then(response => response.json());
 
     Promise.all([overviewData, lingData]).then((values) => {
@@ -66,6 +69,9 @@ function Group() {
       <Switch>
         <Route path={`${match.path}/overview`}>
           <GroupOverview overviewData={data.overviewData} />
+        </Route>
+        <Route path={`${match.path}/ling`}>
+          <GroupLings lingName={data.overviewData.ling0_name} lingData={data.lingData} />
         </Route>
         <Route exact path={match.path}>
           <main>

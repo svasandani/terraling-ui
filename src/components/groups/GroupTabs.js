@@ -23,7 +23,8 @@ function GroupTabs({ data }) {
           </h2>
         </div></Link>
         <Link to={`${match.url}/ling`}><div className={`tab ${activeTab === "ling" ? "active" : ""}`}>
-          <h2>{CapitalCase(TargetToPlural(2, data.ling0_name))}
+          <h2>
+            {CapitalCase(TargetToPlural(2, data.ling0_name))}
           </h2>
         </div></Link>
         { data.ling1_name === "not-present" ?
