@@ -11,6 +11,8 @@ import Footer from './Footer';
 
 import Groups from './groups/Groups';
 
+import Searches from './searches/Searches';
+
 import Feed from './landing/Feed';
 import Homepage from './landing/Homepage';
 
@@ -26,6 +28,9 @@ function App() {
           </Route>
           <Route path="/groups">
             <Groups />
+          </Route>
+          <Route path="/searches">
+            <Searches />
           </Route>
           <Route path="/">
             { signedin ?
