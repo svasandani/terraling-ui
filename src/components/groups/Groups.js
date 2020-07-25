@@ -153,9 +153,9 @@ function Group() {
               <AlphaTable data={data.memberData} sort={nameSort} link={(url, id) => { return "/users/" + id; }} columnMap={columnMap} />
             </Route>
             <Route exact path={match.path}>
-              <section id="no-tab-selected">
+              <div className="no-tab-selected">
                 <h2>No tab selected. Please select a tab.</h2>
-              </section>
+              </div>
             </Route>
           </Switch>
         </section>
