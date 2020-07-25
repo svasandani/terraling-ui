@@ -1,4 +1,4 @@
-.select-row:hover {
+.card:not(.disabled) .select-row:hover {
   cursor: pointer;
 }
 
@@ -6,4 +6,8 @@
   border-left: 5px solid var(--light-color);
   padding-left: 10px;
   color: var(--nav-bg);
+}
+
+.card.disabled {
+  filter: brightness(0.9) grayscale(1);
 }
