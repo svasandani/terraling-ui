@@ -31,9 +31,9 @@ function AlphaTable({ data, sort, link, columnMap }) {
 
   let dataReduce = {};
   data.reduce((acc, row) => {
-    if (row.name === undefined || row.name === "") return null;
+    if (row[columnMap[0]] === undefined || row[columnMap[0]] === "") return null;
     else {
-      let firstLetter = row.name.trim().charAt(0).toLocaleUpperCase();
+      let firstLetter = row[columnMap[0]].trim().charAt(0).toLocaleUpperCase();
 
       // if (!isLetter(firstLetter)) firstLetter = "*";
 
@@ -50,47 +50,53 @@ function AlphaTable({ data, sort, link, columnMap }) {
   }
 
   return (
-    <main>
-      <section id="container">
-        <h1>{CapitalCase(TargetToPlural(2, name))}</h1>
-        <div className="card filter">
-          <a href="#container" onClick={(e) => { filterBy(e, "") }}>ALL</a>
-          { Object.keys(dataReduce).map(letter => {
-            return (
-              <a key={letter} href="#container" onClick={(e) => { filterBy(e, letter) }}>{letter}</a>
-            )
-          })}
-        </div>
+    <>
+      <div className="card filter">
+        <a href="#container" onClick={(e) => { filterBy(e, "") }}>ALL</a>
         { Object.keys(dataReduce).map(letter => {
-          if (filter.length > 0 && filter !== letter) return null;
-
           return (
-            <div key={letter} className="letter">
-              <h2>{letter}</h2>
-              <div className="card">
-                { dataReduce[letter].sort().map((row, i) => {
-                  return (
-                    <React.Fragment key={i}>
-                      <div key={i} className="row">
-                        <Link to={link(match.url, row.id)}><span className="name">{row.name}</span></Link>
-                      </div>
-                      { dataReduce[letter].length - i > 1 ?
-                        (
-                          <span className="h-divider" />
-                        ) :
-                        (
-                          null
-                        )
-                      }
-                    </React.Fragment>
-                  )
-                }) }
-              </div>
-            </div>
+            <a key={letter} href="#container" onClick={(e) => { filterBy(e, letter) }}>{letter}</a>
           )
-        }) }
-      </section>
-    </main>
+        })}
+      </div>
+      { Object.keys(dataReduce).map(letter => {
+        if (filter.length > 0 && filter !== letter) return null;
+
+        return (
+          <div key={letter} className="letter">
+            <h3>{letter}</h3>
+            <div className="card">
+              { dataReduce[letter].sort().map((row, i) => {
+                return (
+                  <React.Fragment key={i}>
+                    <div key={i} className={`row row-${columnMap.length}`}>
+                      {
+                        columnMap.map((col, i) => {
+                          if (i === 0) return (
+                            <span key={i} className="name"><Link to={link(match.url, row.id)}>{row[col]}</Link></span>
+                          ); else return (
+                            <span key={i} className="name">{row[col]}</span>
+                          );
+                        })
+                      }
+
+                    </div>
+                    { dataReduce[letter].length - i > 1 ?
+                      (
+                        <span className="h-divider" />
+                      ) :
+                      (
+                        null
+                      )
+                    }
+                  </React.Fragment>
+                )
+              }) }
+            </div>
+          </div>
+        )
+      }) }
+    </>
   );
 }
 
