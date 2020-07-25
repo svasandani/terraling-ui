@@ -12,6 +12,7 @@ import UserGroups from '../landing/UserGroups';
 import GroupTabs from './GroupTabs';
 import GroupOverview from './GroupOverview';
 import Ling from '../lings/Ling'
+import Search from '../searches/Search'
 
 import AlphaTable from '../shared/AlphaTable';
 
@@ -133,6 +134,9 @@ function Group() {
           <Switch>
             <Route path={`${match.path}/overview`}>
               <GroupOverview overviewData={data.overviewData} columnMap={columnMap} />
+            </Route>
+            <Route path={`${match.path}/searches`}>
+              <Search data={data} />
             </Route>
             <Route path={`${match.path}/lings/:lingId`}>
               <Ling groupId={groupId} />

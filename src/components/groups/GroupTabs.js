@@ -20,6 +20,11 @@ function GroupTabs({ data }) {
             Overview
           </h2>
         </div></Link>
+        <Link to={`${match.url}/searches/new`}><div className={`tab ${activeTab === "searches" ? "active" : ""}`}>
+          <h2>
+            Search
+          </h2>
+        </div></Link>
         <Link to={`${match.url}/lings`}><div className={`tab ${activeTab === "lings" ? "active" : ""}`}>
           <h2>
             {CapitalCase(TargetToPlural(2, data.ling0_name))}
