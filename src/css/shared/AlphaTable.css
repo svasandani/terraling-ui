@@ -1,3 +1,9 @@
+.headers {
+  position: sticky;
+  font-weight: bold;
+  font-size: 1.05em;
+}
+
 .row {
   display: grid;
   grid-gap: 25px;

@@ -15,7 +15,7 @@ function Ling({ groupId }) {
 
   const [data, setData] = useState({ ling_name: "", ling_properties: [] })
 
-  const columnMap = ["property_name", "value"];
+  const columnMap = {"property_name": "Property", "value": "Value"};
 
   let { lingId } = useParams();
 
