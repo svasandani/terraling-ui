@@ -235,7 +235,8 @@ section, footer {
   }
 
   #what-is, #teams, #team, #links {
-    padding: 0 5%;
+    padding-left: 5%;
+    padding-right: 5%;
   }
 
   .what-is-card {
