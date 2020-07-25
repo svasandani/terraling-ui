@@ -19,8 +19,6 @@ function UserGroups() {
         });
   }, []);
 
-  console.log(data);
-
   if (!ready) return(<Loading />);
 
   return (

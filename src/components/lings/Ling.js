@@ -25,8 +25,6 @@ function Ling({ groupId }) {
 
   if (!ready) return(<Loading />);
 
-  console.log(data);
-
   return (
     <>
       <h1>{data.ling_name}</h1>

@@ -11,8 +11,6 @@ import SearchResults from './SearchResults';
 function Search({ data }) {
   let match = useRouteMatch();
 
-  console.log(match.path);
-
   return (
     <Switch>
       <Route path={`${match.path}/new`}>
