@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-function SearchForm() {
+import SelectTable from '../shared/SelectTable';
+
+function SearchForm({ data }) {
+  const [selectArr, setSelectArr] = useState([]);
+
+  useEffect(() => {
+    console.log(selectArr);
+  }, [selectArr]);
+
   return (
-    <div class="container">new search</div>
+    <SelectTable data={data.lingData} columnMap={["name"]} selectArr={selectArr} setSelectArr={setSelectArr} />
   )
 }
 
