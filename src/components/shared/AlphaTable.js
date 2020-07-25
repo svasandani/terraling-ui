@@ -10,8 +10,10 @@ import { CapitalCase, TargetToPlural } from '../helpers/Helpers';
   name - Name of dataset, displayed above table as h1
   sort - Callback that allows for sorting of values, must take in two args
          and return 1 if the first is greater, and -1 otherwise
+  link - Callback that allows for custom linking, must take in two args (current URL and row ID)
+         and return the link to direct the user to, defaults to match.url + "/" + row.ID
 */
-function AlphaTable({ data, name, sort }) {
+function AlphaTable({ data, name, sort, link }) {
   let match = useRouteMatch();
 
   const [filter, setFilter] = useState("");
@@ -26,6 +28,10 @@ function AlphaTable({ data, name, sort }) {
 
   if (sort !== undefined) {
     data = data.sort(sort);
+  }
+
+  if (link === undefined) {
+    link = (url, id) => { return url + "/" + id; }
   }
 
   console.log(data);
@@ -75,7 +81,7 @@ function AlphaTable({ data, name, sort }) {
                   return (
                     <React.Fragment key={i}>
                       <div key={i} className="row">
-                        <Link to={match.url + "/" + row.id}><span className="name">{row.name}</span></Link>
+                        <Link to={link(match.url, row.id)}><span className="name">{row.name}</span></Link>
                       </div>
                       { dataReduce[letter].length - i > 1 ?
                         (

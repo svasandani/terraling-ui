@@ -37,6 +37,8 @@ function Group() {
 
   const [data, setData] = useState({ id: 0, overviewData: {}, lingData: [], lingletData: [], propertyData: [], memberData: [] })
 
+  const nameSort = (a, b) => { return a.name.trim() > b.name.trim() ? 1 : -1; }
+
   let { groupId } = useParams();
 
   // TODO - fetch only active tab? better caching
@@ -87,16 +89,16 @@ function Group() {
           <GroupOverview overviewData={data.overviewData} />
         </Route>
         <Route path={`${match.path}/lings`}>
-          <AlphaTable name={data.overviewData.ling0_name} data={data.lingData} sort={(a, b) => { return a.name.trim() > b.name.trim() ? 1 : -1 }} />
+          <AlphaTable name={data.overviewData.ling0_name} data={data.lingData} sort={nameSort} />
         </Route>
         <Route path={`${match.path}/linglets`}>
-          <AlphaTable name={data.overviewData.ling1_name} data={data.lingletData} sort={(a, b) => { return a.name.trim() > b.name.trim() ? 1 : -1 }} />
+          <AlphaTable name={data.overviewData.ling1_name} data={data.lingletData} sort={nameSort} link={(url, id) => { return "lings/" + id; }} />
         </Route>
         <Route path={`${match.path}/properties`}>
-          <AlphaTable name="property" data={data.propertyData} sort={(a, b) => { return a.name.trim() > b.name.trim() ? 1 : -1 }} />
+          <AlphaTable name="property" data={data.propertyData} sort={nameSort} />
         </Route>
         <Route path={`${match.path}/members`}>
-          <AlphaTable name="member" data={data.memberData} sort={(a, b) => { return a.name.trim() > b.name.trim() ? 1 : -1 }} />
+          <AlphaTable name="member" data={data.memberData} sort={nameSort} link={(url, id) => { return "/users/" + id; }} />
         </Route>
         <Route exact path={match.path}>
           <main>
