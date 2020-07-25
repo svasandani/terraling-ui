@@ -10,7 +10,8 @@ import UserGroups from '../landing/UserGroups';
 
 import GroupTabs from './GroupTabs';
 import GroupOverview from './GroupOverview';
-import GroupLings from './GroupLings';
+
+import AlphaTable from '../shared/AlphaTable';
 
 import Loading from '../shared/Loading';
 
@@ -34,7 +35,7 @@ function Group() {
 
   const [ready, setReady] = useState(false);
 
-  const [data, setData] = useState({ id: 0, overviewData: {}, lingData: { lings: [] } })
+  const [data, setData] = useState({ id: 0, overviewData: {}, lingData: [], propertyData: [] })
 
   let { groupId } = useParams();
 
@@ -48,11 +49,16 @@ function Group() {
       fetch("http://192.168.0.19:4000/groups/" + groupId + "/lings/list", { headers:{'accept': 'application/json'} })
         .then(response => response.json());
 
-    Promise.all([overviewData, lingData]).then((values) => {
+    const propertyData =
+      fetch("http://192.168.0.19:4000/groups/" + groupId + "/properties/list", { headers:{'accept': 'application/json'} })
+        .then(response => response.json());
+
+    Promise.all([overviewData, lingData, propertyData]).then((values) => {
       const newData = { id: groupId };
 
       newData.overviewData = values[0];
       newData.lingData = values[1];
+      newData.propertyData = values[2];
 
       setData(newData);
       setReady(true);
@@ -71,7 +77,10 @@ function Group() {
           <GroupOverview overviewData={data.overviewData} />
         </Route>
         <Route path={`${match.path}/lings`}>
-          <GroupLings lingName={data.overviewData.ling0_name} lingData={data.lingData} />
+          <AlphaTable name={data.overviewData.ling0_name} data={data.lingData} />
+        </Route>
+        <Route path={`${match.path}/properties`}>
+          <AlphaTable name="Properties" data={data.propertyData} />
         </Route>
         <Route exact path={match.path}>
           <main>
