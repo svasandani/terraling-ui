@@ -24,11 +24,11 @@
   transition: 0.06s linear;
 }
 
-.tab a {
+.sidebar a {
   box-shadow: none;
 }
 
-.tab a:hover {
+.sidebar a:hover {
   box-shadow: none;
 }
 
@@ -43,12 +43,17 @@
   }
 
   .tab {
-    padding-left: 5%;
+    float: none;
+    padding: 15px;
     text-align: left;
     font-size: 0.6em;
   }
 
   .tab.active {
     border: 1px solid var(--gray2);
+  }
+
+  .tab h2 {
+    margin-bottom: 0;
   }
 }
