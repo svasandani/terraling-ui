@@ -34,8 +34,6 @@ function AlphaTable({ data, name, sort, link }) {
     link = (url, id) => { return url + "/" + id; }
   }
 
-  console.log(data);
-
   let dataReduce = {};
   data.reduce((acc, row) => {
     if (row.name === undefined || row.name === "") return null;
@@ -50,8 +48,6 @@ function AlphaTable({ data, name, sort, link }) {
 
     return null;
   }, {});
-
-  console.log(dataReduce);
 
   const filterBy = (e, letter) => {
     e.preventDefault();

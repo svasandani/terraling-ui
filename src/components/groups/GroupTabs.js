@@ -11,8 +11,6 @@ function GroupTabs({ data }) {
   let arr = window.location.pathname.split("/");
   let activeTab = arr.length >= 4 ? window.location.pathname.split("/")[3].toLowerCase() : "";
 
-  console.log();
-
   return (
     <aside>
       <div className="sidebar">
@@ -27,16 +25,16 @@ function GroupTabs({ data }) {
             {CapitalCase(TargetToPlural(2, data.ling0_name))}
           </h2>
         </div></Link>
-        { data.ling1_name === "not-present" ?
-        (
-          null
-        ) :
+        { data.depth_maximum > 0 ?
         (
           <Link to={`${match.url}/linglets`}><div className={`tab ${activeTab === "linglets" ? "active" : ""}`}>
             <h2>
               {CapitalCase(TargetToPlural(2, data.ling1_name))}
             </h2>
           </div></Link>
+        ) :
+        (
+          null
         ) }
         <Link to={`${match.url}/properties`}><div className={`tab ${activeTab === "properties" ? "active" : ""}`}>
           <h2>

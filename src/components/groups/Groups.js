@@ -33,6 +33,17 @@ function Groups() {
 function Group() {
   let match = useRouteMatch();
 
+  let arr = window.location.pathname.split("/");
+  let activeTab = arr.length >= 4 ? window.location.pathname.split("/")[3].toLowerCase() : "";
+
+  let tabToProp = {
+    "overview": "overviewData",
+    "lings": "lingData",
+    "linglets": "lingletData",
+    "properties": "propertyData",
+    "memberships": "memberData"
+  }
+
   const [ready, setReady] = useState(false);
 
   const [data, setData] = useState({ id: 0, overviewData: {}, lingData: [], lingletData: [], propertyData: [], memberData: [] })
@@ -63,6 +74,29 @@ function Group() {
       fetch("http://192.168.0.19:4000/groups/" + groupId + "/memberships/list", { headers:{'accept': 'application/json'} })
         .then(response => response.json());
 
+    let firstPromise = overviewData;
+
+    if (activeTab === "overview") {
+      firstPromise = overviewData;
+    } else if (activeTab === "lings") {
+      firstPromise = lingData;
+    } else if (activeTab === "linglets") {
+      firstPromise = lingletData;
+    } else if (activeTab === "properties") {
+      firstPromise = propertyData;
+    } else if (activeTab === "members") {
+      firstPromise = memberData;
+    }
+
+    firstPromise.then((promiseData) => {
+      const newData = { ...data };
+
+      newData[tabToProp[activeTab]] = promiseData;
+
+      setData(newData);
+      setReady(true);
+    });
+
     Promise.all([overviewData, lingData, lingletData, propertyData, memberData]).then((values) => {
       const newData = { id: groupId };
 
@@ -83,7 +117,6 @@ function Group() {
   return (
     <div className="container">
       <GroupTabs data={data.overviewData} />
-      {/* TODO - literally the rest of this group view */}
       <Switch>
         <Route path={`${match.path}/overview`}>
           <GroupOverview overviewData={data.overviewData} />
