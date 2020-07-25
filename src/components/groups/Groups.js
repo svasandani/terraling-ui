@@ -142,7 +142,7 @@ function Group() {
             </Route>
             <Route path={`${match.path}/linglets`}>
               <h1>{CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))}</h1>
-              <AlphaTable data={data.lingletData} sort={nameSort} link={(url, id) => { return "lings/" + id; }} />
+              <AlphaTable data={data.lingletData} sort={nameSort} link={(url, id) => { return "lings/" + id; }} columnMap={columnMap} />
             </Route>
             <Route path={`${match.path}/properties`}>
               <h1>Properties</h1>
