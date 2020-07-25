@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  useRouteMatch,
-  useParams
-} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import AlphaTable from '../shared/AlphaTable';
 
