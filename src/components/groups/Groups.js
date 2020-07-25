@@ -10,10 +10,13 @@ import UserGroups from '../landing/UserGroups';
 
 import GroupTabs from './GroupTabs';
 import GroupOverview from './GroupOverview';
+import Ling from '../lings/Ling'
 
 import AlphaTable from '../shared/AlphaTable';
 
 import Loading from '../shared/Loading';
+
+import { CapitalCase, TargetToPlural } from '../helpers/Helpers';
 
 function Groups() {
   let match = useRouteMatch();
@@ -49,6 +52,8 @@ function Group() {
   const [data, setData] = useState({ id: 0, overviewData: {}, lingData: [], lingletData: [], propertyData: [], memberData: [] })
 
   const nameSort = (a, b) => { return a.name.trim() > b.name.trim() ? 1 : -1; }
+
+  const columnMap = ["name"];
 
   let { groupId } = useParams();
 
