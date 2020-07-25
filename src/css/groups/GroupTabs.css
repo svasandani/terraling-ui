@@ -17,10 +17,10 @@
   transition: 0.06s linear;
 }
 
-.tab:hover {
+.tab:hover:not(.active) {
   cursor: pointer;
-  border-bottom: 1px solid var(--gray2);
-  border-left: 1px solid var(--gray2);
+  border: 1px solid var(--gray2);
+  background: var(--lighter);
   transition: 0.06s linear;
 }
 
