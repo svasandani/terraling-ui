@@ -133,6 +133,28 @@ aside {
   box-shadow: none;
 }
 
+.cta {
+  display: block;
+  font-family: 'Epilogue';
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: none;
+  color: var(--dark-color);
+  border-radius: 3px;
+  background: var(--catchy-color);
+  padding: 15px;
+  padding-top: 18px;
+  transition: 0.1s linear;
+  width: auto;
+  text-align: center;
+}
+
+.cta:hover {
+  box-shadow: none;
+  background: var(--highlight-color);
+  transition: 0.1s linear;
+}
+
 section {
   padding: 25px;
 }
