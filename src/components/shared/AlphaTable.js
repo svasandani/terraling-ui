@@ -16,6 +16,14 @@ function AlphaTable({ data, name, sort }) {
 
   const [filter, setFilter] = useState("");
 
+  if (data.length == 0) return (
+    <main>
+      <section id="container">
+        <h1>Sorry, nothing to display.</h1>
+      </section>
+    </main>
+  );
+
   if (sort !== undefined) {
     data = data.sort(sort);
   }
