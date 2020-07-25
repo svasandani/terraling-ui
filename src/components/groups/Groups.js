@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   Switch,
   Route,
+  Redirect,
   useRouteMatch,
   useParams
 } from 'react-router-dom';
@@ -141,8 +142,18 @@ function Group() {
               <AlphaTable data={data.lingData} sort={nameSort} columnMap={columnMap} />
             </Route>
             <Route path={`${match.path}/linglets`}>
-              <h1>{CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))}</h1>
-              <AlphaTable data={data.lingletData} sort={nameSort} link={(url, id) => { return "lings/" + id; }} columnMap={columnMap} />
+              {
+                data.overviewData.depth_maximum > 0 ?
+                (
+                  <>
+                    <h1>{CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))}</h1>
+                    <AlphaTable data={data.lingletData} sort={nameSort} link={(url, id) => { return "lings/" + id; }} columnMap={columnMap} />
+                  </>
+                ) :
+                (
+                  <Redirect to={`${match.url}/lings`} />
+                )
+              }
             </Route>
             <Route path={`${match.path}/properties`}>
               <h1>Properties</h1>
