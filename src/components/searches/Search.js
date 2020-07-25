@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   Switch,
   Route,
+  Redirect,
   useRouteMatch
 } from 'react-router-dom';
 
@@ -20,7 +21,7 @@ function Search({ data }) {
         <SearchResults />
       </Route>
       <Route path={`${match.path}`}>
-        <h1>Hi</h1>
+        <Redirect to="new" />
       </Route>
     </Switch>
   )
