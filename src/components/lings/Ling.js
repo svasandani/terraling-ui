@@ -26,7 +26,7 @@ function Ling({ groupId }) {
           setData(data);
           setReady(true);
         });
-  }, [lingId]);
+  }, [groupId, lingId]);
 
   if (!ready) return(<Loading />)
 
