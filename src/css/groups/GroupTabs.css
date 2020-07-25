@@ -24,12 +24,16 @@
   transition: 0.06s linear;
 }
 
-.sidebar a {
+.sidebar.tab-sidebar a {
   box-shadow: none;
 }
 
-.sidebar a:hover {
+.sidebar.tab-sidebar a:hover {
   box-shadow: none;
+}
+
+.group-sidebar h3 {
+  margin-bottom: 0.5em;
 }
 
 @media (max-width: 1000px) {

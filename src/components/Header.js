@@ -22,7 +22,7 @@ function Header({ signedin, setSignedIn, user }) {
         <label htmlFor="flyout-input" className="flyout"><img src="https://img.icons8.com/fluent/48/000000/menu--v2.svg" alt="Flyout menu" /></label>
         <div className="flyout-target">
           <div className="sandwich">
-            <a href="explore">Explore</a>
+            <a href="/groups">Explore</a>
             <a href="project_groups">Project Groups</a>
             <a href="help">Help</a>
           </div>

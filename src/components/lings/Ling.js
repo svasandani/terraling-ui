@@ -9,8 +9,6 @@ import AlphaTable from '../shared/AlphaTable';
 import Loading from '../shared/Loading';
 
 function Ling({ groupId }) {
-  let match = useRouteMatch();
-
   const [ready, setReady] = useState(false);
 
   const [data, setData] = useState({ ling_name: "", ling_properties: [] })
@@ -28,7 +26,7 @@ function Ling({ groupId }) {
         });
   }, [groupId, lingId]);
 
-  if (!ready) return(<Loading />)
+  if (!ready) return(<Loading />);
 
   console.log(data);
 
