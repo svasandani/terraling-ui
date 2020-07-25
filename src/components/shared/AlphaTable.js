@@ -3,6 +3,7 @@ import { Link, useRouteMatch } from 'react-router-dom';
 
 import Loading from '../shared/Loading';
 
+import '../../css/shared/Table.css';
 import '../../css/shared/AlphaTable.css';
 
 /*
@@ -100,10 +101,10 @@ function AlphaTable({ data, sort, link, columnMap }) {
                   null
                 )
               }
-              { dataReduce[letter].sort().map((row, i) => {
+              { dataReduce[letter].map((row, i) => {
                 return (
                   <React.Fragment key={i}>
-                    <div key={i} className={`row row-${keys.length}`}>
+                    <div className={`row row-${keys.length}`}>
                       {
                         keys.map((col, i) => {
                           if (i === 0) return (
