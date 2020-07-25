@@ -107,41 +107,55 @@ function Group() {
       newData.memberData = values[4];
 
       setData(newData);
-      setReady(true);
     });
 
   }, [groupId]);
 
-  if (!ready) return(<Loading />)
+  if (!ready) return(
+    <main>
+      <section id="container">
+        <Loading />
+      </section>
+    </main>
+  );
 
   return (
-    <div className="container">
-      <GroupTabs data={data.overviewData} />
-      <Switch>
-        <Route path={`${match.path}/overview`}>
-          <GroupOverview overviewData={data.overviewData} />
-        </Route>
-        <Route path={`${match.path}/lings`}>
-          <AlphaTable name={data.overviewData.ling0_name} data={data.lingData} sort={nameSort} />
-        </Route>
-        <Route path={`${match.path}/linglets`}>
-          <AlphaTable name={data.overviewData.ling1_name} data={data.lingletData} sort={nameSort} link={(url, id) => { return "lings/" + id; }} />
-        </Route>
-        <Route path={`${match.path}/properties`}>
-          <AlphaTable name="property" data={data.propertyData} sort={nameSort} />
-        </Route>
-        <Route path={`${match.path}/members`}>
-          <AlphaTable name="member" data={data.memberData} sort={nameSort} link={(url, id) => { return "/users/" + id; }} />
-        </Route>
-        <Route exact path={match.path}>
-          <main>
-            <section id="no-tab-selected">
-              <h2>No tab selected. Please select a tab.</h2>
-            </section>
-          </main>
-        </Route>
-      </Switch>
-    </div>
+    <main>
+      <div className="container">
+        <GroupTabs data={data.overviewData} />
+        <section id="data">
+          <Switch>
+            <Route path={`${match.path}/overview`}>
+              <GroupOverview overviewData={data.overviewData} columnMap={columnMap} />
+            </Route>
+            <Route path={`${match.path}/lings/:lingId`}>
+              <Ling groupId={groupId} />
+            </Route>
+            <Route path={`${match.path}/lings`}>
+              <h1>{CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))}</h1>
+              <AlphaTable data={data.lingData} sort={nameSort} columnMap={columnMap} />
+            </Route>
+            <Route path={`${match.path}/linglets`}>
+              <h1>{CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))}</h1>
+              <AlphaTable data={data.lingletData} sort={nameSort} link={(url, id) => { return "lings/" + id; }} />
+            </Route>
+            <Route path={`${match.path}/properties`}>
+              <h1>Properties</h1>
+              <AlphaTable data={data.propertyData} sort={nameSort} columnMap={columnMap} />
+            </Route>
+            <Route path={`${match.path}/members`}>
+              <h1>Members</h1>
+              <AlphaTable data={data.memberData} sort={nameSort} link={(url, id) => { return "/users/" + id; }} columnMap={columnMap} />
+            </Route>
+            <Route exact path={match.path}>
+              <section id="no-tab-selected">
+                <h2>No tab selected. Please select a tab.</h2>
+              </section>
+            </Route>
+          </Switch>
+        </section>
+      </div>
+    </main>
   );
 }
 

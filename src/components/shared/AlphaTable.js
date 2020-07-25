@@ -3,27 +3,22 @@ import { Link, useRouteMatch } from 'react-router-dom';
 
 import '../../css/shared/AlphaTable.css';
 
-import { CapitalCase, TargetToPlural } from '../helpers/Helpers';
-
 /*
   data - Set of data to be displayed as a table, must be an Array
-  name - Name of dataset, displayed above table as h1
   sort - Callback that allows for sorting of values, must take in two args
          and return 1 if the first is greater, and -1 otherwise
   link - Callback that allows for custom linking, must take in two args (current URL and row ID)
          and return the link to direct the user to, defaults to match.url + "/" + row.ID
+  columnMap - Array representing the columns in the table, along with their keys in data; the
+              first element in the array (i.e. first column) is what will be alphabetically separated
 */
-function AlphaTable({ data, name, sort, link }) {
+function AlphaTable({ data, sort, link, columnMap }) {
   let match = useRouteMatch();
 
   const [filter, setFilter] = useState("");
 
-  if (data.length == 0) return (
-    <main>
-      <section id="container">
-        <h1>Sorry, nothing to display.</h1>
-      </section>
-    </main>
+  if (data.length === 0) return (
+    <h2>Sorry, nothing to display.</h2>
   );
 
   if (sort !== undefined) {
