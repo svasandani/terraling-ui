@@ -145,6 +145,14 @@ section, footer {
   position: relative;
 }
 
+#links .card {
+  padding: 25px;
+}
+
+#links .h-divider {
+  margin: 25px 0;
+}
+
 #team {
   padding-bottom: 0vh;
 }
@@ -226,7 +234,7 @@ section, footer {
     width: 100%;
   }
 
-  #what-is, #teams, #team {
+  #what-is, #teams, #team, #links {
     padding: 0 5%;
   }
 

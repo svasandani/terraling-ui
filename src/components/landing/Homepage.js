@@ -69,7 +69,7 @@ function Homepage() {
           <div>
             <h2>Working with a team?</h2>
             <p>
-              Our new Teams feature can help you organize all of your citable research in one place.
+              Our new Research Groups feature can help you organize all of your citable research in one place.
             </p>
           </div>
           <a href="sign_up" className="cta">
@@ -87,16 +87,14 @@ function Homepage() {
             <p>
               Hilda Koopman and Cristina Guardiano, 2018
             </p>
-          </li>
-          <li className="card">
+            <span className="h-divider" />
             <h3>
               <a href="https://linguistics.ucla.edu/wp-content/uploads/2017/04/Navigating-Terraling-1.pdf">Navigating TerraLing</a>
             </h3>
             <p>
               Hilda Koopman, 2018
             </p>
-          </li>
-          <li className="card">
+            <span className="h-divider" />
             <h3>
               <a href="https://groups.google.com/a/lists.ucla.edu/forum/#!forum/terraling">Become a member of our Terraling group</a>
             </h3>
