@@ -77,10 +77,10 @@ function Group() {
           <GroupOverview overviewData={data.overviewData} />
         </Route>
         <Route path={`${match.path}/lings`}>
-          <AlphaTable name={data.overviewData.ling0_name} data={data.lingData} />
+          <AlphaTable name={data.overviewData.ling0_name} data={data.lingData} sort={(a, b) => { return a.name.trim() > b.name.trim() ? 1 : -1 }} />
         </Route>
         <Route path={`${match.path}/properties`}>
-          <AlphaTable name="Properties" data={data.propertyData} />
+          <AlphaTable name="Properties" data={data.propertyData} sort={(a, b) => { return a.name.trim() > b.name.trim() ? 1 : -1 }} />
         </Route>
         <Route exact path={match.path}>
           <main>

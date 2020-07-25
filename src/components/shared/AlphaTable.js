@@ -5,23 +5,33 @@ import '../../css/shared/AlphaTable.css';
 
 import { CapitalCase, TargetToPlural } from '../helpers/Helpers';
 
-function AlphaTable({ data, name }) {
+function AlphaTable({ data, name, sort }) {
   let match = useRouteMatch();
 
   const [filter, setFilter] = useState("");
 
+  if (sort !== undefined) {
+    data = data.sort(sort);
+  }
+
+  console.log(data);
+
   let dataReduce = {};
   data.reduce((acc, row) => {
-    if (row.name === undefined || row.name === "") return;
+    if (row.name === undefined || row.name === "") return null;
     else {
-      let firstLetter = row.name.charAt(0).toLocaleUpperCase();
+      let firstLetter = row.name.trim().charAt(0).toLocaleUpperCase();
 
       // if (!isLetter(firstLetter)) firstLetter = "*";
 
       if (!dataReduce[firstLetter]) dataReduce[firstLetter] = [row];
       else dataReduce[firstLetter].push(row);
     }
+
+    return null;
   }, {});
+
+  console.log(dataReduce);
 
   const filterBy = (e, letter) => {
     e.preventDefault();
@@ -34,20 +44,20 @@ function AlphaTable({ data, name }) {
         <h1>{CapitalCase(TargetToPlural(2, name))}</h1>
         <div className="card filter">
           <a href="#container" onClick={(e) => { filterBy(e, "") }}>ALL</a>
-          { Object.keys(dataReduce).sort().map(letter => {
+          { Object.keys(dataReduce).map(letter => {
             return (
               <a key={letter} href="#container" onClick={(e) => { filterBy(e, letter) }}>{letter}</a>
             )
           })}
         </div>
-        { Object.keys(dataReduce).sort().map(letter => {
+        { Object.keys(dataReduce).map(letter => {
           if (filter.length > 0 && filter !== letter) return null;
 
           return (
             <div key={letter} className="letter">
               <h2>{letter}</h2>
               <div className="card">
-                { dataReduce[letter].map((row, i) => {
+                { dataReduce[letter].sort().map((row, i) => {
                   return (
                     <React.Fragment key={i}>
                       <div key={i} className="row">
