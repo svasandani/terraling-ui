@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
+import Loading from '../shared/Loading';
+
 import '../../css/shared/AlphaTable.css';
 
 /*
@@ -30,7 +32,7 @@ function AlphaTable({ data, sort, link, columnMap }) {
   const [filter, setFilter] = useState("");
 
   if (data.length === 0) return (
-    <h2>Sorry, nothing to display.</h2>
+    <Loading />
   );
 
   if (sort !== undefined) {
