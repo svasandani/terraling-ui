@@ -5,6 +5,12 @@ import '../../css/shared/AlphaTable.css';
 
 import { CapitalCase, TargetToPlural } from '../helpers/Helpers';
 
+/*
+  data - Set of data to be displayed as a table, must be an Array
+  name - Name of dataset, displayed above table as h1
+  sort - Callback that allows for sorting of values, must take in two args
+         and return 1 if the first is greater, and -1 otherwise
+*/
 function AlphaTable({ data, name, sort }) {
   let match = useRouteMatch();
 
