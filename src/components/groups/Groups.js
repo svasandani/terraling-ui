@@ -35,7 +35,7 @@ function Group() {
 
   const [ready, setReady] = useState(false);
 
-  const [data, setData] = useState({ id: 0, overviewData: {}, lingData: [], propertyData: [] })
+  const [data, setData] = useState({ id: 0, overviewData: {}, lingData: [], lingletData: [], propertyData: [], memberData: [] })
 
   let { groupId } = useParams();
 
@@ -46,19 +46,29 @@ function Group() {
         .then(response => response.json());
 
     const lingData =
-      fetch("http://192.168.0.19:4000/groups/" + groupId + "/lings/list", { headers:{'accept': 'application/json'} })
+      fetch("http://192.168.0.19:4000/groups/" + groupId + "/lings/depth/0/list", { headers:{'accept': 'application/json'} })
+        .then(response => response.json());
+
+    const lingletData =
+      fetch("http://192.168.0.19:4000/groups/" + groupId + "/lings/depth/1/list", { headers:{'accept': 'application/json'} })
         .then(response => response.json());
 
     const propertyData =
       fetch("http://192.168.0.19:4000/groups/" + groupId + "/properties/list", { headers:{'accept': 'application/json'} })
         .then(response => response.json());
 
-    Promise.all([overviewData, lingData, propertyData]).then((values) => {
+    const memberData =
+      fetch("http://192.168.0.19:4000/groups/" + groupId + "/memberships/list", { headers:{'accept': 'application/json'} })
+        .then(response => response.json());
+
+    Promise.all([overviewData, lingData, lingletData, propertyData, memberData]).then((values) => {
       const newData = { id: groupId };
 
       newData.overviewData = values[0];
       newData.lingData = values[1];
-      newData.propertyData = values[2];
+      newData.lingletData = values[2];
+      newData.propertyData = values[3];
+      newData.memberData = values[4];
 
       setData(newData);
       setReady(true);
@@ -79,8 +89,14 @@ function Group() {
         <Route path={`${match.path}/lings`}>
           <AlphaTable name={data.overviewData.ling0_name} data={data.lingData} sort={(a, b) => { return a.name.trim() > b.name.trim() ? 1 : -1 }} />
         </Route>
+        <Route path={`${match.path}/linglets`}>
+          <AlphaTable name={data.overviewData.ling1_name} data={data.lingletData} sort={(a, b) => { return a.name.trim() > b.name.trim() ? 1 : -1 }} />
+        </Route>
         <Route path={`${match.path}/properties`}>
-          <AlphaTable name="Properties" data={data.propertyData} sort={(a, b) => { return a.name.trim() > b.name.trim() ? 1 : -1 }} />
+          <AlphaTable name="property" data={data.propertyData} sort={(a, b) => { return a.name.trim() > b.name.trim() ? 1 : -1 }} />
+        </Route>
+        <Route path={`${match.path}/members`}>
+          <AlphaTable name="member" data={data.memberData} sort={(a, b) => { return a.name.trim() > b.name.trim() ? 1 : -1 }} />
         </Route>
         <Route exact path={match.path}>
           <main>
