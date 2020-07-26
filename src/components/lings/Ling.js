@@ -6,7 +6,6 @@ import AlphaTable from '../shared/AlphaTable';
 import Loading from '../shared/Loading';
 
 function Ling({ groupId }) {
-
   const [ready, setReady] = useState(false);
 
   const [data, setData] = useState({ ling_name: "", ling_properties: [] })
@@ -32,7 +31,15 @@ function Ling({ groupId }) {
       <h2>Description</h2>
       <h2>Compare</h2>
       <h2>Properties</h2>
-      <AlphaTable name={data.ling_name} data={data.ling_properties} columnMap={columnMap} link={(url, id) => { return "/groups/" + groupId + "/properties/" + id; }} />
+      {
+        data.ling_properties.length === 0 ?
+        (
+          <h3>It doesn't look like there's anything here.</h3>
+        ) :
+        (
+          <AlphaTable name={data.ling_name} data={data.ling_properties} columnMap={columnMap} link={(url, id) => { return "/groups/" + groupId + "/properties/" + id; }} />
+        )
+      }
     </>
   )
 }
