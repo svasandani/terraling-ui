@@ -3,32 +3,29 @@ import {
   Switch,
   Route,
   Link,
-  Redirect,
   useRouteMatch
 } from 'react-router-dom';
 
 import SelectTable from '../shared/SelectTable';
 
-import SearchParams from './SearchParams';
+import CompareSearch from './types/CompareSearch';
+import CrossSearch from './types/CrossSearch';
 
-import { CapitalCase, TargetToPlural } from '../helpers/Helpers';
+import '../../css/searches/SearchForm.css';
 
-function SearchForm({ data }) {
+function SearchForm({ data, searchPath, searchData, setSearchData }) {
   let match = useRouteMatch();
 
-  const [lingArr, setLingArr] = useState([]);
-  const [lingletArr, setLingletArr] = useState([]);
-  const [propertyArr, setPropertyArr] = useState([]);
+  if (Object.keys(searchData).length > 0) setSearchData({});
+
   const [searchTypesArr, setSearchTypesArr] = useState([]);
-  const [searchTargetsArr, setSearchTargetsArr] = useState([]);
 
-  const searchTypes = [{"name": "Any", "id": "any"}, {"name": "Compare", "id": "compare"}, {"name": "Cross", "id": "cross"}];
-
-  if (data.overviewData.depth_maximum > 0) {
-    var searchTargets = [{"name": CapitalCase(TargetToPlural(2, data.overviewData.ling0_name)), "id": "lings"}, {"name": CapitalCase(TargetToPlural(2, data.overviewData.ling1_name)), "id": "linglets"}, {"name": "Properties", "id": "properties"}];
-  } else {
-    var searchTargets = [{"name": CapitalCase(TargetToPlural(2, data.overviewData.ling0_name)), "id": "lings"}, {"name": "Properties", "id": "properties"}];
+  const reset = (e, f) => {
+    e.preventDefault();
+    f([]);
   }
+
+  const searchTypes = [{"name": "Regular", "id": "regular"}, {"name": "Compare", "id": "compare"}, {"name": "Cross", "id": "cross"}, {"name": "Implication", "id": "implication"}, {"name": "Similarity Tree", "id": "similarity"}];
 
   useEffect(() => {
     let contains = false;
@@ -52,64 +49,29 @@ function SearchForm({ data }) {
 
     if (isNew) setSearchTypesArr([hrefType]);
     else if (!contains && searchTypesArr.length > 0) setSearchTypesArr([]);
-
-    contains = false;
-    isNew = false;
-    let hrefTarget = {};
-    oldid = ""
-
-    if (searchTargetsArr.length === 1) {
-      oldid = searchTargetsArr[0].id;
-    }
-
-    searchTargets.forEach(target => {
-      if (window.location.href.includes(target.id)) {
-        contains = true;
-        if (oldid !== target.id) {
-          isNew = true;
-          hrefTarget = target;
-        }
-      }
-    })
-
-    if (isNew) setSearchTargetsArr([hrefTarget]);
-    else if (!contains && searchTargetsArr.length > 0) setSearchTargetsArr([]);
-  }, [window.location.href, searchTargetsArr, searchTypesArr]);
+  }, [searchTypesArr]);
 
   return (
     <>
       <h1>Search</h1>
       <h2>Search type</h2>
-      <SelectTable data={searchTypes} columnMap={["name"]} selectArr={searchTypesArr} find={(el, row) => el.id === row.id} setSelectArr={setSearchTargetsArr} maxSelect={1} link={(url, id) => { return url + "/" + id;}} replaceWithNew={true} />
+      <SelectTable data={searchTypes} columnMap={["name"]} selectArr={searchTypesArr} find={(el, row) => el.id === row.id} setSelectArr={setSearchTypesArr} maxSelect={1} link={(url, id) => { return url + "/" + id;}} replaceWithNew={true} />
         <Switch>
-          <Route path={`${match.path}/compare`}>
-            <h2>Search targets</h2>
-            <SelectTable data={searchTargets} columnMap={["name"]} selectArr={searchTargetsArr} find={(el, row) => el.id === row.id} setSelectArr={setSearchTargetsArr} maxSelect={1} link={(url, id) => { return url + "/" + id;}} replaceWithNew={true} />
-            <Switch>
-              <Route path={`${match.path}/compare/lings`}>
-                <h2>{CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))} (up to 6)</h2>
-                <SelectTable data={data.lingData} columnMap={["name"]} selectArr={lingArr} setSelectArr={setLingArr} maxHeight="250px" />
-                <SearchParams params={lingArr} />
-                <Link className="cta" to="results">Search</Link>
-              </Route>
-              <Route path={`${match.path}/compare/linglets`}>
-                <h2>{CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))} (up to 6)</h2>
-                <SelectTable data={data.lingletData} columnMap={["name"]} selectArr={lingletArr} setSelectArr={setLingletArr} maxHeight="250px" />
-                <SearchParams params={lingletArr} />
-                <Link className="cta" to="results">Search</Link>
-              </Route>
-              <Route path={`${match.path}/compare/properties`}>
-                <h2>Properties (up to 6)</h2>
-                <SelectTable data={data.propertyData} columnMap={["name"]} selectArr={propertyArr} setSelectArr={setPropertyArr} maxHeight="250px" />
-                <SearchParams params={propertyArr} />
-                <Link className="cta" to="results">Search</Link>
-              </Route>
-            </Switch>
-          </Route>
-          <Route path={`${match.path}/linglets`}>
+          <Route path={`${match.path}/regular`}>
             <div />
           </Route>
-          <Route path={`${match.path}/properties`}>
+          <Route path={`${match.path}/compare`}>
+            <CompareSearch data={data} reset={reset} setSearchData={setSearchData} />
+            <Link className="cta" to={`${searchPath}/results`} onClick={() => {setSearchData({"a":"b"})}}>Search</Link>
+          </Route>
+          <Route path={`${match.path}/cross`}>
+            <CrossSearch data={data} reset={reset} setSearchData={setSearchData} />
+            <Link className="cta" to={`${searchPath}/results`} onClick={() => {setSearchData({"a":"b"})}}>Search</Link>
+          </Route>
+          <Route path={`${match.path}/implication`}>
+            <div />
+          </Route>
+          <Route path={`${match.path}/similarity`}>
             <div />
           </Route>
         </Switch>
