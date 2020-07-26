@@ -16,8 +16,6 @@ import '../../css/searches/SearchForm.css';
 function SearchForm({ data, searchPath, searchData, setSearchData }) {
   let match = useRouteMatch();
 
-  if (Object.keys(searchData).length > 0) setSearchData({});
-
   const [searchTypesArr, setSearchTypesArr] = useState([]);
 
   const reset = (e, f) => {
@@ -49,7 +47,9 @@ function SearchForm({ data, searchPath, searchData, setSearchData }) {
 
     if (isNew) setSearchTypesArr([hrefType]);
     else if (!contains && searchTypesArr.length > 0) setSearchTypesArr([]);
-  }, [searchTypesArr]);
+
+    if (Object.keys(searchData).length > 0) setSearchData({});
+  }, [window.location.href, searchTypesArr, searchData]);
 
   return (
     <>
