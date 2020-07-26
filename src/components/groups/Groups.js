@@ -61,11 +61,11 @@ function Group() {
 
   useEffect(() => {
     const overviewData =
-      fetch("http://192.168.0.19:4000/groups/" + groupId, { headers:{'accept': 'application/json'} })
+      fetch(process.env.REACT_APP_API + "groups/" + groupId, { headers:{'accept': 'application/json'} })
         .then(response => response.json());
 
     const lingData =
-      fetch("http://192.168.0.19:4000/groups/" + groupId + "/lings/depth/0/list", { headers:{'accept': 'application/json'} })
+      fetch(process.env.REACT_APP_API + "groups/" + groupId + "/lings/depth/0/list", { headers:{'accept': 'application/json'} })
         .then(response => response.json())
         .then(data => {
           data = data.sort(nameSort);
@@ -73,7 +73,7 @@ function Group() {
         });
 
     const lingletData =
-      fetch("http://192.168.0.19:4000/groups/" + groupId + "/lings/depth/1/list", { headers:{'accept': 'application/json'} })
+      fetch(process.env.REACT_APP_API + "groups/" + groupId + "/lings/depth/1/list", { headers:{'accept': 'application/json'} })
         .then(response => response.json())
         .then(data => {
           data = data.sort(nameSort);
@@ -81,7 +81,7 @@ function Group() {
         });
 
     const propertyData =
-      fetch("http://192.168.0.19:4000/groups/" + groupId + "/properties/list", { headers:{'accept': 'application/json'} })
+      fetch(process.env.REACT_APP_API + "groups/" + groupId + "/properties/list", { headers:{'accept': 'application/json'} })
         .then(response => response.json())
         .then(data => {
           data = data.sort(nameSort);
@@ -89,7 +89,7 @@ function Group() {
         });
 
     const lingPropertyData =
-      fetch("http://192.168.0.19:4000/groups/" + groupId + "/properties/depth/0/list", { headers:{'accept': 'application/json'} })
+      fetch(process.env.REACT_APP_API + "groups/" + groupId + "/properties/depth/0/list", { headers:{'accept': 'application/json'} })
         .then(response => response.json())
         .then(data => {
           data = data.sort(nameSort);
@@ -97,7 +97,7 @@ function Group() {
         });
 
     const lingletPropertyData =
-      fetch("http://192.168.0.19:4000/groups/" + groupId + "/properties/depth/1/list", { headers:{'accept': 'application/json'} })
+      fetch(process.env.REACT_APP_API + "groups/" + groupId + "/properties/depth/1/list", { headers:{'accept': 'application/json'} })
         .then(response => response.json())
         .then(data => {
           data = data.sort(nameSort);
@@ -105,7 +105,7 @@ function Group() {
         });
 
     const memberData =
-      fetch("http://192.168.0.19:4000/groups/" + groupId + "/memberships/list", { headers:{'accept': 'application/json'} })
+      fetch(process.env.REACT_APP_API + "groups/" + groupId + "/memberships/list", { headers:{'accept': 'application/json'} })
         .then(response => response.json())
         .then(data => {
           data = data.sort(nameSort);

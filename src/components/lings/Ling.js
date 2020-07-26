@@ -15,7 +15,7 @@ function Ling({ groupId }) {
   let { lingId } = useParams();
 
   useEffect(() => {
-    fetch("http://192.168.0.19:4000/groups/" + groupId + "/lings/" + lingId, { headers:{'accept': 'application/json'} })
+    fetch(process.env.REACT_APP_API + "groups/" + groupId + "/lings/" + lingId, { headers:{'accept': 'application/json'} })
         .then(response => response.json())
         .then((data) => {
           setData(data);
