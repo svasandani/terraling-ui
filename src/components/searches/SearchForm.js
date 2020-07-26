@@ -72,7 +72,7 @@ function SearchForm({ data }) {
             <SelectTable data={searchTargets} columnMap={["name"]} selectArr={searchTargetsArr} find={(el, row) => el.id === row.id} setSelectArr={setSearchTargetsArr} maxSelect={1} link={(url, id) => { return url + "/" + id;}} />
             <Switch>
               <Route path={`${match.path}/compare/lings`}>
-                <h2>{CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))}</h2>
+                <h2>{CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))} (up to 6)</h2>
                 <SelectTable data={data.lingData} columnMap={["name"]} selectArr={selectArr} setSelectArr={setSelectArr} maxHeight="250px" />
                 <Link className="cta" to="results">Search</Link>
               </Route>
