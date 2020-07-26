@@ -6,11 +6,12 @@ import AlphaTable from '../shared/AlphaTable';
 import Loading from '../shared/Loading';
 
 function Ling({ groupId }) {
+
   const [ready, setReady] = useState(false);
 
   const [data, setData] = useState({ ling_name: "", ling_properties: [] })
 
-  const columnMap = {"property_name": "Property", "value": "Value"};
+  const columnMap = {"name": "Property", "value": "Value"};
 
   let { lingId } = useParams();
 
@@ -31,7 +32,7 @@ function Ling({ groupId }) {
       <h2>Description</h2>
       <h2>Compare</h2>
       <h2>Properties</h2>
-      <AlphaTable name={data.ling_name} data={data.ling_properties} columnMap={columnMap} />
+      <AlphaTable name={data.ling_name} data={data.ling_properties} columnMap={columnMap} link={(url, id) => { return "/groups/" + groupId + "/properties/" + id; }} />
     </>
   )
 }
