@@ -20,8 +20,9 @@ import '../../css/shared/SelectTable.css';
               first element in the array (i.e. first column) is what will be alphabetically separated.
   maxHeight - Max height in px of card
   disabled - Whether to gray out card
+  replaceWithNew - Replace old values with new values, or simply stop any more selections
 */
-function SelectTable({ data, sort, link, find, selectArr, setSelectArr, maxSelect=6, columnMap, maxHeight, disabled }) {
+function SelectTable({ data, sort, link, find, selectArr, setSelectArr, maxSelect=6, columnMap, maxHeight, disabled, replaceWithNew }) {
   let match = useRouteMatch();
 
   if (data.length === 0) return (
@@ -44,8 +45,10 @@ function SelectTable({ data, sort, link, find, selectArr, setSelectArr, maxSelec
     if (index >= 0) newSelectArr.splice(index, 1);
     else if (selectArr.length < maxSelect) newSelectArr.push(row);
     else {
-      newSelectArr.shift();
-      newSelectArr.push(row);
+      if (replaceWithNew) {
+        newSelectArr.shift();
+        newSelectArr.push(row);
+      }
     }
 
     setSelectArr(newSelectArr);
