@@ -181,13 +181,16 @@ function Group() {
               <h1>{CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))}</h1>
               <AlphaTable data={data.lingData} columnMap={columnMap} />
             </Route>
+            <Route path={`${match.path}/lings/:lingId`}>
+              <Ling groupId={groupId} />
+            </Route>
             <Route path={`${match.path}/linglets`}>
               {
                 data.overviewData.depth_maximum > 0 ?
                 (
                   <>
                     <h1>{CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))}</h1>
-                    <AlphaTable data={data.lingletData} link={(url, id) => { return "lings/" + id; }} columnMap={columnMap} />
+                    <AlphaTable data={data.lingletData} link={(url, id) => { return "linglets/" + id; }} columnMap={columnMap} />
                   </>
                 ) :
                 (

@@ -37,7 +37,7 @@ function Property({ groupId, lingName }) {
           <h3>It doesn't look like there's anything here.</h3>
         ) :
         (
-          <AlphaTable name={data.property_name} data={data.property_lings} columnMap={columnMap} link={(url, id) => { return "/groups/" + groupId + "/lings/" + id; }} />
+          <AlphaTable name={data.property_name} data={data.property_lings} columnMap={columnMap} link={(url, id) => { return "/groups/" + groupId + "/" + (data.property_depth === 0 ? "lings" : "linglets") + "/" + id; }} />
         )
       }
     </>
