@@ -67,19 +67,35 @@ function Group() {
 
     const lingData =
       fetch("http://192.168.0.19:4000/groups/" + groupId + "/lings/depth/0/list", { headers:{'accept': 'application/json'} })
-        .then(response => response.json());
+        .then(response => response.json())
+        .then(data => {
+          data = data.sort(nameSort);
+          return data;
+        });
 
     const lingletData =
       fetch("http://192.168.0.19:4000/groups/" + groupId + "/lings/depth/1/list", { headers:{'accept': 'application/json'} })
-        .then(response => response.json());
+        .then(response => response.json())
+        .then(data => {
+          data = data.sort(nameSort);
+          return data;
+        });
 
     const propertyData =
       fetch("http://192.168.0.19:4000/groups/" + groupId + "/properties/list", { headers:{'accept': 'application/json'} })
-        .then(response => response.json());
+        .then(response => response.json())
+        .then(data => {
+          data = data.sort(nameSort);
+          return data;
+        });
 
     const memberData =
       fetch("http://192.168.0.19:4000/groups/" + groupId + "/memberships/list", { headers:{'accept': 'application/json'} })
-        .then(response => response.json());
+        .then(response => response.json())
+        .then(data => {
+          data = data.sort(nameSort);
+          return data;
+        });
 
     let firstPromise = overviewData;
 
@@ -143,7 +159,7 @@ function Group() {
             </Route>
             <Route path={`${match.path}/lings`}>
               <h1>{CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))}</h1>
-              <AlphaTable data={data.lingData} sort={nameSort} columnMap={columnMap} />
+              <AlphaTable data={data.lingData} columnMap={columnMap} />
             </Route>
             <Route path={`${match.path}/linglets`}>
               {
@@ -151,7 +167,7 @@ function Group() {
                 (
                   <>
                     <h1>{CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))}</h1>
-                    <AlphaTable data={data.lingletData} sort={nameSort} link={(url, id) => { return "lings/" + id; }} columnMap={columnMap} />
+                    <AlphaTable data={data.lingletData} link={(url, id) => { return "lings/" + id; }} columnMap={columnMap} />
                   </>
                 ) :
                 (
@@ -161,11 +177,11 @@ function Group() {
             </Route>
             <Route path={`${match.path}/properties`}>
               <h1>Properties</h1>
-              <AlphaTable data={data.propertyData} sort={nameSort} columnMap={columnMap} />
+              <AlphaTable data={data.propertyData} columnMap={columnMap} />
             </Route>
             <Route path={`${match.path}/members`}>
               <h1>Members</h1>
-              <AlphaTable data={data.memberData} sort={nameSort} link={(url, id) => { return "/users/" + id; }} columnMap={columnMap} />
+              <AlphaTable data={data.memberData} link={(url, id) => { return "/users/" + id; }} columnMap={columnMap} />
             </Route>
             <Route exact path={match.path}>
               <div className="no-tab-selected">
