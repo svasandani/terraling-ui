@@ -13,6 +13,7 @@ function TargetToPlural(count, target) {
 }
 
 function CapitalCase(word) {
+  if (word === undefined) return "";
   return word.charAt(0).toUpperCase() + word.slice(1, word.length);
 }
 
