@@ -59,17 +59,16 @@ function CrossSearch({ data, reset, setSearchData }) {
       <Switch>
         <Route path={`${match.path}/lings`}>
           <h2>{CapitalCase(data.overviewData.ling0_name) + " Properties"} (up to 6) <Link className="reset-btn" to="." onClick={(e) => reset(e, setLingArr)}>Reset</Link></h2>
-          <SelectTable data={data.propertyData} columnMap={["name"]} selectArr={lingArr} setSelectArr={setLingArr} maxHeight="250px" />
+          <SelectTable data={data.lingPropertyData} columnMap={["name"]} selectArr={lingArr} setSelectArr={setLingArr} maxHeight="250px" />
           <SearchParams params={lingArr} />
         </Route>
         <Route path={`${match.path}/linglets`}>
-          <h1>TODO: How to get Anaphor properties? See backend</h1>
           {
             data.overviewData.depth_maximum > 0 ?
             (
               <>
                 <h2>{CapitalCase(data.overviewData.ling1_name) + " Properties"} (up to 6) <Link className="reset-btn" to="." onClick={(e) => reset(e, setLingletArr)}>Reset</Link></h2>
-                <SelectTable data={data.lingletData} columnMap={["name"]} selectArr={lingletArr} setSelectArr={setLingletArr} maxHeight="250px" />
+                <SelectTable data={data.lingletPropertyData} columnMap={["name"]} selectArr={lingletArr} setSelectArr={setLingletArr} maxHeight="250px" />
                 <SearchParams params={lingletArr} />
               </>
             ) :

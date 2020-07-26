@@ -51,7 +51,7 @@ function Group() {
 
   const [ready, setReady] = useState(false);
 
-  const [data, setData] = useState({ id: 0, overviewData: {}, lingData: [], lingletData: [], propertyData: [], memberData: [] })
+  const [data, setData] = useState({ id: 0, overviewData: {}, lingData: [], lingletData: [], propertyData: [], lingPropertyData: [], lingletPropertyData: [], memberData: [] })
 
   const nameSort = (a, b) => { return a.name.trim() > b.name.trim() ? 1 : -1; }
 
@@ -59,7 +59,6 @@ function Group() {
 
   let { groupId } = useParams();
 
-  // TODO - fetch only active tab? better caching
   useEffect(() => {
     const overviewData =
       fetch("http://192.168.0.19:4000/groups/" + groupId, { headers:{'accept': 'application/json'} })
@@ -83,6 +82,22 @@ function Group() {
 
     const propertyData =
       fetch("http://192.168.0.19:4000/groups/" + groupId + "/properties/list", { headers:{'accept': 'application/json'} })
+        .then(response => response.json())
+        .then(data => {
+          data = data.sort(nameSort);
+          return data;
+        });
+
+    const lingPropertyData =
+      fetch("http://192.168.0.19:4000/groups/" + groupId + "/properties/depth/0/list", { headers:{'accept': 'application/json'} })
+        .then(response => response.json())
+        .then(data => {
+          data = data.sort(nameSort);
+          return data;
+        });
+
+    const lingletPropertyData =
+      fetch("http://192.168.0.19:4000/groups/" + groupId + "/properties/depth/1/list", { headers:{'accept': 'application/json'} })
         .then(response => response.json())
         .then(data => {
           data = data.sort(nameSort);
@@ -120,14 +135,16 @@ function Group() {
       setReady(true);
     });
 
-    Promise.all([overviewData, lingData, lingletData, propertyData, memberData]).then((values) => {
+    Promise.all([overviewData, lingData, lingletData, propertyData, lingPropertyData, lingletPropertyData, memberData]).then((values) => {
       const newData = { id: groupId };
 
       newData.overviewData = values[0];
       newData.lingData = values[1];
       newData.lingletData = values[2];
       newData.propertyData = values[3];
-      newData.memberData = values[4];
+      newData.lingPropertyData = values[4];
+      newData.lingletPropertyData = values[5];
+      newData.memberData = values[6];
 
       setData(newData);
     });
