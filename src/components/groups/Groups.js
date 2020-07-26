@@ -11,7 +11,10 @@ import UserGroups from '../landing/UserGroups';
 
 import GroupTabs from './GroupTabs';
 import GroupOverview from './GroupOverview';
+
 import Ling from '../lings/Ling'
+import Property from '../properties/Property'
+
 import Search from '../searches/Search'
 
 import AlphaTable from '../shared/AlphaTable';
@@ -191,6 +194,9 @@ function Group() {
                   <Redirect to={`${match.url}/lings`} />
                 )
               }
+            </Route>
+            <Route path={`${match.path}/properties/:propertyId`}>
+              <Property groupId={groupId} />
             </Route>
             <Route path={`${match.path}/properties`}>
               <h1>Properties</h1>
