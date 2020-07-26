@@ -63,6 +63,7 @@ function CrossSearch({ data, reset, setSearchData }) {
           <SearchParams params={lingArr} />
         </Route>
         <Route path={`${match.path}/linglets`}>
+          <h1>TODO: How to get Anaphor properties? See backend</h1>
           {
             data.overviewData.depth_maximum > 0 ?
             (
