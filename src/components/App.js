@@ -21,23 +21,23 @@ function App() {
   return (
     <Router>
       <Header signedin={signedin} setSignedIn={setSignedIn} />
-        <Switch>
-          <Route path="/about">
-            <div />
-          </Route>
-          <Route path="/groups">
-            <Groups />
-          </Route>
-          <Route path="/">
-            { signedin ?
-            (
-              <Feed user={{}} />
-            ) :
-            (
-              <Homepage />
-            ) }
-          </Route>
-        </Switch>
+      <Switch>
+        <Route path="/about">
+          <div />
+        </Route>
+        <Route path="/groups">
+          <Groups />
+        </Route>
+        <Route path="/">
+          { signedin ?
+          (
+            <Feed user={{}} />
+          ) :
+          (
+            <Homepage />
+          ) }
+        </Route>
+      </Switch>
       <Footer />
     </Router>
   );
