@@ -42,16 +42,19 @@ function SearchForm({ data }) {
 
     searchTypes.forEach(type => {
       if (window.location.href.includes(type.id)) {
+        contains = true;
         if (oldid !== type.id) {
-          contains = true;
+          isNew = true;
           hrefType = type;
         }
       }
     })
 
-    if (contains) setSearchTypesArr([hrefType]);
+    if (isNew) setSearchTypesArr([hrefType]);
+    else if (!contains && searchTypesArr.length > 0) setSearchTypesArr([]);
 
     contains = false;
+    isNew = false;
     let hrefTarget = {};
     oldid = ""
 
