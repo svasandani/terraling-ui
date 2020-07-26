@@ -13,10 +13,10 @@ function SearchParams({ params }) {
           params.map((ling, i) => {
             return (
               <React.Fragment key={i}>
-                <span class="name">{ling.name}</span>
+                <span className="name">{ling.name}</span>
                 { params.length - i > 1 ?
                   (
-                    <span class="v-divider"> | </span>
+                    <span className="v-divider"> | </span>
                   ) :
                   (
                     null
