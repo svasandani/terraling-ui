@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, useRouteMatch } from 'react-router-dom';
 
 import Loading from '../shared/Loading';
 
@@ -9,6 +10,8 @@ import '../../css/shared/SelectTable.css';
   data - Set of data to be displayed as a table, must be an Array
   sort - Callback that allows for sorting of values, must take in two args
          and return 1 if the first is greater, and -1 otherwise
+  link - Callback that allows for custom linking, must take in two args (current URL and row ID)
+         and return the link to direct the user to, defaults to match.url + "/" + row.ID
   find - Callback that allows for custom find methods (defaults to checking name prop)
   selectArr - Array that contains all selected objects in table (extracted from data)
   setSelectArr - State setter for selectArr
@@ -18,7 +21,9 @@ import '../../css/shared/SelectTable.css';
   maxHeight - Max height in px of card
   disabled - Whether to gray out card
 */
-function SelectTable({ data, sort, find, selectArr, setSelectArr, maxSelect=6, columnMap, maxHeight, disabled }) {
+function SelectTable({ data, sort, link, find, selectArr, setSelectArr, maxSelect=6, columnMap, maxHeight, disabled }) {
+  let match = useRouteMatch();
+
   if (data.length === 0) return (
     <Loading />
   );
@@ -53,16 +58,34 @@ function SelectTable({ data, sort, find, selectArr, setSelectArr, maxSelect=6, c
 
         return (
           <React.Fragment key={i}>
-            <div key={i} className={`select-row row row-${columnMap.length} ${index >= 0 ? "active" : ""}`} onClick={() => {toggle(index, row)}}>
-              {
-                columnMap.map((col, i) => {
-                  return (
-                    <span key={i} className="name">{row[col]}</span>
-                  );
-                })
-              }
+            { link ?
+              (
+                <Link to={link(match.url, row.id)}>
+                  <div key={i} className={`select-row row row-${columnMap.length} ${index >= 0 ? "active" : ""}`} onClick={() => {toggle(index, row)}}>
+                    {
+                      columnMap.map((col, i) => {
+                        return (
+                          <span key={i} className="name">{row[col]}</span>
+                        );
+                      })
+                    }
 
-            </div>
+                  </div>
+                </Link>
+              ) :
+              (
+                <div key={i} className={`select-row row row-${columnMap.length} ${index >= 0 ? "active" : ""}`} onClick={() => {toggle(index, row)}}>
+                  {
+                    columnMap.map((col, i) => {
+                      return (
+                        <span key={i} className="name">{row[col]}</span>
+                      );
+                    })
+                  }
+
+                </div>
+              )
+            }
             { data.length - i > 1 ?
               (
                 <span className="h-divider" />
