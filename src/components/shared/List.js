@@ -1,20 +1,20 @@
 import React from 'react';
 
-import '../../css/searches/SearchParams.css';
+import '../../css/shared/List.css';
 
-function SearchParams({ params }) {
-  if (params.length === 0) return null;
+function List({ data, field, heading }) {
+  if (data.length === 0) return null;
 
   return (
     <>
-      <h2>Your search parameters</h2>
-      <div className="card params">
+      <h2>{heading}</h2>
+      <div className="card list">
         {
-          params.map((ling, i) => {
+          data.map((item, i) => {
             return (
               <React.Fragment key={i}>
-                <span className="name">{ling.name}</span>
-                { params.length - i > 1 ?
+                <span className="name">{field ? item[field] : item}</span>
+                { data.length - i > 1 ?
                   (
                     <span className="v-divider"> | </span>
                   ) :
@@ -31,4 +31,4 @@ function SearchParams({ params }) {
   )
 }
 
-export default SearchParams;
+export default List;

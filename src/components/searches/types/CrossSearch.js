@@ -58,18 +58,20 @@ function CrossSearch({ data, reset, setSearchData, searchPath }) {
       <SelectTable data={searchTargets} columnMap={["name"]} selectArr={searchTargetsArr} find={(el, row) => el.id === row.id} setSelectArr={setSearchTargetsArr} maxSelect={1} link={(url, id) => { return url + "/" + id;}} replaceWithNew={true} />
       <Switch>
         <Route path={`${match.path}/lings`}>
-          <h2>{CapitalCase(data.overviewData.ling0_name) + " Properties"} (up to 6) <Link className="reset-btn" to="." onClick={(e) => reset(e, setLingArr)}>Reset</Link></h2>
-          <SelectTable data={data.lingPropertyData} columnMap={["name"]} selectArr={lingArr} setSelectArr={setLingArr} maxHeight="250px" />
-          <SearchParams params={lingArr} />
+          <h2>{CapitalCase(data.overviewData.ling0_name) + " Properties"} (up to 6) <Link className="reset-btn" to="." onClick={(e) => reset(e, setLingPropertyArr)}>Reset</Link></h2>
+          <SelectTable data={data.lingPropertyData} columnMap={["name"]} selectArr={lingPropertyArr} setSelectArr={setLingPropertyArr} maxHeight="250px" />
+          <List data={lingPropertyArr} field="name" heading="Your search parameters" />
+          <Link className="cta" to={`${searchPath}/results`} onClick={buildLingPropertySearch}>Search</Link>
         </Route>
         <Route path={`${match.path}/linglets`}>
           {
             data.overviewData.depth_maximum > 0 ?
             (
               <>
-                <h2>{CapitalCase(data.overviewData.ling1_name) + " Properties"} (up to 6) <Link className="reset-btn" to="." onClick={(e) => reset(e, setLingletArr)}>Reset</Link></h2>
-                <SelectTable data={data.lingletPropertyData} columnMap={["name"]} selectArr={lingletArr} setSelectArr={setLingletArr} maxHeight="250px" />
-                <SearchParams params={lingletArr} />
+                <h2>{CapitalCase(data.overviewData.ling1_name) + " Properties"} (up to 6) <Link className="reset-btn" to="." onClick={(e) => reset(e, setLingletPropertyArr)}>Reset</Link></h2>
+                <SelectTable data={data.lingletPropertyData} columnMap={["name"]} selectArr={lingletPropertyArr} setSelectArr={setLingletPropertyArr} maxHeight="250px" />
+                <List data={lingletPropertyArr} field="name" heading="Your search parameters" />
+                <Link className="cta" to={`${searchPath}/results`} onClick={buildLingletPropertySearch}>Search</Link>
               </>
             ) :
             (

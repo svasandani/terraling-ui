@@ -8,7 +8,7 @@ import {
 
 import SelectTable from '../../shared/SelectTable';
 
-import SearchParams from '../SearchParams';
+import List from '../../shared/List';
 
 import { CapitalCase, TargetToPlural } from '../../helpers/Helpers';
 
@@ -96,7 +96,7 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
         <Route path={`${match.path}/lings`}>
           <h2>{CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))} (up to 6) <Link className="reset-btn" to="." onClick={(e) => reset(e, setLingArr)}>Reset</Link></h2>
           <SelectTable data={data.lingData} columnMap={["name"]} selectArr={lingArr} setSelectArr={setLingArr} maxHeight="250px" />
-          <SearchParams params={lingArr} />
+          <List data={lingArr} field="name" heading="Your search parameters" />
           <Link className="cta" to={`${searchPath}/results`} onClick={buildLingSearch}>Search</Link>
         </Route>
         <Route path={`${match.path}/linglets`}>
@@ -106,7 +106,7 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
               <>
                 <h2>{CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))} (up to 6) <Link className="reset-btn" to="." onClick={(e) => reset(e, setLingletArr)}>Reset</Link></h2>
                 <SelectTable data={data.lingletData} columnMap={["name"]} selectArr={lingletArr} setSelectArr={setLingletArr} maxHeight="250px" />
-                <SearchParams params={lingletArr} />
+                <List data={lingletArr} field="name" heading="Your search parameters" />
                 <Link className="cta" to={`${searchPath}/results`} onClick={buildLingletSearch}>Search</Link>
               </>
             ) :
