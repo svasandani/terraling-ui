@@ -8,7 +8,9 @@ import Loading from '../shared/Loading';
 function Ling({ groupId }) {
   const [ready, setReady] = useState(false);
 
-  const [data, setData] = useState({ ling_name: "", ling_properties: [] })
+  const [data, setData] = useState({ ling_name: "", ling_properties: [] });
+
+  const nameSort = (a, b) => { return a.name.trim() > b.name.trim() ? 1 : -1; };
 
   const columnMap = {"name": "Property", "value": "Value"};
 
@@ -37,7 +39,7 @@ function Ling({ groupId }) {
           <h3>It doesn't look like there's anything here.</h3>
         ) :
         (
-          <AlphaTable name={data.ling_name} data={data.ling_properties} columnMap={columnMap} link={(url, id) => { return "/groups/" + groupId + "/properties/" + id; }} />
+          <AlphaTable name={data.ling_name} sort={nameSort} data={data.ling_properties} columnMap={columnMap} link={(url, id) => { return "/groups/" + groupId + "/properties/" + id; }} />
         )
       }
     </>
