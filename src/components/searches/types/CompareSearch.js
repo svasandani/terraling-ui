@@ -33,7 +33,18 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
     setSearchData(searchArr);
   };
 
-  const buildLingletSearch = () => {};
+  const buildLingletSearch = () => {
+    let searchArr = {
+      search: {
+        lings: {"1": lingletArr.reduce((ids, linglet) => { ids.push(linglet.id); return ids; }, [])},
+        ling_set: {"1": "compare"}
+      },
+      group_id: data.id
+    }
+
+    setSearchData(searchArr);
+  };
+
   const buildPropertySearch = () => {};
 
   let searchTargets = [];
