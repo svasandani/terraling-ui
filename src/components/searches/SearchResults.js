@@ -28,23 +28,21 @@ function SearchResults({ data, groupId, searchData }) {
 
   if (!ready) return(<Loading />);
 
-  return (
-    <>
-      <h1>{data.ling_name}</h1>
-      <h2>Description</h2>
-      <h2>Compare</h2>
-      <h2>Properties</h2>
-      {
-        true ?
-        (
-          <h3>It doesn't look like there's anything here.</h3>
-        ) :
-        (
-          <div />
-        )
-      }
-    </>
-  )
+  if (resultData.type === "compare") {
+    return (
+      <>
+        <h1>Search Results</h1>
+        <CompareResults data={data} resultData={resultData} />
+      </>
+    )
+  } else {
+    return (
+      <>
+        <h1>Search Results</h1>
+        <h3>Something went wrong. Please try again.</h3>
+      </>
+    )
+  }
 }
 
 export default SearchResults;
