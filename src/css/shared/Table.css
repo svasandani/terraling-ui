@@ -52,6 +52,22 @@
   grid-template-columns: 1.25fr repeat(8, 1fr);
 }
 
+.row-10 {
+  grid-template-columns: 1.25fr repeat(9, 1fr);
+}
+
+.row-11 {
+  grid-template-columns: 1.25fr repeat(10, 1fr);
+}
+
+.row-12 {
+  grid-template-columns: 1.25fr repeat(11, 1fr);
+}
+
+.row-13 {
+  grid-template-columns: 1.25fr repeat(12, 1fr);
+}
+
 .name {
   word-break: break-all;
   word-break: break-word;
