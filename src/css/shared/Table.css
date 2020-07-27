@@ -29,25 +29,30 @@
 }
 
 .row-4 {
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1.25fr repeat(3, 1fr);
 }
 
 .row-5 {
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: 1.25fr repeat(4, 1fr);
 }
 
 .row-6 {
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: 1.25fr repeat(5, 1fr);
 }
 
 .row-7 {
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: 1.25fr repeat(6, 1fr);
 }
 
 .row-8 {
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: 1.25fr repeat(7, 1fr);
 }
 
 .row-9 {
-  grid-template-columns: repeat(9, 1fr);
+  grid-template-columns: 1.25fr repeat(8, 1fr);
+}
+
+.name {
+  word-break: break-all;
+  word-break: break-word;
 }
