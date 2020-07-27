@@ -8,15 +8,43 @@ import {
 
 import SelectTable from '../../shared/SelectTable';
 
-import SearchParams from '../SearchParams';
+import List from '../../shared/List';
 
 import { CapitalCase } from '../../helpers/Helpers';
 
 function CrossSearch({ data, reset, setSearchData, searchPath }) {
   let match = useRouteMatch();
 
-  const [lingArr, setLingArr] = useState([]);
-  const [lingletArr, setLingletArr] = useState([]);
+  const [lingPropertyArr, setLingPropertyArr] = useState([]);
+  const [lingletPropertyArr, setLingletPropertyArr] = useState([]);
+
+  const buildLingPropertySearch = () => {
+    let propertyCategoryId = data.lingPropertyData[0].category_id;
+
+    let searchArr = {
+      search: {
+        properties: { [propertyCategoryId]: lingPropertyArr.reduce((ids, linglet) => { ids.push(linglet.id.toString()); return ids; }, []) },
+        property_set: { [propertyCategoryId]: "cross" }
+      },
+      group_id: data.id
+    }
+
+    setSearchData(searchArr);
+  };
+
+  const buildLingletPropertySearch = () => {
+    let propertyCategoryId = data.lingletPropertyData[0].category_id;
+
+    let searchArr = {
+      search: {
+        properties: { [propertyCategoryId]: lingletPropertyArr.reduce((ids, linglet) => { ids.push(linglet.id.toString()); return ids; }, []) },
+        property_set: { [propertyCategoryId]: "cross" }
+      },
+      group_id: data.id
+    }
+
+    setSearchData(searchArr);
+  };
 
   let searchTargets = [];
 
