@@ -1,7 +1,16 @@
+.card.header-card {
+  padding-top: 0;
+}
+
 .headers {
   position: sticky;
+  top: 0;
   font-weight: bold;
   font-size: 1.05em;
+  background: inherit;
+  border-bottom: 1px solid var(--gray2);
+  padding: 0.5em 0;
+  margin-bottom: 0.5em;
 }
 
 .row {
@@ -28,4 +37,16 @@
 
 .row-6 {
   grid-template-columns: repeat(6, 1fr);
+}
+
+.row-7 {
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.row-8 {
+  grid-template-columns: repeat(8, 1fr);
+}
+
+.row-9 {
+  grid-template-columns: repeat(9, 1fr);
 }

@@ -80,7 +80,7 @@ function AlphaTable({ data, sort, link, columnMap }) {
         return (
           <div key={letter} className="letter">
             <h3>{letter}</h3>
-            <div className="card">
+            <div className={`card ${headers ? "header-card" : ""}`}>
               {
                 headers ?
                 (
@@ -94,7 +94,6 @@ function AlphaTable({ data, sort, link, columnMap }) {
                         })
                       }
                     </div>
-                    <span className="h-divider" />
                   </>
                 ) :
                 (
