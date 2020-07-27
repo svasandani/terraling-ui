@@ -14,9 +14,9 @@ function Search({ groupId, data }) {
 
   const [searchData, setSearchData] = useState({});
 
-  useEffect(() => {
-    console.log("wow");
-  }, [searchData])
+  // useEffect(() => {
+  //   console.log("wow");
+  // }, [searchData])
 
   return (
     <Switch>

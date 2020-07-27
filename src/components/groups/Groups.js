@@ -12,10 +12,10 @@ import UserGroups from '../landing/UserGroups';
 import GroupTabs from './GroupTabs';
 import GroupOverview from './GroupOverview';
 
-import Ling from '../lings/Ling'
-import Property from '../properties/Property'
+import Ling from '../lings/Ling';
+import Property from '../properties/Property';
 
-import Search from '../searches/Search'
+import Search from '../searches/Search';
 
 import AlphaTable from '../shared/AlphaTable';
 

@@ -5,7 +5,7 @@ import AlphaTable from '../shared/AlphaTable';
 
 import Loading from '../shared/Loading';
 
-function Property({ groupId, lingName }) {
+function Property({ groupId }) {
   const [ready, setReady] = useState(false);
 
   const [data, setData] = useState({ property_name: "", property_lings: [] })
