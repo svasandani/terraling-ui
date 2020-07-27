@@ -1,5 +1,5 @@
 .card.header-card {
-  padding-top: 0;
+  padding-top: 0.25em;
 }
 
 .headers {
@@ -9,7 +9,8 @@
   font-size: 1.05em;
   background: inherit;
   border-bottom: 1px solid var(--gray2);
-  padding: 0.5em 0;
+  padding-top: 0.75em;
+  padding-bottom: 1em;
   margin-bottom: 0.5em;
 }
 

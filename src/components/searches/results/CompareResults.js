@@ -1,5 +1,7 @@
 import React from 'react';
 
+import HeadingTable from '../../shared/HeadingTable';
+
 import { CapitalCase, TargetToPlural } from '../../helpers/Helpers';
 
 function CompareResults({ data, resultData }) {
