@@ -10,6 +10,8 @@ function SearchResults({ data, groupId, searchData }) {
   const [resultData, setResultData] = useState({})
 
   useEffect(() => {
+    if (Object.keys(searchData).length === 0) return;
+    
     fetch(process.env.REACT_APP_API + "groups/" + groupId + "/searches/get_results", {
       headers: {
         "Content-Type": "application/json",
