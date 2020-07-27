@@ -60,7 +60,15 @@ function SearchResults({ data, groupId, searchData }) {
     return (
       <>
         <h1>Search Results</h1>
-        <h2>Something went wrong. Please try again.</h2>
+        {
+          resultData.errors ?
+          (
+            <h2>{resultData.errors}</h2>
+          ) :
+          (
+            <h2>Something went wrong. Please try again.</h2>
+          )
+        }
       </>
     )
   }
