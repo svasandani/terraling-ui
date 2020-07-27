@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-import AlphaTable from '../shared/AlphaTable';
+import CompareResults from './results/CompareResults';
 
 import Loading from '../shared/Loading';
 
-function SearchResults({ groupId, searchData }) {
+function SearchResults({ data, groupId, searchData }) {
   const [ready, setReady] = useState(false);
 
-  const [data, setData] = useState({})
+  const [resultData, setResultData] = useState({})
 
   useEffect(() => {
     fetch(process.env.REACT_APP_API + "groups/" + groupId + "/searches/get_results", {
@@ -18,8 +18,8 @@ function SearchResults({ groupId, searchData }) {
       method: 'POST',
       body: JSON.stringify(searchData)
     }).then(response => response.json())
-      .then((data) => {
-        setData(data);
+      .then((resultData) => {
+        setResultData(resultData);
         setReady(true);
       });
   }, [groupId]);

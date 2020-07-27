@@ -24,7 +24,7 @@ function Search({ groupId, data }) {
         <SearchForm data={data} searchPath={match.url} searchData={searchData} setSearchData={setSearchData} />
       </Route>
       <Route path={`${match.path}/results`}>
-        <SearchResults groupId={groupId} searchData={searchData} />
+        <SearchResults data={data} groupId={groupId} searchData={searchData} />
       </Route>
       <Route path={`${match.path}`}>
         <Redirect to="new" />
