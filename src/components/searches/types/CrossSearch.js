@@ -50,7 +50,7 @@ function CrossSearch({ data, reset, setSearchData, searchPath }) {
 
     if (isNew) setSearchTargetsArr([hrefTarget]);
     else if (!contains && searchTargetsArr.length > 0) setSearchTargetsArr([]);
-  }, [searchTargetsArr])
+  }, [data, searchTargetsArr])
 
   return (
     <>

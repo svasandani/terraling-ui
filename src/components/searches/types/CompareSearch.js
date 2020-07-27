@@ -45,7 +45,7 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
   const buildLingletSearch = () => {
     let searchArr = {
       search: {
-        lings: { "1": lingletArr.reduce((ids, linglet) => { ids.push(linglet.id); return ids; }, []) },
+        lings: { "1": lingletArr.reduce((ids, linglet) => { ids.push(linglet.id.toString()); return ids; }, []) },
         ling_set: { "1": "compare" }
       },
       group_id: data.id
@@ -86,7 +86,7 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
 
     if (isNew) setSearchTargetsArr([hrefTarget]);
     else if (!contains && searchTargetsArr.length > 0) setSearchTargetsArr([]);
-  }, [searchTargetsArr])
+  }, [data, searchTargetsArr])
 
   return (
     <>
