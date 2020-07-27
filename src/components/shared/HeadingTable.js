@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
 import Loading from '../shared/Loading';
