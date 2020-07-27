@@ -11,6 +11,8 @@ function CompareResults({ data, resultData }) {
 
   lings = lings.reduce((arr, ling) => { arr.push(ling.name); return arr; }, []);
 
+  const idSort = (a, b) => { return a.id > b.id ? 1 : -1; }
+
   let diffColumnMap = { name: resultData.header.differents.compare_property };
   resultData.header.differents.ling_value.forEach((value, i) => {
     diffColumnMap["value_" + i] = value;
@@ -40,7 +42,7 @@ function CompareResults({ data, resultData }) {
         (
           <>
             <h2>Common Property Values</h2>
-            <HeadingTable data={separatedData.commons} columnMap={{ "name": resultData.header.commons.compare_property, "value": resultData.header.commons.common_values }} link={(url, id) => { return "/groups/" + data.id + "/properties/" + id; }} />
+            <HeadingTable data={separatedData.commons} sort={idSort} link={(url, id) => { return "/groups/" + data.id + "/properties/" + id; }} columnMap={{ "name": resultData.header.commons.compare_property, "value": resultData.header.commons.common_values }} />
           </>
         ) :
         (
@@ -52,7 +54,7 @@ function CompareResults({ data, resultData }) {
         (
           <>
             <h2>Different Property Values</h2>
-            <HeadingTable data={separatedData.differents} columnMap={diffColumnMap} link={(url, id) => { return "/groups/" + data.id + "/properties/" + id; }} />
+            <HeadingTable data={separatedData.differents} sort={idSort} link={(url, id) => { return "/groups/" + data.id + "/properties/" + id; }} columnMap={diffColumnMap} />
           </>
         ) :
         (
