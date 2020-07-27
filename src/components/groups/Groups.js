@@ -63,6 +63,15 @@ function Group() {
   let { groupId } = useParams();
 
   useEffect(() => {
+    let cachedData = localStorage.getItem('groupData');
+
+    let obj = JSON.parse(cachedData) || {};
+
+    if (obj[groupId]) {
+      setData(obj[groupId]);
+      setReady(true);
+    }
+
     const overviewData =
       fetch(process.env.REACT_APP_API + "groups/" + groupId, { headers:{'accept': 'application/json'} })
         .then(response => response.json());
@@ -129,15 +138,6 @@ function Group() {
       firstPromise = memberData;
     }
 
-    firstPromise.then((promiseData) => {
-      const newData = { ...data };
-
-      newData[tabToProp[activeTab]] = promiseData;
-
-      setData(newData);
-      setReady(true);
-    });
-
     Promise.all([overviewData, lingData, lingletData, propertyData, lingPropertyData, lingletPropertyData, memberData]).then((values) => {
       const newData = { id: groupId };
 
@@ -150,6 +150,10 @@ function Group() {
       newData.memberData = values[6];
 
       setData(newData);
+
+      obj[groupId] = newData;
+
+      localStorage.setItem('groupData', JSON.stringify(obj));
     });
 
   }, [groupId]);
