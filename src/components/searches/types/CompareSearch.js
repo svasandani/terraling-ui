@@ -12,7 +12,7 @@ import SearchParams from '../SearchParams';
 
 import { CapitalCase, TargetToPlural } from '../../helpers/Helpers';
 
-function CompareSearch({ data, reset, setSearchData }) {
+function CompareSearch({ data, reset, setSearchData, searchPath }) {
   let match = useRouteMatch();
 
   const [lingArr, setLingArr] = useState([]);
@@ -62,6 +62,7 @@ function CompareSearch({ data, reset, setSearchData }) {
           <h2>{CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))} (up to 6) <Link className="reset-btn" to="." onClick={(e) => reset(e, setLingArr)}>Reset</Link></h2>
           <SelectTable data={data.lingData} columnMap={["name"]} selectArr={lingArr} setSelectArr={setLingArr} maxHeight="250px" />
           <SearchParams params={lingArr} />
+          <Link className="cta" to={`${searchPath}/results`} onClick={buildLingSearch}>Search</Link>
         </Route>
         <Route path={`${match.path}/linglets`}>
           {
@@ -71,6 +72,7 @@ function CompareSearch({ data, reset, setSearchData }) {
                 <h2>{CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))} (up to 6) <Link className="reset-btn" to="." onClick={(e) => reset(e, setLingletArr)}>Reset</Link></h2>
                 <SelectTable data={data.lingletData} columnMap={["name"]} selectArr={lingletArr} setSelectArr={setLingletArr} maxHeight="250px" />
                 <SearchParams params={lingletArr} />
+                <Link className="cta" to={`${searchPath}/results`} onClick={buildLingletSearch}>Search</Link>
               </>
             ) :
             (
@@ -82,6 +84,7 @@ function CompareSearch({ data, reset, setSearchData }) {
           <h2>Properties (up to 6) <Link className="reset-btn" to="." onClick={(e) => reset(e, setPropertyArr)}>Reset</Link></h2>
           <SelectTable data={data.propertyData} columnMap={["name"]} selectArr={propertyArr} setSelectArr={setPropertyArr} maxHeight="250px" />
           <SearchParams params={propertyArr} />
+          <Link className="cta" to={`${searchPath}/results`} onClick={buildPropertySearch}>Search</Link>
         </Route>
       </Switch>
     </>

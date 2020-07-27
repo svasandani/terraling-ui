@@ -61,12 +61,10 @@ function SearchForm({ data, searchPath, searchData, setSearchData }) {
             <div />
           </Route>
           <Route path={`${match.path}/compare`}>
-            <CompareSearch data={data} reset={reset} setSearchData={setSearchData} />
-            <Link className="cta" to={`${searchPath}/results`} onClick={() => {setSearchData({"a":"b"})}}>Search</Link>
+            <CompareSearch data={data} reset={reset} setSearchData={setSearchData} searchPath={searchPath} />
           </Route>
           <Route path={`${match.path}/cross`}>
-            <CrossSearch data={data} reset={reset} setSearchData={setSearchData} />
-            <Link className="cta" to={`${searchPath}/results`} onClick={() => {setSearchData({"a":"b"})}}>Search</Link>
+            <CrossSearch data={data} reset={reset} setSearchData={setSearchData} searchPath={searchPath} />
           </Route>
           <Route path={`${match.path}/implication`}>
             <div />

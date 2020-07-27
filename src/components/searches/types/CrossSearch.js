@@ -12,7 +12,7 @@ import SearchParams from '../SearchParams';
 
 import { CapitalCase } from '../../helpers/Helpers';
 
-function CrossSearch({ data, reset, setSearchData }) {
+function CrossSearch({ data, reset, setSearchData, searchPath }) {
   let match = useRouteMatch();
 
   const [lingArr, setLingArr] = useState([]);
