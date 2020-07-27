@@ -78,7 +78,7 @@ function AlphaTable({ data, sort, link, columnMap }) {
         if (filter.length > 0 && filter !== letter) return null;
 
         return (
-          <div key={letter} className="letter">
+          <div key={letter} className="letter grouped-card">
             <h3>{letter}</h3>
             <div className={`card ${headers ? "header-card" : ""}`}>
               {

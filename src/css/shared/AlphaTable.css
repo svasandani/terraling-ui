@@ -1,9 +1,3 @@
-.letter h3 {
-  font-size: 1.5em;
-  margin-bottom: 0.5rem;
-  margin-left: 5px;
-}
-
 .filter {
   display: flex;
   flex-flow: row wrap;
