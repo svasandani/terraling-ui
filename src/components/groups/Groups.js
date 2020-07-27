@@ -172,7 +172,7 @@ function Group() {
               <GroupOverview overviewData={data.overviewData} columnMap={columnMap} />
             </Route>
             <Route path={`${match.path}/searches`}>
-              <Search data={data} />
+              <Search groupId={groupId} data={data} />
             </Route>
             <Route path={`${match.path}/lings/:lingId`}>
               <Ling groupId={groupId} />

@@ -9,7 +9,7 @@ import {
 import SearchForm from './SearchForm';
 import SearchResults from './SearchResults';
 
-function Search({ data }) {
+function Search({ groupId, data }) {
   let match = useRouteMatch();
 
   const [searchData, setSearchData] = useState({});
@@ -24,7 +24,7 @@ function Search({ data }) {
         <SearchForm data={data} searchPath={match.url} searchData={searchData} setSearchData={setSearchData} />
       </Route>
       <Route path={`${match.path}/results`}>
-        <SearchResults searchData={searchData} />
+        <SearchResults groupId={groupId} searchData={searchData} />
       </Route>
       <Route path={`${match.path}`}>
         <Redirect to="new" />
