@@ -21,7 +21,7 @@ function CrossSearch({ data, reset, setSearchData, searchPath }) {
   const buildLingPropertySearch = () => {
     let propertyCategoryId = data.lingPropertyData[0].category_id;
 
-    let searchArr = {
+    let searchObj = {
       search: {
         properties: { [propertyCategoryId]: lingPropertyArr.reduce((ids, linglet) => { ids.push(linglet.id.toString()); return ids; }, []) },
         property_set: { [propertyCategoryId]: "cross" }
@@ -29,13 +29,13 @@ function CrossSearch({ data, reset, setSearchData, searchPath }) {
       group_id: data.id
     }
 
-    setSearchData(searchArr);
+    setSearchData(searchObj);
   };
 
   const buildLingletPropertySearch = () => {
     let propertyCategoryId = data.lingletPropertyData[0].category_id;
 
-    let searchArr = {
+    let searchObj = {
       search: {
         properties: { [propertyCategoryId]: lingletPropertyArr.reduce((ids, linglet) => { ids.push(linglet.id.toString()); return ids; }, []) },
         property_set: { [propertyCategoryId]: "cross" }
@@ -43,7 +43,7 @@ function CrossSearch({ data, reset, setSearchData, searchPath }) {
       group_id: data.id
     }
 
-    setSearchData(searchArr);
+    setSearchData(searchObj);
   };
 
   let searchTargets = [];

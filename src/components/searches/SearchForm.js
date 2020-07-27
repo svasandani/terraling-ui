@@ -7,6 +7,7 @@ import {
 
 import SelectTable from '../shared/SelectTable';
 
+import RegularSearch from './types/RegularSearch';
 import CompareSearch from './types/CompareSearch';
 import CrossSearch from './types/CrossSearch';
 
@@ -57,7 +58,7 @@ function SearchForm({ data, searchPath, searchData, setSearchData }) {
       <SelectTable data={searchTypes} columnMap={["name"]} selectArr={searchTypesArr} find={(el, row) => el.id === row.id} setSelectArr={setSearchTypesArr} maxSelect={1} link={(url, id) => { return url + "/" + id;}} replaceWithNew={true} />
         <Switch>
           <Route path={`${match.path}/regular`}>
-            <div />
+            <RegularSearch data={data} reset={reset} setSearchData={setSearchData} searchPath={searchPath} />
           </Route>
           <Route path={`${match.path}/compare`}>
             <CompareSearch data={data} reset={reset} setSearchData={setSearchData} searchPath={searchPath} />

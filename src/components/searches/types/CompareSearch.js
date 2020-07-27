@@ -19,7 +19,7 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
   const [lingletArr, setLingletArr] = useState([]);
 
   const buildLingSearch = () => {
-    let searchArr = {
+    let searchObj = {
       search: {
         // include: { ling_0: 1, property_0: 1, value_0: 1, example_0: 1 },
         lings: { "0": lingArr.reduce((ids, ling) => { ids.push(ling.id.toString()); return ids; }, [""]) },
@@ -37,11 +37,11 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
       group_id: data.id
     }
 
-    setSearchData(searchArr);
+    setSearchData(searchObj);
   };
 
   const buildLingletSearch = () => {
-    let searchArr = {
+    let searchObj = {
       search: {
         lings: { "1": lingletArr.reduce((ids, linglet) => { ids.push(linglet.id.toString()); return ids; }, []) },
         ling_set: { "1": "compare" }
@@ -49,7 +49,7 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
       group_id: data.id
     }
 
-    setSearchData(searchArr);
+    setSearchData(searchObj);
   };
 
   let searchTargets = [];
