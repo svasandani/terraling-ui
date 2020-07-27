@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import CompareResults from './results/CompareResults';
+import CrossResults from './results/CrossResults';
 
 import Loading from '../shared/Loading';
 
@@ -47,6 +48,12 @@ function SearchResults({ data, groupId, searchData }) {
     return (
       <>
         <CompareResults data={data} resultData={resultData} />
+      </>
+    )
+  } else if (resultData.type === "cross") {
+    return (
+      <>
+        <CrossResults data={data} resultData={resultData} />
       </>
     )
   } else {
