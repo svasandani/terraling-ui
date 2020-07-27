@@ -5,7 +5,7 @@ import Loading from '../shared/Loading';
 
 import '../../css/shared/Table.css';
 
-function HeadingTable({ data, sort, link, columnMap }) {
+function HeadingTable({ data, sort, link, linkColumn, clickHandler, columnMap }) {
   let keys = Object.keys(columnMap);
 
   let match = useRouteMatch();
@@ -20,6 +20,10 @@ function HeadingTable({ data, sort, link, columnMap }) {
 
   if (link === undefined) {
     link = (url, id) => { return url + "/" + id; }
+  }
+
+  if (clickHandler === undefined) {
+    clickHandler = () => {};
   }
 
   return (
@@ -40,8 +44,8 @@ function HeadingTable({ data, sort, link, columnMap }) {
               <div className={`row row-${keys.length}`}>
                 {
                   keys.map((col, i) => {
-                    if (i === 0) return (
-                      <span key={i} className="name"><Link to={link(match.url, row.id)}>{row[col]}</Link></span>
+                    if ((linkColumn && col === linkColumn) || (!linkColumn && i === 0)) return (
+                      <span key={i} className="name" onClick={(e) => { clickHandler(e, row) }}><Link to={link(match.url, row.id)}>{row[col]}</Link></span>
                     ); else return (
                       <span key={i} className="name">{row[col]}</span>
                     );
