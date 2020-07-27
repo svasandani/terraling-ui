@@ -39,7 +39,6 @@ function SearchResults({ data, groupId, searchData }) {
   if (resultData.type === "compare") {
     return (
       <>
-        <h1>Search Results</h1>
         <CompareResults data={data} resultData={resultData} />
       </>
     )
@@ -47,7 +46,7 @@ function SearchResults({ data, groupId, searchData }) {
     return (
       <>
         <h1>Search Results</h1>
-        <h3>Something went wrong. Please try again.</h3>
+        <h2>Something went wrong. Please try again.</h2>
       </>
     )
   }
