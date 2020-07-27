@@ -19,8 +19,6 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
   const [lingletArr, setLingletArr] = useState([]);
 
   const buildLingSearch = () => {
-    let propertyCategoryId = data.lingPropertyData[0].category_id;
-
     let searchArr = {
       search: {
         // include: { ling_0: 1, property_0: 1, value_0: 1, example_0: 1 },

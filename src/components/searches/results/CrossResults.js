@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import HeadingTable from '../../shared/HeadingTable';
-import List from '../../shared/List';
 
 import { CapitalCase, TargetToPlural } from '../../helpers/Helpers';
 
@@ -17,6 +16,18 @@ function CrossResults({ data, resultData }) {
   const nameSort = (a, b) => { return a.name > b.name ? 1 : -1; }
 
   const [propertyArr, setPropertyArr] = useState([]);
+
+  useEffect(() => {
+    if (propertyArr.length > 0) {
+      let el = document.querySelector("#lings-in-row");
+
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      } else {
+        setPropertyArr(propertyArr);
+      }
+    }
+  }, [propertyArr])
 
   let columnMap = {};
   for ( let i = 0; i < num; i++ ) {
@@ -34,6 +45,7 @@ function CrossResults({ data, resultData }) {
     }
 
     rowObj["count"] = row.child.length;
+    rowObj["id"] = row.child.length;
     rowObj["children"] = row.child.reduce((childArr, c) => {
       childArr.push(c.lings_property.ling.name.trim());
 
@@ -49,10 +61,7 @@ function CrossResults({ data, resultData }) {
     <>
       <h1>Crossing {num} {CapitalCase(depth > 0 ? data.overviewData.ling1_name : data.overviewData.ling0_name)} Properties: {lingProperties.join(", ")}</h1>
       <h2>Different Property Values</h2>
-      <HeadingTable data={mappedData} sort={countSort} link={(url, id) => { return "./results"; }} linkColumn="count" clickHandler={(e, row) => { e.preventDefault(); setPropertyArr(row.children.reduce((arr, c) => {
-        arr.push({ name: c });
-        return arr;
-      }, [])); }} columnMap={columnMap} />
+      <HeadingTable data={mappedData} sort={countSort} link={(url, id) => { return "./results"; }} linkColumn="count" clickHandler={(e, row) => { e.preventDefault(); setPropertyArr(row.children.reduce((arr, c) => { arr.push({ name: c }); return arr; }, [])); }} columnMap={columnMap} />
       {
         propertyArr.length === 0 ?
         (
@@ -60,7 +69,7 @@ function CrossResults({ data, resultData }) {
         ) :
         (
           <>
-            <h2>{CapitalCase(TargetToPlural(2, depth > 0 ? data.overviewData.ling1_name : data.overviewData.ling0_name))} in this row <Link className="reset-btn" to="./results" onClick={(e) => setPropertyArr([])}>Hide</Link></h2>
+            <h2 id="lings-in-row">{CapitalCase(TargetToPlural(2, depth > 0 ? data.overviewData.ling1_name : data.overviewData.ling0_name))} in this row <Link className="reset-btn" to="#container" onClick={(e) => setPropertyArr([])}>Hide</Link></h2>
             <HeadingTable data={propertyArr} link={(url, id) => { return "./results"; }} linkColumn="none" sort={nameSort} columnMap={{ "name": "Name" }} />
           </>
         )
