@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import CompareResults from './results/CompareResults';
 
@@ -11,7 +12,7 @@ function SearchResults({ data, groupId, searchData }) {
 
   useEffect(() => {
     if (Object.keys(searchData).length === 0) return;
-    
+
     fetch(process.env.REACT_APP_API + "groups/" + groupId + "/searches/get_results", {
       headers: {
         "Content-Type": "application/json",
@@ -25,6 +26,13 @@ function SearchResults({ data, groupId, searchData }) {
         setReady(true);
       });
   }, [groupId]);
+
+  if (Object.keys(searchData).length === 0) {
+    // TODO - persist searchData ?
+    return (
+      <Redirect to={`/groups/${groupId}/searches/new`} />
+    )
+  };
 
   if (!ready) return(<Loading />);
 
