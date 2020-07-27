@@ -19,6 +19,23 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
   const [lingletArr, setLingletArr] = useState([]);
   const [propertyArr, setPropertyArr] = useState([]);
 
+  console.log(data);
+
+  const buildLingSearch = () => {
+    let searchArr = {
+      search: {
+        lings: {"0": lingArr.reduce((ids, ling) => { ids.push(ling.id); return ids; }, [])},
+        ling_set: {"0": "compare"}
+      },
+      group_id: data.id
+    }
+
+    setSearchData(searchArr);
+  };
+
+  const buildLingletSearch = () => {};
+  const buildPropertySearch = () => {};
+
   let searchTargets = [];
 
   if (data.overviewData.depth_maximum > 0) {
