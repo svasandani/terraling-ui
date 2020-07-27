@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 
+import RegularResults from './results/RegularResults';
 import CompareResults from './results/CompareResults';
 import CrossResults from './results/CrossResults';
 
@@ -44,17 +45,17 @@ function SearchResults({ data, groupId, searchData }) {
 
   if (!ready) return(<Loading />);
 
-  if (resultData.type === "compare") {
+  if (resultData.type === "default") {
     return (
-      <>
-        <CompareResults data={data} resultData={resultData} />
-      </>
+      <RegularResults data={data} resultData={resultData} />
+    )
+  } else if (resultData.type === "compare") {
+    return (
+      <CompareResults data={data} resultData={resultData} />
     )
   } else if (resultData.type === "cross") {
     return (
-      <>
-        <CrossResults data={data} resultData={resultData} />
-      </>
+      <CrossResults data={data} resultData={resultData} />
     )
   } else {
     return (

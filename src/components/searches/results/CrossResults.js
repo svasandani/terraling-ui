@@ -60,7 +60,7 @@ function CrossResults({ data, resultData }) {
   return (
     <>
       <h1>Crossing {num} {CapitalCase(depth > 0 ? data.overviewData.ling1_name : data.overviewData.ling0_name)} Properties: {lingProperties.join(", ")}</h1>
-      <h2>Different Property Values</h2>
+      <h2>Results</h2>
       <HeadingTable data={mappedData} sort={countSort} link={(url, id) => { return "./results"; }} linkColumn="count" clickHandler={(e, row) => { e.preventDefault(); setPropertyArr(row.children.reduce((arr, c) => { arr.push({ name: c }); return arr; }, [])); }} columnMap={columnMap} />
       {
         propertyArr.length === 0 ?
