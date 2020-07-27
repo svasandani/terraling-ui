@@ -19,13 +19,23 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
   const [lingletArr, setLingletArr] = useState([]);
   const [propertyArr, setPropertyArr] = useState([]);
 
-  console.log(data);
-
   const buildLingSearch = () => {
+    let propertyCategoryId = data.lingPropertyData[0].category_id;
+
     let searchArr = {
       search: {
-        lings: {"0": lingArr.reduce((ids, ling) => { ids.push(ling.id); return ids; }, [])},
-        ling_set: {"0": "compare"}
+        // include: { ling_0: 1, property_0: 1, value_0: 1, example_0: 1 },
+        lings: { "0": lingArr.reduce((ids, ling) => { ids.push(ling.id.toString()); return ids; }, [""]) },
+        ling_set: { "0": "compare" },
+        // ling_keywords: { "0": "" },
+        // properties: { [propertyCategoryId]: [""] },
+        // property_set: { [propertyCategoryId]: "any" },
+        // ling_keywords: { [propertyCategoryId]: "" },
+        // lings_props: { [propertyCategoryId]: [""] },
+        // lings_property_set: { [propertyCategoryId]: "any" },
+        // example_fields: { "0": "description" },
+        // example_keywords: { "0": "" },
+        javascript: true
       },
       group_id: data.id
     }
@@ -36,8 +46,8 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
   const buildLingletSearch = () => {
     let searchArr = {
       search: {
-        lings: {"1": lingletArr.reduce((ids, linglet) => { ids.push(linglet.id); return ids; }, [])},
-        ling_set: {"1": "compare"}
+        lings: { "1": lingletArr.reduce((ids, linglet) => { ids.push(linglet.id); return ids; }, []) },
+        ling_set: { "1": "compare" }
       },
       group_id: data.id
     }
@@ -45,14 +55,12 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
     setSearchData(searchArr);
   };
 
-  const buildPropertySearch = () => {};
-
   let searchTargets = [];
 
   if (data.overviewData.depth_maximum > 0) {
-    searchTargets = [{"name": CapitalCase(TargetToPlural(2, data.overviewData.ling0_name)), "id": "lings"}, {"name": CapitalCase(TargetToPlural(2, data.overviewData.ling1_name)), "id": "linglets"}, {"name": "Properties", "id": "properties"}];
+    searchTargets = [{"name": CapitalCase(TargetToPlural(2, data.overviewData.ling0_name)), "id": "lings"}, {"name": CapitalCase(TargetToPlural(2, data.overviewData.ling1_name)), "id": "linglets"}];
   } else {
-    searchTargets = [{"name": CapitalCase(TargetToPlural(2, data.overviewData.ling0_name)), "id": "lings"}, {"name": "Properties", "id": "properties"}];
+    searchTargets = [{"name": CapitalCase(TargetToPlural(2, data.overviewData.ling0_name)), "id": "lings"}];
   }
 
   const [searchTargetsArr, setSearchTargetsArr] = useState([]);
@@ -107,12 +115,6 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
               null
             )
           }
-        </Route>
-        <Route path={`${match.path}/properties`}>
-          <h2>Properties (up to 6) <Link className="reset-btn" to="." onClick={(e) => reset(e, setPropertyArr)}>Reset</Link></h2>
-          <SelectTable data={data.propertyData} columnMap={["name"]} selectArr={propertyArr} setSelectArr={setPropertyArr} maxHeight="250px" />
-          <SearchParams params={propertyArr} />
-          <Link className="cta" to={`${searchPath}/results`} onClick={buildPropertySearch}>Search</Link>
         </Route>
       </Switch>
     </>
