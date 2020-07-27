@@ -27,12 +27,19 @@ function SearchResults({ data, groupId, searchData }) {
       });
   }, [groupId]);
 
-  if (Object.keys(searchData).length === 0) {
-    // TODO - persist searchData ?
-    return (
-      <Redirect to={`/groups/${groupId}/searches/new`} />
-    )
-  };
+  if (!ready && Object.keys(searchData).length === 0) {
+    let localResults = JSON.parse(localStorage.getItem('resultData'));
+    if (!localResults || Object.keys(localResults).length === 0) {
+      return (
+        <Redirect to={`/groups/${groupId}/searches/new`} />
+      )
+    } else {
+      setResultData(localResults);
+      setReady(true);
+    }
+  } else if (!ready) {
+    localStorage.setItem('resultData', JSON.stringify(resultData));
+  }
 
   if (!ready) return(<Loading />);
 
