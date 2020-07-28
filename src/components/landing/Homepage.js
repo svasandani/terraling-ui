@@ -69,7 +69,7 @@ function Homepage() {
           <div>
             <h2>Working with a team?</h2>
             <p>
-              Our new Research Groups feature can help you organize all of your citable research in one place.
+              Our new Teams feature can help you organize all of your citable research in one place.
             </p>
           </div>
           <a href="sign_up" className="cta">

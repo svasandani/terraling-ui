@@ -23,7 +23,7 @@ function Header({ signedin, setSignedIn, user }) {
         <div className="flyout-target">
           <div className="sandwich">
             <a href="/groups">Explore</a>
-            <a href="project_groups">Project Groups</a>
+            <a href="/teams">Teams</a>
             <a href="help">Help</a>
           </div>
           {signedin ?
