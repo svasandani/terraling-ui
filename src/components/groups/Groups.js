@@ -154,6 +154,7 @@ function Group() {
       obj[groupId] = newData;
 
       localStorage.setItem('groupData', JSON.stringify(obj));
+      setReady(true);
     });
 
   }, [groupId]);
