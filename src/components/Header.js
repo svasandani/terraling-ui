@@ -26,7 +26,10 @@ function Header({ signedin, setSignedIn, user }) {
             <a href="/teams">Teams</a>
             <a href="help">Help</a>
           </div>
-          {signedin ?
+          <div className="user-nav">
+            <a className="button" href=".">Beta!</a>
+          </div>
+          {/* signedin ?
           (
             <div className="user-nav">
               <a href="users">Shailesh Vasandani</a>
@@ -37,7 +40,7 @@ function Header({ signedin, setSignedIn, user }) {
             <div className="user-nav">
               <a className="button" href="." onClick={signIn}>Sign in</a>
             </div>
-          )}
+          ) */}
         </div>
       </nav>
     </header>
