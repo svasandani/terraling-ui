@@ -22,6 +22,7 @@ import AlphaTable from '../shared/AlphaTable';
 import Loading from '../shared/Loading';
 
 import { CapitalCase, TargetToPlural } from '../helpers/Helpers';
+import ConditionalReload from '../helpers/ConditionalReload';
 
 function Groups() {
   let match = useRouteMatch();
@@ -174,19 +175,23 @@ function Group() {
         <section id="data">
           <Switch>
             <Route path={`${match.path}/overview`}>
+              <ConditionalReload />
               <GroupOverview overviewData={data.overviewData} columnMap={columnMap} />
             </Route>
             <Route path={`${match.path}/searches`}>
               <Search groupId={groupId} data={data} />
             </Route>
             <Route path={`${match.path}/lings/:lingId`}>
+              <ConditionalReload />
               <Ling groupId={groupId} />
             </Route>
             <Route path={`${match.path}/lings`}>
+              <ConditionalReload />
               <h1>{CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))}</h1>
               <AlphaTable data={data.lingData} columnMap={columnMap} />
             </Route>
             <Route path={`${match.path}/linglets/:lingId`}>
+              <ConditionalReload />
               {
                 data.overviewData.depth_maximum > 0 ?
                 (
@@ -198,6 +203,7 @@ function Group() {
               }
             </Route>
             <Route path={`${match.path}/linglets`}>
+              <ConditionalReload />
               {
                 data.overviewData.depth_maximum > 0 ?
                 (
@@ -212,17 +218,21 @@ function Group() {
               }
             </Route>
             <Route path={`${match.path}/properties/:propertyId`}>
+              <ConditionalReload />
               <Property groupId={groupId} />
             </Route>
             <Route path={`${match.path}/properties`}>
+              <ConditionalReload />
               <h1>Properties</h1>
               <AlphaTable data={data.propertyData} columnMap={columnMap} />
             </Route>
             <Route path={`${match.path}/members`}>
+              <ConditionalReload />
               <h1>Members</h1>
               <AlphaTable data={data.memberData} link={(url, id) => { return "/users/" + id; }} columnMap={columnMap} />
             </Route>
             <Route exact path={match.path}>
+              <ConditionalReload />
               <div className="no-tab-selected">
                 <h2>No tab selected. Please select a tab.</h2>
               </div>
