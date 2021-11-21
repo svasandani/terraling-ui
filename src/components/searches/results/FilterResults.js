@@ -8,7 +8,7 @@ import { CapitalCase, TargetToPlural } from '../../helpers/Helpers';
 const FilterLingResults = ({data, resultData, nameSort}) => {
   return (
     <>
-      <h1>Filter Search</h1>
+      <h1>Filtering by {CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))}</h1>
       {
         resultData.lings.length === 0 ? 
         (
@@ -39,7 +39,7 @@ const FilterLingResults = ({data, resultData, nameSort}) => {
 const FilterLingPropertyResults = ({data, resultData, nameSort}) => {
   return (
     <>
-      <h1>Filter Search</h1>
+      <h1>Filtering by {CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))} properties</h1>
       {
         resultData.properties.length === 0 ? 
         (
@@ -70,7 +70,7 @@ const FilterLingPropertyResults = ({data, resultData, nameSort}) => {
 const FilterLingletResults = ({data, resultData, nameSort}) => {
   return (
     <>
-      <h1>Filter Search</h1>
+      <h1>Filtering by {CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))}</h1>
       {
         resultData.lings.length === 0 ? 
         (
@@ -110,7 +110,7 @@ const FilterLingletResults = ({data, resultData, nameSort}) => {
 const FilterLingletPropertyResults = ({data, resultData, nameSort}) => {
   return (
     <>
-      <h1>Filter Search</h1>
+      <h1>Filtering by {CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))} properties</h1>
       {
         resultData.properties.length === 0 ? 
         (
