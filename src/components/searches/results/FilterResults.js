@@ -72,7 +72,7 @@ const FilterLingletResults = ({data, resultData, nameSort}) => {
     <>
       <h1>Filter Search</h1>
       {
-        resultData.linglets.length === 0 ? 
+        resultData.lings.length === 0 ? 
         (
           <>
             <h2>No results found!</h2>
@@ -108,7 +108,6 @@ const FilterLingletResults = ({data, resultData, nameSort}) => {
   )
 }
 const FilterLingletPropertyResults = ({data, resultData, nameSort}) => {
-  console.log(resultData)
   return (
     <>
       <h1>Filter Search</h1>
