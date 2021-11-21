@@ -38,9 +38,9 @@ const FilterLingSearch = ({ data, reset, setSearchData, searchPath }) => {
   return (
     <>
       <h2>{CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))} <Link className="reset-btn" to="." onClick={(e) => reset(e, setLingArr)}>Reset</Link></h2>
-      <SelectTable data={data.lingData} columnMap={["name"]} selectArr={lingArr} setSelectArr={setLingArr} maxHeight="250px" />
+      <SelectTable data={data.lingData} columnMap={["name"]} selectArr={lingArr} setSelectArr={setLingArr} maxSelect={-1} maxHeight="250px" />
       <h2>{CapitalCase(data.overviewData.ling0_name) + " properties to display"} (defaults to all) <Link className="reset-btn" to="." onClick={(e) => reset(e, setLingPropertyArr)}>Reset</Link></h2>
-      <SelectTable data={data.lingPropertyData} columnMap={["name"]} selectArr={lingPropertyArr} setSelectArr={setLingPropertyArr} maxHeight="250px" />
+      <SelectTable data={data.lingPropertyData} columnMap={["name"]} selectArr={lingPropertyArr} setSelectArr={setLingPropertyArr} maxSelect={-1} maxHeight="250px" />
       {
         lingPropertyArr.length > 0 ?
         (
@@ -93,22 +93,22 @@ const FilterLingPropertySearch = ({ data, reset, setSearchData, searchPath }) =>
   return (
     <>
     <h2>{CapitalCase(data.overviewData.ling0_name) + " properties"} <Link className="reset-btn" to="." onClick={(e) => reset(e, setPropertyArr)}>Reset</Link></h2>
-    <SelectTable data={data.lingPropertyData} columnMap={["name"]} selectArr={propertyArr} setSelectArr={setPropertyArr} maxHeight="250px" />
-      <h2>{`${CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))} to display`} (defaults to all) <Link className="reset-btn" to="." onClick={(e) => reset(e, setLingArr)}>Reset</Link></h2>
-      <SelectTable data={data.lingData} columnMap={["name"]} selectArr={lingArr} setSelectArr={setLingArr} maxHeight="250px" />
-      {
-        lingArr.length > 0 ?
-        (
-          <>
-            <h2>{CapitalCase(data.overviewData.ling0_name) + " inclusivity"}</h2>
-            <SelectTable data={lingInclusivityData} columnMap={["name"]} selectArr={lingInclusivity} setSelectArr={setLingInclusivity} maxHeight="250px" maxSelect={1} replaceWithNew={true} />
-          </>
-        ) :
-        (
-          null
-        )
-      }
-      {
+    <SelectTable data={data.lingPropertyData} columnMap={["name"]} selectArr={propertyArr} setSelectArr={setPropertyArr} maxSelect={-1} maxHeight="250px" />
+    <h2>{`${CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))} to display`} (defaults to all) <Link className="reset-btn" to="." onClick={(e) => reset(e, setLingArr)}>Reset</Link></h2>
+    <SelectTable data={data.lingData} columnMap={["name"]} selectArr={lingArr} setSelectArr={setLingArr} maxSelect={-1} maxHeight="250px" />
+    {
+      lingArr.length > 0 ?
+      (
+        <>
+          <h2>{CapitalCase(data.overviewData.ling0_name) + " inclusivity"}</h2>
+          <SelectTable data={lingInclusivityData} columnMap={["name"]} selectArr={lingInclusivity} setSelectArr={setLingInclusivity} maxHeight="250px" maxSelect={1} replaceWithNew={true} />
+        </>
+      ) :
+      (
+        null
+      )
+    }
+    {
       propertyArr.length > 0 ?
       (
         <Link className="cta" to={`${searchPath}/results`} onClick={buildSearch}>Search</Link>
@@ -148,9 +148,9 @@ const FilterLingletSearch = ({ data, reset, setSearchData, searchPath }) => {
   return (
     <>
     <h2>{CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))} <Link className="reset-btn" to="." onClick={(e) => reset(e, setLingletArr)}>Reset</Link></h2>
-    <SelectTable data={data.lingletData} columnMap={["name"]} selectArr={lingletArr} setSelectArr={setLingletArr} maxHeight="250px" />
+    <SelectTable data={data.lingletData} columnMap={["name"]} selectArr={lingletArr} setSelectArr={setLingletArr} maxSelect={-1} maxHeight="250px" />
     <h2>{CapitalCase(data.overviewData.ling1_name) + " properties to display"} (defaults to all) <Link className="reset-btn" to="." onClick={(e) => reset(e, setLingletPropertyArr)}>Reset</Link></h2>
-    <SelectTable data={data.lingletPropertyData} columnMap={["name"]} selectArr={lingletPropertyArr} setSelectArr={setLingletPropertyArr} maxHeight="250px" />
+    <SelectTable data={data.lingletPropertyData} columnMap={["name"]} selectArr={lingletPropertyArr} setSelectArr={setLingletPropertyArr} maxSelect={-1} maxHeight="250px" />
     {
       lingletPropertyArr.length > 0 ?
       (
@@ -203,22 +203,22 @@ const FilterLingletPropertySearch = ({ data, reset, setSearchData, searchPath })
   return (
     <>
     <h2>{CapitalCase(data.overviewData.ling1_name) + " properties"} <Link className="reset-btn" to="." onClick={(e) => reset(e, setPropertyArr)}>Reset</Link></h2>
-    <SelectTable data={data.lingletPropertyData} columnMap={["name"]} selectArr={propertyArr} setSelectArr={setPropertyArr} maxHeight="250px" />
-      <h2>{`${CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))} to display`} (defaults to all) <Link className="reset-btn" to="." onClick={(e) => reset(e, setLingletArr)}>Reset</Link></h2>
-      <SelectTable data={data.lingletData} columnMap={["name"]} selectArr={lingletArr} setSelectArr={setLingletArr} maxHeight="250px" />
-      {
-        lingletArr.length > 0 ?
-        (
-          <>
-            <h2>{CapitalCase(data.overviewData.ling1_name) + " inclusivity"}</h2>
-            <SelectTable data={lingletInclusivityData} columnMap={["name"]} selectArr={lingletInclusivity} setSelectArr={setLingletInclusivity} maxHeight="250px" maxSelect={1} replaceWithNew={true} />
-          </>
-        ) :
-        (
-          null
-        )
-      }
-      {
+    <SelectTable data={data.lingletPropertyData} columnMap={["name"]} selectArr={propertyArr} setSelectArr={setPropertyArr} maxSelect={-1} maxHeight="250px" />
+    <h2>{`${CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))} to display`} (defaults to all) <Link className="reset-btn" to="." onClick={(e) => reset(e, setLingletArr)}>Reset</Link></h2>
+    <SelectTable data={data.lingletData} columnMap={["name"]} selectArr={lingletArr} setSelectArr={setLingletArr} maxSelect={-1} maxHeight="250px" />
+    {
+      lingletArr.length > 0 ?
+      (
+        <>
+          <h2>{CapitalCase(data.overviewData.ling1_name) + " inclusivity"}</h2>
+          <SelectTable data={lingletInclusivityData} columnMap={["name"]} selectArr={lingletInclusivity} setSelectArr={setLingletInclusivity} maxHeight="250px" maxSelect={1} replaceWithNew={true} />
+        </>
+      ) :
+      (
+        null
+      )
+    }
+    {
       propertyArr.length > 0 ?
       (
         <Link className="cta" to={`${searchPath}/results`} onClick={buildSearch}>Search</Link>

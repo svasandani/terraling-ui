@@ -43,7 +43,7 @@ function SelectTable({ data, sort, link, find, selectArr, setSelectArr, maxSelec
     let newSelectArr = [...selectArr];
 
     if (index >= 0) newSelectArr.splice(index, 1);
-    else if (selectArr.length < maxSelect) newSelectArr.push(row);
+    else if (maxSelect == -1 || selectArr.length < maxSelect) newSelectArr.push(row);
     else {
       if (replaceWithNew) {
         newSelectArr.shift();
