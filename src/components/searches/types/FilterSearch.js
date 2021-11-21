@@ -15,21 +15,24 @@ import { CapitalCase, TargetToPlural } from '../../helpers/Helpers';
 const FilterLingSearch = ({ data, reset, setSearchData, searchPath }) => {
   const [lingArr, setLingArr] = useState([]);
   const [lingPropertyArr, setLingPropertyArr] = useState([]);
-  const [lingPropertyInclusivity, setLingPropertyInclusivity] = useState([{ name: "Find data that has ANY of these properties", id: "false"}]);
-  const propertyInclusivityData = [{ name: "Find data that has ANY of these properties", id: "false"}, {name: "Find data that has ALL of these properties", id: "true" }];
+  const [lingPropertyInclusivity, setLingPropertyInclusivity] = useState([{ name: `Find ${CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))} that have ANY of these properties`, id: "false"}]);
+  const propertyInclusivityData = [{ name: `Find ${CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))} that have ANY of these properties`, id: "false"}, {name: `Find ${CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))} that has ALL of these properties`, id: "true" }];
 
   const buildSearch = () => {
-    let searchObj = {
-      group: data.id,
-      lings: lingArr
+    let searchData = {
+      group: parseInt(data.id),
+      lings: lingArr.map(ling => parseInt(ling.id))
     }
 
     if (lingPropertyArr.length > 0) {
-      searchObj.ling_properties = lingPropertyArr;
-      searchObj.ling_properties_inclusive = lingPropertyInclusivity;
+      searchData.ling_properties = lingPropertyArr.map(property => parseInt(property.id));
+      searchData.ling_properties_inclusive = lingPropertyInclusivity[0].id === 'true';
     }
 
-    setSearchData(searchObj);
+    setSearchData({
+      href: "filter/lings",
+      data: searchData
+    });
   };
   
   return (
@@ -71,17 +74,20 @@ const FilterLingPropertySearch = ({ data, reset, setSearchData, searchPath }) =>
   const lingInclusivityData = [{ name: `Find properties that have ANY of these ${CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))}`, id: "false"}, {name: `Find properties that have ALL of these ${CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))}`, id: "true" }];
 
   const buildSearch = () => {
-    let searchObj = {
-      group: data.id,
-      ling_properties: propertyArr
+    let searchData = {
+      group: parseInt(data.id),
+      ling_properties: propertyArr.map(property => parseInt(property.id))
     }
 
     if (lingArr.length > 0) {
-      searchObj.lings = lingArr;
-      searchObj.lings_inclusive = lingInclusivity;
+      searchData.lings = lingArr.map(ling => parseInt(ling.id));
+      searchData.lings_inclusive = lingInclusivity[0].id === 'true';
     }
 
-    setSearchData(searchObj);
+    setSearchData({
+      href: "filter/ling_properties",
+      data: searchData
+    });
   };
   
   return (
@@ -119,21 +125,24 @@ const FilterLingPropertySearch = ({ data, reset, setSearchData, searchPath }) =>
 const FilterLingletSearch = ({ data, reset, setSearchData, searchPath }) => {
   const [lingletArr, setLingletArr] = useState([]);
   const [lingletPropertyArr, setLingletPropertyArr] = useState([]);
-  const [lingletPropertyInclusivity, setLingletPropertyInclusivity] = useState([{ name: "Find data that has ANY of these properties", id: "false"}]);
-  const propertyInclusivityData = [{ name: "Find data that has ANY of these properties", id: "false"}, {name: "Find data that has ALL of these properties", id: "true" }];
+  const [lingletPropertyInclusivity, setLingletPropertyInclusivity] = useState([{ name: `Find ${CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))} that have ANY of these properties`, id: "false"}]);
+  const propertyInclusivityData = [{ name: `Find ${CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))} that have ANY of these properties`, id: "false"}, {name: `Find ${CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))} that has ALL of these properties`, id: "true" }];
 
   const buildSearch = () => {
-    let searchObj = {
-      group: data.id,
-      linglets: lingletArr
+    let searchData = {
+      group: parseInt(data.id),
+      linglets: lingletArr.map(linglet => parseInt(linglet.id))
     }
 
     if (lingletPropertyArr.length > 0) {
-      searchObj.linglet_properties = lingletPropertyArr;
-      searchObj.linglet_properties_inclusive = lingletPropertyInclusivity;
+      searchData.linglet_properties = lingletPropertyArr.map(property => parseInt(property.id));
+      searchData.linglet_properties_inclusive = lingletPropertyInclusivity[0].id === 'true';
     }
 
-    setSearchData(searchObj);
+    setSearchData({
+      href: "filter/linglets",
+      data: searchData
+    });
   };
   
   return (
@@ -175,17 +184,20 @@ const FilterLingletPropertySearch = ({ data, reset, setSearchData, searchPath })
   const lingletInclusivityData = [{ name: `Find properties that have ANY of these ${CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))}`, id: "false"}, {name: `Find properties that have ALL of these ${CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))}`, id: "true" }];
 
   const buildSearch = () => {
-    let searchObj = {
-      group: data.id,
-      linglet_properties: propertyArr
+    let searchData = {
+      group: parseInt(data.id),
+      linglet_properties: propertyArr.map(property => parseInt(property.id))
     }
 
     if (lingletArr.length > 0) {
-      searchObj.linglets = lingletArr;
-      searchObj.linglets_inclusive = lingletInclusivity;
+      searchData.linglets = lingletArr.map(linglet => parseInt(linglet.id));
+      searchData.linglets_inclusive = lingletInclusivity[0].id === 'true';
     }
 
-    setSearchData(searchObj);
+    setSearchData({
+      href: "filter/linglet_properties",
+      data: searchData
+    });
   };
   
   return (

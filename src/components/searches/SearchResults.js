@@ -15,13 +15,14 @@ function SearchResults({ data, groupId, searchData }) {
   useEffect(() => {
     if (Object.keys(searchData).length === 0) return;
 
-    fetch(process.env.REACT_APP_API + "groups/" + groupId + "/searches/get_results", {
+    // fetch(process.env.REACT_APP_API + "groups/" + groupId + "/searches/get_results", {
+    fetch(`http://localhost:7107/api/search/${searchData.href}`, {
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
       method: 'POST',
-      body: JSON.stringify(searchData)
+      body: JSON.stringify(searchData.data)
     }).then(response => response.json())
       .then((resultData) => {
         setResultData(resultData);
@@ -45,7 +46,7 @@ function SearchResults({ data, groupId, searchData }) {
 
   if (!ready) return(<Loading />);
 
-  if (resultData.type === "default") {
+  if (resultData.type === "filter") {
     return (
       <FilterResults data={data} resultData={resultData} />
     )
