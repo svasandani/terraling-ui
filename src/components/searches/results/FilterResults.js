@@ -15,7 +15,7 @@ const FilterLingResults = ({data, resultData, nameSort}) => {
           return (
             <div key={i} className="grouped-card">
               <h3><Link to={`/groups/${data.id}/lings/${ling.id}`}>{ling.name}</Link></h3>
-              <HeadingTable data={ling.property_value_pairs} sort={nameSort} linkColumn="" columnMap={{name: 'Property', value: 'Value'}} />
+              <HeadingTable data={ling.property_value_pairs} sort={nameSort} link={(_, id) => `/groups/${data.id}/properties/${id}`} columnMap={{name: 'Property', value: 'Value'}} />
             </div>
           )
         })
@@ -33,7 +33,7 @@ const FilterLingPropertyResults = ({data, resultData, nameSort}) => {
           return (
             <div key={i} className="grouped-card">
               <h3><Link to={`/groups/${data.id}/properties/${property.id}`}>{property.name}</Link></h3>
-              <HeadingTable data={property.ling_value_pairs} sort={nameSort} linkColumn="" columnMap={{name: CapitalCase(data.overviewData.ling0_name), value: 'Value'}} />
+              <HeadingTable data={property.ling_value_pairs} sort={nameSort} link={(_, id) => `/groups/${data.id}/lings/${id}`} columnMap={{name: CapitalCase(data.overviewData.ling0_name), value: 'Value'}} />
             </div>
           )
         })
@@ -56,7 +56,7 @@ const FilterLingletResults = ({data, resultData, nameSort}) => {
                   return(
                     <div key={j} className="grouped-card">
                       <h4><Link to={`/groups/${data.id}/lings/${linglet.id}`}>{linglet.name}</Link></h4>
-                      <HeadingTable data={linglet.property_value_pairs} sort={nameSort} linkColumn="" columnMap={{name: 'Property', value: 'Value'}} />
+                      <HeadingTable data={linglet.property_value_pairs} sort={nameSort} link={(_, id) => `/groups/${data.id}/properties/${id}`} columnMap={{name: 'Property', value: 'Value'}} />
                     </div>
                   )
                 })
@@ -78,7 +78,7 @@ const FilterLingletPropertyResults = ({data, resultData, nameSort}) => {
           return (
             <div key={i} className="grouped-card">
               <h3><Link to={`/groups/${data.id}/properties/${property.id}`}>{property.name}</Link></h3>
-              <HeadingTable data={property.linglet_value_pairs} sort={nameSort} linkColumn="" columnMap={{name: CapitalCase(data.overviewData.ling1_name), value: 'Value'}} />
+              <HeadingTable data={property.linglet_value_pairs} sort={nameSort} link={(_, id) => `/groups/${data.id}/lings/${id}`} columnMap={{name: CapitalCase(data.overviewData.ling1_name), value: 'Value'}} />
             </div>
           )
         })
