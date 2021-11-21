@@ -5,7 +5,7 @@ import HeadingTable from '../../shared/HeadingTable';
 
 import { CapitalCase, TargetToPlural } from '../../helpers/Helpers';
 
-function RegularResults({ data, resultData }) {
+function FilterResults({ data, resultData }) {
   const nameSort = (a, b) => { return a.name > b.name ? 1 : -1; }
 
   let columnMap = {};
@@ -66,4 +66,4 @@ function RegularResults({ data, resultData }) {
   )
 }
 
-export default RegularResults;
+export default FilterResults;

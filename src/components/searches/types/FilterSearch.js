@@ -7,7 +7,7 @@ import List from '../../shared/List';
 
 import { CapitalCase, TargetToPlural } from '../../helpers/Helpers';
 
-function RegularSearch({ data, reset, setSearchData, searchPath }) {
+function FilterSearch({ data, reset, setSearchData, searchPath }) {
   const [lingArr, setLingArr] = useState([]);
   const [lingPropertyArr, setLingPropertyArr] = useState([]);
   const [lingletArr, setLingletArr] = useState([]);
@@ -97,4 +97,4 @@ function RegularSearch({ data, reset, setSearchData, searchPath }) {
   )
 }
 
-export default RegularSearch;
+export default FilterSearch;

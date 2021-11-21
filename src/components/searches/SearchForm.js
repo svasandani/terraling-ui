@@ -7,7 +7,7 @@ import {
 
 import SelectTable from '../shared/SelectTable';
 
-import RegularSearch from './types/RegularSearch';
+import FilterSearch from './types/FilterSearch';
 import CompareSearch from './types/CompareSearch';
 import CrossSearch from './types/CrossSearch';
 
@@ -23,7 +23,7 @@ function SearchForm({ data, searchPath, searchData, setSearchData }) {
     f([]);
   }
 
-  const searchTypes = [{"name": "Regular", "id": "regular"}, {"name": "Compare", "id": "compare"}, {"name": "Cross", "id": "cross"}, {"name": "Implication", "id": "implication"}, {"name": "Similarity Tree", "id": "similarity"}];
+  const searchTypes = [{"name": "Filter", "id": "filter"}, {"name": "Compare", "id": "compare"}, {"name": "Cross", "id": "cross"}, {"name": "Implication", "id": "implication"}, {"name": "Similarity Tree", "id": "similarity"}];
 
   useEffect(() => {
     let contains = false;
@@ -57,8 +57,8 @@ function SearchForm({ data, searchPath, searchData, setSearchData }) {
       <h2>Search type</h2>
       <SelectTable data={searchTypes} columnMap={["name"]} selectArr={searchTypesArr} find={(el, row) => el.id === row.id} setSelectArr={setSearchTypesArr} maxSelect={1} link={(url, id) => { return url + "/" + id;}} replaceWithNew={true} />
         <Switch>
-          <Route path={`${match.path}/regular`}>
-            <RegularSearch data={data} reset={reset} setSearchData={setSearchData} searchPath={searchPath} />
+          <Route path={`${match.path}/filter`}>
+            <FilterSearch data={data} reset={reset} setSearchData={setSearchData} searchPath={searchPath} />
           </Route>
           <Route path={`${match.path}/compare`}>
             <CompareSearch data={data} reset={reset} setSearchData={setSearchData} searchPath={searchPath} />

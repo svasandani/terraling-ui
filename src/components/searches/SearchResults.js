@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import RegularResults from './results/RegularResults';
+import FilterResults from './results/FilterResults';
 import CompareResults from './results/CompareResults';
 import CrossResults from './results/CrossResults';
 
@@ -47,7 +47,7 @@ function SearchResults({ data, groupId, searchData }) {
 
   if (resultData.type === "default") {
     return (
-      <RegularResults data={data} resultData={resultData} />
+      <FilterResults data={data} resultData={resultData} />
     )
   } else if (resultData.type === "compare") {
     return (
