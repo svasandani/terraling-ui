@@ -34,7 +34,7 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
   const buildLingletSearch = () => {
     let searchData = {
       group: parseInt(data.id),
-      lings: lingletArr.map(linglet => parseInt(linglet.id))
+      linglets: lingletArr.map(linglet => parseInt(linglet.id))
     }
 
     setSearchData({
