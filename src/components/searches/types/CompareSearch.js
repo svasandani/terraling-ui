@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Switch,
+  Redirect,
   Route,
   Link,
   useRouteMatch
@@ -19,45 +20,32 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
   const [lingletArr, setLingletArr] = useState([]);
 
   const buildLingSearch = () => {
-    let searchObj = {
-      search: {
-        // include: { ling_0: 1, property_0: 1, value_0: 1, example_0: 1 },
-        lings: { "0": lingArr.reduce((ids, ling) => { ids.push(ling.id.toString()); return ids; }, [""]) },
-        ling_set: { "0": "compare" },
-        // ling_keywords: { "0": "" },
-        // properties: { [propertyCategoryId]: [""] },
-        // property_set: { [propertyCategoryId]: "any" },
-        // ling_keywords: { [propertyCategoryId]: "" },
-        // lings_props: { [propertyCategoryId]: [""] },
-        // lings_property_set: { [propertyCategoryId]: "any" },
-        // example_fields: { "0": "description" },
-        // example_keywords: { "0": "" },
-        javascript: true
-      },
-      group_id: data.id
+    let searchData = {
+      group: parseInt(data.id),
+      lings: lingArr.map(ling => parseInt(ling.id))
     }
 
-    setSearchData(searchObj);
+    setSearchData({
+      href: "compare/lings",
+      data: searchData
+    });
   };
 
   const buildLingletSearch = () => {
-    let searchObj = {
-      search: {
-        lings: { "1": lingletArr.reduce((ids, linglet) => { ids.push(linglet.id.toString()); return ids; }, []) },
-        ling_set: { "1": "compare" }
-      },
-      group_id: data.id
+    let searchData = {
+      group: parseInt(data.id),
+      lings: lingletArr.map(linglet => parseInt(linglet.id))
     }
 
-    setSearchData(searchObj);
+    setSearchData({
+      href: "compare/linglets",
+      data: searchData
+    });
   };
 
-  let searchTargets = [];
-
+  let searchTargets = [{"name": CapitalCase(TargetToPlural(2, data.overviewData.ling0_name)), "id": "lings"}];
   if (data.overviewData.depth_maximum > 0) {
-    searchTargets = [{"name": CapitalCase(TargetToPlural(2, data.overviewData.ling0_name)), "id": "lings"}, {"name": CapitalCase(TargetToPlural(2, data.overviewData.ling1_name)), "id": "linglets"}];
-  } else {
-    searchTargets = [{"name": CapitalCase(TargetToPlural(2, data.overviewData.ling0_name)), "id": "lings"}];
+    searchTargets.push({"name": CapitalCase(TargetToPlural(2, data.overviewData.ling1_name)), "id": "linglets"});
   }
 
   const [searchTargetsArr, setSearchTargetsArr] = useState([]);
@@ -109,7 +97,7 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
               </>
             ) :
             (
-              null
+              <Redirect to='lings' />
             )
           }
         </Route>
