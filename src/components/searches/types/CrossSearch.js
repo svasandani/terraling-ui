@@ -11,21 +11,22 @@ import SelectTable from "../../shared/SelectTable";
 import Divider from "../../shared/Divider";
 import List from "../../shared/List";
 
-import { CapitalCase } from "../../helpers/Helpers";
+import { CapitalCase, TargetToPlural } from "../../helpers/Helpers";
 
 function CrossSearch({ data, reset, setSearchData, searchPath }) {
   let match = useRouteMatch();
   const history = useHistory();
 
+  const [lingArr, setLingArr] = useState([]);
   const [lingPropertyArr, setLingPropertyArr] = useState([]);
+  const [lingletArr, setLingletArr] = useState([]);
   const [lingletPropertyArr, setLingletPropertyArr] = useState([]);
 
   const buildLingPropertySearch = () => {
     let searchData = {
       group: parseInt(data.id),
-      ling_properties: lingPropertyArr.map((lingProperty) =>
-        parseInt(lingProperty.id)
-      ),
+      ling_properties: lingPropertyArr.map((property) => parseInt(property.id)),
+      lings: lingArr.map((ling) => parseInt(ling.id)),
     };
 
     setSearchData({
@@ -37,9 +38,10 @@ function CrossSearch({ data, reset, setSearchData, searchPath }) {
   const buildLingletPropertySearch = () => {
     let searchData = {
       group: parseInt(data.id),
-      linglet_properties: lingletPropertyArr.map((lingletProperty) =>
-        parseInt(lingletProperty.id)
+      linglet_properties: lingletPropertyArr.map((property) =>
+        parseInt(property.id)
       ),
+      linglets: lingletArr.map((linglet) => parseInt(linglet.id)),
     };
 
     setSearchData({
@@ -130,6 +132,27 @@ function CrossSearch({ data, reset, setSearchData, searchPath }) {
             setSelectArr={setLingPropertyArr}
             maxHeight="250px"
           />
+          <h2>
+            {`${CapitalCase(
+              TargetToPlural(2, data.overviewData.ling0_name)
+            )} to display`}{" "}
+            (defaults to all){" "}
+            <Link
+              className="reset-btn"
+              to="."
+              onClick={(e) => reset(e, setLingArr)}
+            >
+              Reset
+            </Link>
+          </h2>
+          <SelectTable
+            data={data.lingData}
+            columnMap={["name"]}
+            selectArr={lingArr}
+            setSelectArr={setLingArr}
+            maxSelect={-1}
+            maxHeight="250px"
+          />
           <Divider />
           <List
             data={lingPropertyArr}
@@ -137,6 +160,13 @@ function CrossSearch({ data, reset, setSearchData, searchPath }) {
             heading={`Crossing ${lingPropertyArr.length} propert${
               lingPropertyArr.length === 1 ? "y" : "ies"
             }:`}
+          />
+          <List
+            data={lingArr}
+            field="name"
+            heading={`Showing ${lingArr.length} ${CapitalCase(
+              TargetToPlural(lingArr.length, data.overviewData.ling0_name)
+            )}:`}
           />
           {lingPropertyArr.length <= 1 ? (
             <p>Select at least two properties to cross.</p>
@@ -171,6 +201,27 @@ function CrossSearch({ data, reset, setSearchData, searchPath }) {
                 setSelectArr={setLingletPropertyArr}
                 maxHeight="250px"
               />
+              <h2>
+                {`${CapitalCase(
+                  TargetToPlural(2, data.overviewData.ling1_name)
+                )} to display`}{" "}
+                (defaults to all){" "}
+                <Link
+                  className="reset-btn"
+                  to="."
+                  onClick={(e) => reset(e, setLingletArr)}
+                >
+                  Reset
+                </Link>
+              </h2>
+              <SelectTable
+                data={data.lingletData}
+                columnMap={["name"]}
+                selectArr={lingletArr}
+                setSelectArr={setLingletArr}
+                maxSelect={-1}
+                maxHeight="250px"
+              />
               <Divider />
               <List
                 data={lingletPropertyArr}
@@ -178,6 +229,16 @@ function CrossSearch({ data, reset, setSearchData, searchPath }) {
                 heading={`Crossing ${lingletPropertyArr.length} propert${
                   lingletPropertyArr.length === 1 ? "y" : "ies"
                 }:`}
+              />
+              <List
+                data={lingletArr}
+                field="name"
+                heading={`Showing ${lingletArr.length} ${CapitalCase(
+                  TargetToPlural(
+                    lingletArr.length,
+                    data.overviewData.ling1_name
+                  )
+                )}:`}
               />
               {lingletPropertyArr.length <= 1 ? (
                 <p>Select at least two properties to cross.</p>
