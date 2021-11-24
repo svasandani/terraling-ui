@@ -19,7 +19,7 @@ const CrossLingPropertyResults = ({ data, resultData, nameSort, countSort }) => 
   })
 
   const columnMap = {}
-  resultData.ling_properties.forEach(property => {
+  resultData.ling_properties.sort().forEach(property => {
     columnMap[property] = `${property} Value`;
   })
   columnMap.count = 'Count';
@@ -78,7 +78,7 @@ const CrossLingletPropertyResults = ({ data, resultData, nameSort, countSort }) 
   })
 
   const columnMap = {}
-  resultData.linglet_properties.forEach(property => {
+  resultData.linglet_properties.sort().forEach(property => {
     columnMap[property] = `${property} Value`;
   })
   columnMap.count = 'Count';
