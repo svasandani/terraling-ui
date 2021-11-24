@@ -1,13 +1,8 @@
-import React, { useState } from 'react';
-import {
-  Switch,
-  Route,
-  Redirect,
-  useRouteMatch
-} from 'react-router-dom';
+import React, { useState } from "react";
+import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
 
-import SearchForm from './SearchForm';
-import SearchResults from './SearchResults';
+import SearchForm from "./SearchForm";
+import SearchResults from "./SearchResults";
 
 function Search({ groupId, data }) {
   let match = useRouteMatch();
@@ -21,7 +16,12 @@ function Search({ groupId, data }) {
   return (
     <Switch>
       <Route path={`${match.path}/new`}>
-        <SearchForm data={data} searchPath={match.url} searchData={searchData} setSearchData={setSearchData} />
+        <SearchForm
+          data={data}
+          searchPath={match.url}
+          searchData={searchData}
+          setSearchData={setSearchData}
+        />
       </Route>
       <Route path={`${match.path}/results`}>
         <SearchResults data={data} groupId={groupId} searchData={searchData} />
@@ -30,7 +30,7 @@ function Search({ groupId, data }) {
         <Redirect to="new" />
       </Route>
     </Switch>
-  )
+  );
 }
 
 export default Search;

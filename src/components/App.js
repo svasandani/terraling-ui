@@ -1,21 +1,17 @@
-import React, { useState } from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
+import React, { useState } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import '../css/App.css';
+import "../css/App.css";
 
-import Header from './Header';
-import Footer from './Footer';
+import Header from "./Header";
+import Footer from "./Footer";
 
-import Groups from './groups/Groups';
+import Groups from "./groups/Groups";
 
-import Feed from './landing/Feed';
-import Homepage from './landing/Homepage';
+import Feed from "./landing/Feed";
+import Homepage from "./landing/Homepage";
 
-import ConditionalReload from './helpers/ConditionalReload';
+import ConditionalReload from "./helpers/ConditionalReload";
 
 function App() {
   const [signedin, setSignedIn] = useState(false);
@@ -32,13 +28,7 @@ function App() {
         </Route>
         <Route path="/">
           <ConditionalReload />
-          { signedin ?
-          (
-            <Feed user={{}} />
-          ) :
-          (
-            <Homepage />
-          ) }
+          {signedin ? <Feed user={{}} /> : <Homepage />}
         </Route>
       </Switch>
       <Footer />

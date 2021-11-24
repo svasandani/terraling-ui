@@ -1,12 +1,9 @@
-import React from 'react';
+import React from "react";
 
 function ConditionalReload() {
-  if (process.env.REACT_APP_RELOAD != 'FALSE')
-    window.location.reload();
+  if (process.env.REACT_APP_RELOAD != "FALSE") window.location.reload();
 
-  return (
-    <></>
-  );
+  return <></>;
 }
 
 export default ConditionalReload;

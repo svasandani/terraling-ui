@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 
-import '../../css/shared/Divider.css';
+import "../../css/shared/Divider.css";
 
 function Divider() {
   return (
     <>
-      <div className='divider'></div>
+      <div className="divider"></div>
     </>
-  )
+  );
 }
 
 export default Divider;
