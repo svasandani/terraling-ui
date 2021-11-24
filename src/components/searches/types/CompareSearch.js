@@ -19,12 +19,15 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
   const history = useHistory();
 
   const [lingArr, setLingArr] = useState([]);
+  const [lingPropertyArr, setLingPropertyArr] = useState([]);
   const [lingletArr, setLingletArr] = useState([]);
+  const [lingletPropertyArr, setLingletPropertyArr] = useState([]);
 
   const buildLingSearch = () => {
     let searchData = {
       group: parseInt(data.id),
       lings: lingArr.map((ling) => parseInt(ling.id)),
+      ling_properties: lingPropertyArr.map((property) => parseInt(property.id)),
     };
 
     setSearchData({
@@ -37,6 +40,9 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
     let searchData = {
       group: parseInt(data.id),
       linglets: lingletArr.map((linglet) => parseInt(linglet.id)),
+      linglet_properties: lingletPropertyArr.map((property) =>
+        parseInt(property.id)
+      ),
     };
 
     setSearchData({
@@ -127,6 +133,26 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
             setSelectArr={setLingArr}
             maxHeight="250px"
           />
+          <h2>
+            {CapitalCase(data.overviewData.ling0_name) +
+              " properties to display"}{" "}
+            (defaults to all){" "}
+            <Link
+              className="reset-btn"
+              to="."
+              onClick={(e) => reset(e, setLingPropertyArr)}
+            >
+              Reset
+            </Link>
+          </h2>
+          <SelectTable
+            data={data.lingPropertyData}
+            columnMap={["name"]}
+            selectArr={lingPropertyArr}
+            setSelectArr={setLingPropertyArr}
+            maxSelect={-1}
+            maxHeight="250px"
+          />
           <Divider />
           <List
             data={lingArr}
@@ -134,6 +160,13 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
             heading={`Comparing ${lingArr.length} ${CapitalCase(
               TargetToPlural(lingArr.length, data.overviewData.ling0_name)
             )}:`}
+          />
+          <List
+            data={lingPropertyArr}
+            field="name"
+            heading={`Showing ${lingPropertyArr.length} propert${
+              lingPropertyArr.length === 1 ? "y" : "ies"
+            }:`}
           />
           {lingArr.length <= 1 ? (
             <p>
@@ -172,6 +205,26 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
                 setSelectArr={setLingletArr}
                 maxHeight="250px"
               />
+              <h2>
+                {CapitalCase(data.overviewData.ling1_name) +
+                  " properties to display"}{" "}
+                (defaults to all){" "}
+                <Link
+                  className="reset-btn"
+                  to="."
+                  onClick={(e) => reset(e, setLingletPropertyArr)}
+                >
+                  Reset
+                </Link>
+              </h2>
+              <SelectTable
+                data={data.lingletPropertyData}
+                columnMap={["name"]}
+                selectArr={lingletPropertyArr}
+                setSelectArr={setLingletPropertyArr}
+                maxSelect={-1}
+                maxHeight="250px"
+              />
               <Divider />
               <List
                 data={lingletArr}
@@ -182,6 +235,13 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
                     data.overviewData.ling1_name
                   )
                 )}:`}
+              />
+              <List
+                data={lingletPropertyArr}
+                field="name"
+                heading={`Showing ${lingletPropertyArr.length} propert${
+                  lingletPropertyArr.length === 1 ? "y" : "ies"
+                }:`}
               />
               {lingletArr.length <= 1 ? (
                 <p>
