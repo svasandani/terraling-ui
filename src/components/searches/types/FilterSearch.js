@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 import SelectTable from '../../shared/SelectTable';
-
+import Divider from '../../shared/Divider';
 import List from '../../shared/List';
 
 import { CapitalCase, TargetToPlural } from '../../helpers/Helpers';
@@ -16,7 +16,7 @@ const FilterLingSearch = ({ data, reset, setSearchData, searchPath }) => {
   const [lingArr, setLingArr] = useState([]);
   const [lingPropertyArr, setLingPropertyArr] = useState([]);
   const [lingPropertyInclusivity, setLingPropertyInclusivity] = useState([{ name: `Find ${CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))} that have ANY of these properties`, id: "false"}]);
-  const propertyInclusivityData = [{ name: `Find ${CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))} that have ANY of these properties`, id: "false"}, {name: `Find ${CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))} that has ALL of these properties`, id: "true" }];
+  const propertyInclusivityData = [{ name: `Find ${CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))} that have ANY of these properties`, id: "false"}, {name: `Find ${CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))} that have ALL of these properties`, id: "true" }];
 
   const buildSearch = () => {
     let searchData = {
@@ -53,17 +53,14 @@ const FilterLingSearch = ({ data, reset, setSearchData, searchPath }) => {
           null
         )
       }
+      <Divider />
+      <List data={lingArr} field="name" heading={`Filtering by ${lingArr.length} ${CapitalCase(TargetToPlural(lingArr.length, data.overviewData.ling0_name))}:`} />
+      <List data={lingPropertyArr} field="name" heading={`Showing ${lingPropertyArr.length} propert${lingPropertyArr.length === 1 ? 'y' : 'ies'}:`} />
       {
-      lingArr.length > 0 ?
-      (
+        lingArr.length <= 0 ?
+        <p>Select at least one {CapitalCase(data.overviewData.ling0_name)} to filter by.</p> :
         <Link className="cta" to={`${searchPath}/results`} onClick={buildSearch}>Search</Link>
-      ) :
-      (
-        <>
-          {`Select at least one ${data.overviewData.ling0_name} to filter.`}
-        </>
-      )
-    }
+      }
     </>
   )
 };
@@ -108,16 +105,13 @@ const FilterLingPropertySearch = ({ data, reset, setSearchData, searchPath }) =>
         null
       )
     }
+    <Divider />
+    <List data={propertyArr} field="name" heading={`Filtering by ${propertyArr.length} propert${propertyArr.length === 1 ? 'y' : 'ies'}:`} />
+    <List data={lingArr} field="name" heading={`Showing ${lingArr.length} ${CapitalCase(TargetToPlural(lingArr.length, data.overviewData.ling0_name))}:`} />
     {
-      propertyArr.length > 0 ?
-      (
-        <Link className="cta" to={`${searchPath}/results`} onClick={buildSearch}>Search</Link>
-      ) :
-      (
-        <>
-          {`Select at least one property to filter.`}
-        </>
-      )
+      propertyArr.length <= 0 ?
+      <p>Select at least one property to filter by.</p> :
+      <Link className="cta" to={`${searchPath}/results`} onClick={buildSearch}>Search</Link>
     }
     </>
   )
@@ -126,7 +120,7 @@ const FilterLingletSearch = ({ data, reset, setSearchData, searchPath }) => {
   const [lingletArr, setLingletArr] = useState([]);
   const [lingletPropertyArr, setLingletPropertyArr] = useState([]);
   const [lingletPropertyInclusivity, setLingletPropertyInclusivity] = useState([{ name: `Find ${CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))} that have ANY of these properties`, id: "false"}]);
-  const propertyInclusivityData = [{ name: `Find ${CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))} that have ANY of these properties`, id: "false"}, {name: `Find ${CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))} that has ALL of these properties`, id: "true" }];
+  const propertyInclusivityData = [{ name: `Find ${CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))} that have ANY of these properties`, id: "false"}, {name: `Find ${CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))} that have ALL of these properties`, id: "true" }];
 
   const buildSearch = () => {
     let searchData = {
@@ -163,16 +157,13 @@ const FilterLingletSearch = ({ data, reset, setSearchData, searchPath }) => {
         null
       )
     }
+    <Divider />
+    <List data={lingletArr} field="name" heading={`Filtering by ${lingletArr.length} ${CapitalCase(TargetToPlural(lingletArr.length, data.overviewData.ling1_name))}:`} />
+    <List data={lingletPropertyArr} field="name" heading={`Showing ${lingletPropertyArr.length} propert${lingletPropertyArr.length === 1 ? 'y' : 'ies'}:`} />
     {
-      lingletArr.length > 0 ?
-      (
-        <Link className="cta" to={`${searchPath}/results`} onClick={buildSearch}>Search</Link>
-      ) :
-      (
-        <>
-          {`Select at least one ${data.overviewData.ling1_name} to filter.`}
-        </>
-      )
+      lingletArr.length <= 0 ?
+      <p>Select at least one {CapitalCase(data.overviewData.ling1_name)} to filter by.</p> :
+      <Link className="cta" to={`${searchPath}/results`} onClick={buildSearch}>Search</Link>
     }
   </>
   )
@@ -218,16 +209,13 @@ const FilterLingletPropertySearch = ({ data, reset, setSearchData, searchPath })
         null
       )
     }
+    <Divider />
+    <List data={propertyArr} field="name" heading={`Filtering by ${propertyArr.length} propert${propertyArr.length === 1 ? 'y' : 'ies'}:`} />
+    <List data={lingletArr} field="name" heading={`Showing ${lingletArr.length} ${CapitalCase(TargetToPlural(lingletArr.length, data.overviewData.ling1_name))}:`} />
     {
-      propertyArr.length > 0 ?
-      (
-        <Link className="cta" to={`${searchPath}/results`} onClick={buildSearch}>Search</Link>
-      ) :
-      (
-        <>
-          {`Select at least one property to filter.`}
-        </>
-      )
+      propertyArr.length <= 0 ?
+      <p>Select at least one property to filter by.</p> :
+      <Link className="cta" to={`${searchPath}/results`} onClick={buildSearch}>Search</Link>
     }
     </>
   )
@@ -236,12 +224,12 @@ const FilterLingletPropertySearch = ({ data, reset, setSearchData, searchPath })
 function FilterSearch({ data, reset, setSearchData, searchPath }) {
   let match = useRouteMatch();
 
-  const [filterTargetsArr, setfilterTargetsArr] = useState([]);
-
-  const filterTargets = [{"name": `Filter by ${CapitalCase(data.overviewData.ling0_name)}`, "id": "lings"}, {"name": `Filter by ${CapitalCase(data.overviewData.ling0_name)} Property`, "id": "ling_properties"}];
+  const searchTargets = [{"name": `Filter by ${CapitalCase(data.overviewData.ling0_name)}`, "id": "lings"}, {"name": `Filter by ${CapitalCase(data.overviewData.ling0_name)} property`, "id": "ling_properties"}];
   if (data.overviewData.depth_maximum > 0) {
-    filterTargets.push(...[{"name": `Filter by ${CapitalCase(data.overviewData.ling1_name)}`, id: "linglets"}, {"name": `Filter by ${CapitalCase(data.overviewData.ling1_name)} Property`, "id": "linglet_properties"}]);
+    searchTargets.push(...[{"name": `Filter by ${CapitalCase(data.overviewData.ling1_name)}`, id: "linglets"}, {"name": `Filter by ${CapitalCase(data.overviewData.ling1_name)} property`, "id": "linglet_properties"}]);
   }
+
+  const [searchTargetsArr, setSearchTargetsArr] = useState([]);
 
   useEffect(() => {
     let contains = false;
@@ -249,11 +237,11 @@ function FilterSearch({ data, reset, setSearchData, searchPath }) {
     let hrefTarget = {};
     let oldid = ""
 
-    if (filterTargetsArr.length === 1) {
-      oldid = filterTargetsArr[0].id;
+    if (searchTargetsArr.length === 1) {
+      oldid = searchTargetsArr[0].id;
     }
 
-    filterTargets.forEach(target => {
+    searchTargets.forEach(target => {
       if (window.location.href.includes(target.id)) {
         contains = true;
         if (oldid !== target.id) {
@@ -263,14 +251,14 @@ function FilterSearch({ data, reset, setSearchData, searchPath }) {
       }
     })
 
-    if (isNew) setfilterTargetsArr([hrefTarget]);
-    else if (!contains && filterTargetsArr.length > 0) setfilterTargetsArr([]);
-  }, [window.location.href, filterTargetsArr]);
+    if (isNew) setSearchTargetsArr([hrefTarget]);
+    else if (!contains && searchTargetsArr.length > 0) setSearchTargetsArr([]);
+  }, [window.location.href, searchTargetsArr]);
 
   return (
     <>
-      <h2>Filter target</h2>
-      <SelectTable data={filterTargets} columnMap={["name"]} selectArr={filterTargetsArr} find={(el, row) => el.id === row.id} setSelectArr={setfilterTargetsArr} maxSelect={1} link={(url, id) => { return url + "/" + id;}} replaceWithNew={true} />
+      <h2>Search target</h2>
+      <SelectTable data={searchTargets} columnMap={["name"]} selectArr={searchTargetsArr} find={(el, row) => el.id === row.id} setSelectArr={setSearchTargetsArr} maxSelect={1} link={(url, id) => { return url + "/" + id;}} replaceWithNew={true} />
       <Switch>
           <Route path={`${match.path}/lings`}>
             <FilterLingSearch data={data} reset={reset} setSearchData={setSearchData} searchPath={searchPath} />
@@ -279,10 +267,18 @@ function FilterSearch({ data, reset, setSearchData, searchPath }) {
             <FilterLingPropertySearch data={data} reset={reset} setSearchData={setSearchData} searchPath={searchPath} />
           </Route>
           <Route path={`${match.path}/linglets`}>
-            <FilterLingletSearch data={data} reset={reset} setSearchData={setSearchData} searchPath={searchPath} />
+            {
+              data.overviewData.depth_maximum > 0 ?
+              <FilterLingletSearch data={data} reset={reset} setSearchData={setSearchData} searchPath={searchPath} /> :
+              null
+            }
           </Route>
           <Route path={`${match.path}/linglet_properties`}>
-            <FilterLingletPropertySearch data={data} reset={reset} setSearchData={setSearchData} searchPath={searchPath} />
+            {
+              data.overviewData.depth_maximum > 0 ?
+              <FilterLingletPropertySearch data={data} reset={reset} setSearchData={setSearchData} searchPath={searchPath} /> :
+              null
+            }
           </Route>
         </Switch>
     </>

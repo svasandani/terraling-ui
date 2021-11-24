@@ -4,17 +4,19 @@ import {
   Redirect,
   Route,
   Link,
+  useHistory,
   useRouteMatch
 } from 'react-router-dom';
 
 import SelectTable from '../../shared/SelectTable';
-
+import Divider from '../../shared/Divider';
 import List from '../../shared/List';
 
 import { CapitalCase, TargetToPlural } from '../../helpers/Helpers';
 
 function CompareSearch({ data, reset, setSearchData, searchPath }) {
   let match = useRouteMatch();
+  const history = useHistory();
 
   const [lingArr, setLingArr] = useState([]);
   const [lingletArr, setLingletArr] = useState([]);
@@ -43,9 +45,9 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
     });
   };
 
-  let searchTargets = [{"name": CapitalCase(TargetToPlural(2, data.overviewData.ling0_name)), "id": "lings"}];
+  let searchTargets = [{"name": `Compare two or more ${CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))}`, "id": "lings"}];
   if (data.overviewData.depth_maximum > 0) {
-    searchTargets.push({"name": CapitalCase(TargetToPlural(2, data.overviewData.ling1_name)), "id": "linglets"});
+    searchTargets.push({"name": `Compare two or more ${CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))}`, "id": "linglets"});
   }
 
   const [searchTargetsArr, setSearchTargetsArr] = useState([]);
@@ -55,6 +57,10 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
     let isNew = false;
     let hrefTarget = {};
     let oldid = ""
+
+    if (searchTargets.length === 1) {
+      history.push(`${match.url}/${searchTargets[0].id}`)
+    }
 
     if (searchTargetsArr.length === 1) {
       oldid = searchTargetsArr[0].id;
@@ -82,8 +88,13 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
         <Route path={`${match.path}/lings`}>
           <h2>{CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))} (up to 6) <Link className="reset-btn" to="." onClick={(e) => reset(e, setLingArr)}>Reset</Link></h2>
           <SelectTable data={data.lingData} columnMap={["name"]} selectArr={lingArr} setSelectArr={setLingArr} maxHeight="250px" />
-          <List data={lingArr} field="name" heading="Your search parameters" />
-          <Link className="cta" to={`${searchPath}/results`} onClick={buildLingSearch}>Search</Link>
+          <Divider />
+          <List data={lingArr} field="name" heading={`Comparing ${lingArr.length} ${CapitalCase(TargetToPlural(lingArr.length, data.overviewData.ling0_name))}:`} />
+          {
+            lingArr.length <= 1 ?
+            <p>Select at least two {CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))} to compare.</p> :
+            <Link className="cta" to={`${searchPath}/results`} onClick={buildLingSearch}>Search</Link>
+          }
         </Route>
         <Route path={`${match.path}/linglets`}>
           {
@@ -92,8 +103,13 @@ function CompareSearch({ data, reset, setSearchData, searchPath }) {
               <>
                 <h2>{CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))} (up to 6) <Link className="reset-btn" to="." onClick={(e) => reset(e, setLingletArr)}>Reset</Link></h2>
                 <SelectTable data={data.lingletData} columnMap={["name"]} selectArr={lingletArr} setSelectArr={setLingletArr} maxHeight="250px" />
-                <List data={lingletArr} field="name" heading="Your search parameters" />
-                <Link className="cta" to={`${searchPath}/results`} onClick={buildLingletSearch}>Search</Link>
+                <Divider />
+                <List data={lingletArr} field="name" heading={`Comparing ${lingletArr.length} ${CapitalCase(TargetToPlural(lingletArr.length, data.overviewData.ling1_name))}:`} />
+                {
+                  lingletArr.length <= 1 ?
+                  <p>Select at least two {CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))} to compare.</p> :
+                  <Link className="cta" to={`${searchPath}/results`} onClick={buildLingletSearch}>Search</Link>
+                }
               </>
             ) :
             (
