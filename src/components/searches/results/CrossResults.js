@@ -40,24 +40,37 @@ const CrossLingPropertyResults = ({ data, resultData, nameSort, countSort }) => 
 
   return (
     <>
-      <h1>Crossing {resultData.ling_properties.length} {CapitalCase(data.overviewData.ling0_name)} Properties: {resultData.ling_properties.join(", ")}</h1>
-      <h2>Results</h2>
-      <HeadingTable 
-        data={mappedData} 
-        sort={countSort} link={(_, __) => { return "./results"; }} 
-        linkColumn="count" 
-        clickHandler={(e, row) => { e.preventDefault(); setPropertyArr(row.lings.map(l => { return { name: l } })); }} 
-        columnMap={columnMap} 
-      />
+      <h1>Crossing {resultData.ling_properties.length} {CapitalCase(data.overviewData.ling0_name)} propert{resultData.ling_properties.length === 1 ? 'y' : 'ies'}: {resultData.ling_properties.join(", ")}</h1>
       {
-        propertyArr.length === 0 ?
+        resultData.property_combinations.length === 0 ? 
         (
-          null
+          <>
+            <h2>No results found!</h2>
+            <Link to='new'>Try again?</Link>
+          </>
         ) :
         (
           <>
-            <h2 id="lings-in-row">{CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))} in this row <Link className="reset-btn" to="#container" onClick={(e) => setPropertyArr([])}>Hide</Link></h2>
-            <HeadingTable data={propertyArr} link={(_, __) => { return "./results"; }} linkColumn="none" sort={nameSort} columnMap={{ "name": "Name" }} />
+            <h2>Results</h2>
+            <HeadingTable 
+              data={mappedData} 
+              sort={countSort} link={(_, __) => { return "./results"; }} 
+              linkColumn="count" 
+              clickHandler={(e, row) => { e.preventDefault(); setPropertyArr(row.lings.map(l => { return { name: l } })); }} 
+              columnMap={columnMap} 
+            />
+            {
+              propertyArr.length === 0 ?
+              (
+                null
+              ) :
+              (
+                <>
+                  <h2 id="lings-in-row">{CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))} in this row <Link className="reset-btn" to="#container" onClick={(e) => setPropertyArr([])}>Hide</Link></h2>
+                  <HeadingTable data={propertyArr} link={(_, __) => { return "./results"; }} linkColumn="none" sort={nameSort} columnMap={{ "name": "Name" }} />
+                </>
+              )
+            }
           </>
         )
       }
@@ -99,24 +112,37 @@ const CrossLingletPropertyResults = ({ data, resultData, nameSort, countSort }) 
 
   return (
     <>
-      <h1>Crossing {resultData.linglet_properties.length} {CapitalCase(data.overviewData.ling1_name)} Properties: {resultData.linglet_properties.join(", ")}</h1>
-      <h2>Results</h2>
-      <HeadingTable 
-        data={mappedData} 
-        sort={countSort} link={(_, __) => { return "./results"; }} 
-        linkColumn="count" 
-        clickHandler={(e, row) => { e.preventDefault(); setPropertyArr(row.linglets.map(l => { return { name: l } })); }} 
-        columnMap={columnMap} 
-      />
+      <h1>Crossing {resultData.linglet_properties.length} {CapitalCase(data.overviewData.ling1_name)} propert{resultData.linglet_properties.length === 1 ? 'y' : 'ies'}: {resultData.linglet_properties.join(", ")}</h1>
       {
-        propertyArr.length === 0 ?
+        resultData.property_combinations.length === 0 ? 
         (
-          null
+          <>
+            <h2>No results found!</h2>
+            <Link to='new'>Try again?</Link>
+          </>
         ) :
         (
           <>
-            <h2 id="lings-in-row">{CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))} in this row <Link className="reset-btn" to="#container" onClick={(e) => setPropertyArr([])}>Hide</Link></h2>
-            <HeadingTable data={propertyArr} link={(_, __) => { return "./results"; }} linkColumn="none" sort={nameSort} columnMap={{ "name": "Name" }} />
+            <h2>Results</h2>
+            <HeadingTable 
+              data={mappedData} 
+              sort={countSort} link={(_, __) => { return "./results"; }} 
+              linkColumn="count" 
+              clickHandler={(e, row) => { e.preventDefault(); setPropertyArr(row.linglets.map(l => { return { name: l } })); }} 
+              columnMap={columnMap} 
+            />
+            {
+              propertyArr.length === 0 ?
+              (
+                null
+              ) :
+              (
+                <>
+                  <h2 id="lings-in-row">{CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))} in this row <Link className="reset-btn" to="#container" onClick={(e) => setPropertyArr([])}>Hide</Link></h2>
+                  <HeadingTable data={propertyArr} link={(_, __) => { return "./results"; }} linkColumn="none" sort={nameSort} columnMap={{ "name": "Name" }} />
+                </>
+              )
+            }
           </>
         )
       }
