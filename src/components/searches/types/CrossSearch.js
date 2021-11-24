@@ -19,39 +19,32 @@ function CrossSearch({ data, reset, setSearchData, searchPath }) {
   const [lingletPropertyArr, setLingletPropertyArr] = useState([]);
 
   const buildLingPropertySearch = () => {
-    let propertyCategoryId = data.lingPropertyData[0].category_id;
-
-    let searchObj = {
-      search: {
-        properties: { [propertyCategoryId]: lingPropertyArr.reduce((ids, linglet) => { ids.push(linglet.id.toString()); return ids; }, []) },
-        property_set: { [propertyCategoryId]: "cross" }
-      },
-      group_id: data.id
+    let searchData = {
+      group: parseInt(data.id),
+      ling_properties: lingPropertyArr.map(lingProperty => parseInt(lingProperty.id))
     }
 
-    setSearchData(searchObj);
+    setSearchData({
+      href: "cross/ling_properties",
+      data: searchData
+    });
   };
 
   const buildLingletPropertySearch = () => {
-    let propertyCategoryId = data.lingletPropertyData[0].category_id;
-
-    let searchObj = {
-      search: {
-        properties: { [propertyCategoryId]: lingletPropertyArr.reduce((ids, linglet) => { ids.push(linglet.id.toString()); return ids; }, []) },
-        property_set: { [propertyCategoryId]: "cross" }
-      },
-      group_id: data.id
+    let searchData = {
+      group: parseInt(data.id),
+      linglet_properties: lingletPropertyArr.map(lingletProperty => parseInt(lingletProperty.id))
     }
 
-    setSearchData(searchObj);
+    setSearchData({
+      href: "cross/linglet_properties",
+      data: searchData
+    });
   };
 
-  let searchTargets = [];
-
+  let searchTargets = [{"name": CapitalCase(data.overviewData.ling0_name) + " Properties", "id": "lings"}];
   if (data.overviewData.depth_maximum > 0) {
-    searchTargets = [{"name": CapitalCase(data.overviewData.ling0_name) + " Properties", "id": "lings"}, {"name": CapitalCase(data.overviewData.ling1_name) + " Properties", "id": "linglets"}];
-  } else {
-    searchTargets = [{"name": CapitalCase(data.overviewData.ling0_name) + " Properties", "id": "lings"}];
+    searchTargets.push({"name": CapitalCase(data.overviewData.ling1_name) + " Properties", "id": "linglets"});
   }
 
   const [searchTargetsArr, setSearchTargetsArr] = useState([]);
