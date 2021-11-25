@@ -6,6 +6,7 @@ import SelectTable from "../shared/SelectTable";
 import FilterSearch from "./types/FilterSearch";
 import CompareSearch from "./types/CompareSearch";
 import CrossSearch from "./types/CrossSearch";
+import SimilaritySearch from "./types/SimilaritySearch";
 
 import "../../css/searches/SearchForm.css";
 
@@ -24,7 +25,7 @@ function SearchForm({ data, searchPath, searchData, setSearchData }) {
     { name: "Compare", id: "compare" },
     { name: "Cross", id: "cross" },
     { name: "Implication", id: "implication" },
-    { name: "Similarity Tree", id: "similarity" },
+    { name: "Similarity Graph", id: "similarity" },
   ];
 
   useEffect(() => {
@@ -98,7 +99,12 @@ function SearchForm({ data, searchPath, searchData, setSearchData }) {
           <div />
         </Route>
         <Route path={`${match.path}/similarity`}>
-          <div />
+          <SimilaritySearch
+            data={data}
+            reset={reset}
+            setSearchData={setSearchData}
+            searchPath={searchPath}
+          />
         </Route>
       </Switch>
     </>
