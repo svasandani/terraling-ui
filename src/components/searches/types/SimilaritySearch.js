@@ -121,37 +121,26 @@ function SimilaritySearch({ data, reset, setSearchData, searchPath }) {
             <Link
               className="reset-btn"
               to="."
+              onClick={(e) => {
+                e.preventDefault();
+                setLingArr(data.lingData);
+              }}
+            >
+              Select all
+            </Link>{" "}
+            <Link
+              className="reset-btn"
+              to="."
               onClick={(e) => reset(e, setLingArr)}
             >
               Reset
             </Link>
-            <Link onClick={() => setLingArr(data.lingData)}>Select all</Link>
           </h2>
           <SelectTable
             data={data.lingData}
             columnMap={["name"]}
             selectArr={lingArr}
             setSelectArr={setLingArr}
-            maxHeight="250px"
-          />
-          <h2>
-            {CapitalCase(data.overviewData.ling0_name) +
-              " properties to display"}{" "}
-            (defaults to all){" "}
-            <Link
-              className="reset-btn"
-              to="."
-              onClick={(e) => reset(e, setLingPropertyArr)}
-            >
-              Reset
-            </Link>
-          </h2>
-          <SelectTable
-            data={data.lingPropertyData}
-            columnMap={["name"]}
-            selectArr={lingPropertyArr}
-            setSelectArr={setLingPropertyArr}
-            maxSelect={-1}
             maxHeight="250px"
           />
           <Divider />

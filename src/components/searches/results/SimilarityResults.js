@@ -1,23 +1,25 @@
 import React, { useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 
-import HeadingTable from "../../shared/HeadingTable";
-
 import SimilarityGraph from "../visualizers/SimilarityGraph";
 
 import { CapitalCase, TargetToPlural } from "../../helpers/Helpers";
 
-const SimilarityLingResults = ({ data, resultData, nameSort }) => {
+const SimilarityLingResults = ({ data, resultData }) => {
+  const [filterThreshold, setFilterThreshold] = React.useState(80);
+
   const nodes = resultData.lings.map((lingName) => {
     return { id: lingName };
   });
-  const links = resultData.pairs.map((pair) => {
-    return {
-      source: pair.lings[0],
-      target: pair.lings[1],
-      value: parseInt(pair.common_property_values),
-    };
-  });
+  const links = resultData.pairs
+    .filter((p) => p.common_property_values > filterThreshold)
+    .map((pair) => {
+      return {
+        source: pair.lings[0],
+        target: pair.lings[1],
+        value: parseInt(pair.common_property_values),
+      };
+    });
 
   return (
     <>
@@ -37,6 +39,15 @@ const SimilarityLingResults = ({ data, resultData, nameSort }) => {
         <>
           <h2>Similarity Graph</h2>
           <SimilarityGraph nodes={nodes} links={links} />
+          <input
+            type="range"
+            min="0"
+            max={links.reduce((a, c) => (a > c.value ? a : c.value), 0)}
+            value={filterThreshold}
+            onChange={(e) => {
+              setFilterThreshold(e.target.value);
+            }}
+          />
         </>
       )}
     </>
@@ -44,19 +55,9 @@ const SimilarityLingResults = ({ data, resultData, nameSort }) => {
 };
 
 function SimilarityResults({ data, resultData }) {
-  const nameSort = (a, b) => {
-    return a.name > b.name ? 1 : -1;
-  };
-
   switch (resultData.on) {
     case "lings":
-      return (
-        <SimilarityLingResults
-          data={data}
-          resultData={resultData}
-          nameSort={nameSort}
-        />
-      );
+      return <SimilarityLingResults data={data} resultData={resultData} />;
     default:
       return <Redirect to="new" />;
   }

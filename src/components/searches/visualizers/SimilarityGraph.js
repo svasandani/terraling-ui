@@ -7,6 +7,11 @@ import "../../../css/visualizers/ForceGraph.css";
 const SimilarityGraph = ({ nodes, links }) => {
   let doUnmount = () => {};
 
+  const viewBoxWidth = 200 + nodes.length / 3;
+  const viewBox = `-${viewBoxWidth} -${viewBoxWidth} ${2 * viewBoxWidth} ${
+    2 * viewBoxWidth
+  }`;
+
   React.useEffect(() => {
     return () => {
       doUnmount();
@@ -44,13 +49,16 @@ const SimilarityGraph = ({ nodes, links }) => {
     // Construct the forces.
     const forceNode = d3.forceManyBody();
     const forceLink = d3.forceLink(links).id(({ index: i }) => nodeIds[i]);
+    forceNode.strength(-3);
+    forceLink.strength((l) => lLerp(l.value, 0, 0.05));
 
     const simulation = d3
       .forceSimulation(nodes)
       .force("link", forceLink)
       .force("charge", forceNode)
-      .force("x", d3.forceX())
-      .force("y", d3.forceY())
+      .force("center", d3.forceCenter())
+      // .force("x", d3.forceX())
+      // .force("y", d3.forceY())
       .on("tick", ticked);
 
     doUnmount = () => {
@@ -76,39 +84,52 @@ const SimilarityGraph = ({ nodes, links }) => {
       .attr("stroke", nodeStroke)
       .attr("stroke-opacity", nodeStrokeOpacity)
       .attr("stroke-width", nodeStrokeWidth)
-      .selectAll("g")
+      .selectAll("circle")
       .data(nodes)
-      .join("g");
-
-    node.append("circle").attr("r", nodeRadius).call(drag(simulation));
-    // .on("mouseover", () => {
-    //   active = true;
-    // })
-    // .on("mousemove", (e, d) => {
-    //   if (active) {
-    //     tooltip
-    //       .html(d.id)
-    //       .style("left", e.pageX + "px")
-    //       .style("top", e.pageY - 28 + "px")
-    //       .style("opacity", 0.9);
-    //   }
-    // })
-    // .on("mouseout", () => {
-    //   tooltip.style("opacity", 0);
-    //   active = false;
-    // });
+      .join("circle")
+      .attr("r", nodeRadius)
+      .call(drag(simulation))
+      .on("mouseover", () => {
+        active = true;
+      })
+      .on("mousemove", (e, d) => {
+        if (active) {
+          tooltip
+            .html(d.id)
+            .style("left", e.pageX + "px")
+            .style("top", e.pageY - 28 + "px")
+            .style("opacity", 0.9);
+        }
+      })
+      .on("mouseout", () => {
+        tooltip.style("opacity", 0);
+        active = false;
+      });
 
     link.attr("stroke-width", ({ index: i }) => widths[i]);
 
     function ticked() {
-      console.count("tick");
       link
-        .attr("x1", (d) => d.source.x)
-        .attr("y1", (d) => d.source.y)
-        .attr("x2", (d) => d.target.x)
-        .attr("y2", (d) => d.target.y);
+        .attr("x1", (d) =>
+          Math.min(viewBoxWidth, Math.max(d.source.x, -1 * viewBoxWidth))
+        )
+        .attr("y1", (d) =>
+          Math.min(viewBoxWidth, Math.max(d.source.y, -1 * viewBoxWidth))
+        )
+        .attr("x2", (d) =>
+          Math.min(viewBoxWidth, Math.max(d.target.x, -1 * viewBoxWidth))
+        )
+        .attr("y2", (d) =>
+          Math.min(viewBoxWidth, Math.max(d.target.y, -1 * viewBoxWidth))
+        );
 
-      node.attr("transform", (d) => `translate(${d.x},${d.y})`);
+      node
+        .attr("cx", (d) =>
+          Math.min(viewBoxWidth, Math.max(d.x, -1 * viewBoxWidth))
+        )
+        .attr("cy", (d) =>
+          Math.min(viewBoxWidth, Math.max(d.y, -1 * viewBoxWidth))
+        );
     }
 
     function drag(simulation) {
@@ -137,18 +158,13 @@ const SimilarityGraph = ({ nodes, links }) => {
     }
   });
 
-  const viewBoxWidth = 200 + nodes.length / 3;
-  const viewBox = `-${viewBoxWidth} -${viewBoxWidth} ${2 * viewBoxWidth} ${
-    2 * viewBoxWidth
-  }`;
-
   return (
     <>
       <svg
         ref={ref}
         style={{
-          height: "500px",
-          width: "100%",
+          maxHeight: "50vh",
+          width: "auto",
         }}
         viewBox={viewBox}
       >
