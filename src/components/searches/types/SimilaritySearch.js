@@ -116,8 +116,7 @@ function SimilaritySearch({ data, reset, setSearchData, searchPath }) {
       <Switch>
         <Route path={`${match.path}/lings`}>
           <h2>
-            {CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))} (up
-            to 6){" "}
+            {CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))}{" "}
             <Link
               className="reset-btn"
               to="."
@@ -142,6 +141,7 @@ function SimilaritySearch({ data, reset, setSearchData, searchPath }) {
             selectArr={lingArr}
             setSelectArr={setLingArr}
             maxHeight="250px"
+            maxSelect={-1}
           />
           <Divider />
           <List
@@ -179,7 +179,16 @@ function SimilaritySearch({ data, reset, setSearchData, searchPath }) {
             <>
               <h2>
                 {CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))}{" "}
-                (up to 6){" "}
+                <Link
+                  className="reset-btn"
+                  to="."
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setLingletArr(data.lingletData);
+                  }}
+                >
+                  Select all
+                </Link>{" "}
                 <Link
                   className="reset-btn"
                   to="."
@@ -194,26 +203,7 @@ function SimilaritySearch({ data, reset, setSearchData, searchPath }) {
                 selectArr={lingletArr}
                 setSelectArr={setLingletArr}
                 maxHeight="250px"
-              />
-              <h2>
-                {CapitalCase(data.overviewData.ling1_name) +
-                  " properties to display"}{" "}
-                (defaults to all){" "}
-                <Link
-                  className="reset-btn"
-                  to="."
-                  onClick={(e) => reset(e, setLingletPropertyArr)}
-                >
-                  Reset
-                </Link>
-              </h2>
-              <SelectTable
-                data={data.lingletPropertyData}
-                columnMap={["name"]}
-                selectArr={lingletPropertyArr}
-                setSelectArr={setLingletPropertyArr}
                 maxSelect={-1}
-                maxHeight="250px"
               />
               <Divider />
               <List
@@ -225,13 +215,6 @@ function SimilaritySearch({ data, reset, setSearchData, searchPath }) {
                     data.overviewData.ling1_name
                   )
                 )}:`}
-              />
-              <List
-                data={lingletPropertyArr}
-                field="name"
-                heading={`Showing ${lingletPropertyArr.length} propert${
-                  lingletPropertyArr.length === 1 ? "y" : "ies"
-                }:`}
               />
               {lingletArr.length <= 1 ? (
                 <p>

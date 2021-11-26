@@ -14,9 +14,10 @@ const SimilarityGraph = ({ nodes, links }) => {
 
   React.useEffect(() => {
     return () => {
+      console.log("Stopping...");
       doUnmount();
     };
-  }, []);
+  }, [nodes, links]);
 
   const ref = useD3((svg) => {
     const nodeIds = d3.map(nodes, (d) => d.id);
