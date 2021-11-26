@@ -3,7 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 
 import HeadingTable from "../../shared/HeadingTable";
 
-import { ForceGraph } from "../visualizers/ForceGraph";
+import SimilarityGraph from "../visualizers/SimilarityGraph";
 
 import { CapitalCase, TargetToPlural } from "../../helpers/Helpers";
 
@@ -15,18 +15,9 @@ const SimilarityLingResults = ({ data, resultData, nameSort }) => {
     return {
       source: pair.lings[0],
       target: pair.lings[1],
-      value: pair.c,
+      value: parseInt(pair.common_property_values),
     };
   });
-
-  const graph = ForceGraph(
-    { nodes, links },
-    {
-      nodeId: (d) => d.id,
-      nodeTitle: null,
-      linkStrokeWidth: (l) => Math.sqrt(l.value),
-    }
-  );
 
   return (
     <>
@@ -44,15 +35,8 @@ const SimilarityLingResults = ({ data, resultData, nameSort }) => {
         </>
       ) : (
         <>
-          <h2>Distinct Property Values</h2>
-          <HeadingTable
-            data={distinctData}
-            sort={nameSort}
-            link={(_, id) => {
-              return "/groups/" + data.id + "/properties/" + id;
-            }}
-            columnMap={diffColumnMap}
-          />
+          <h2>Similarity Graph</h2>
+          <SimilarityGraph nodes={nodes} links={links} />
         </>
       )}
     </>

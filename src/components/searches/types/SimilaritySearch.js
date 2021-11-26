@@ -125,6 +125,7 @@ function SimilaritySearch({ data, reset, setSearchData, searchPath }) {
             >
               Reset
             </Link>
+            <Link onClick={() => setLingArr(data.lingData)}>Select all</Link>
           </h2>
           <SelectTable
             data={data.lingData}
