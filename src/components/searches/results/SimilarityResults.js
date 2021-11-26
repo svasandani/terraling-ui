@@ -9,7 +9,7 @@ import SimilarityGraph from "../visualizers/SimilarityGraph";
 import { CapitalCase, TargetToPlural } from "../../helpers/Helpers";
 import CheckboxInput from "../../shared/CheckboxInput";
 
-const SimilarityLingResults = ({ data, resultData }) => {
+const SimilarityResultsInner = ({ data, resultData, accessor }) => {
   const max = resultData.pairs.reduce(
     (a, c) => (a > c.common_property_values ? a : c.common_property_values),
     0
@@ -23,15 +23,15 @@ const SimilarityLingResults = ({ data, resultData }) => {
   const links = resultData.pairs
     .filter((p) => p.common_property_values > filterThreshold)
     .map((pair) => {
-      lonelyMap.set(pair.lings[0], 1);
-      lonelyMap.set(pair.lings[1], 1);
+      lonelyMap.set(pair[accessor][0], 1);
+      lonelyMap.set(pair[accessor][1], 1);
       return {
-        source: pair.lings[0],
-        target: pair.lings[1],
+        source: pair[accessor][0],
+        target: pair[accessor][1],
         value: parseInt(pair.common_property_values),
       };
     });
-  const nodes = resultData.lings
+  const nodes = resultData[accessor]
     .filter((l) => showLonely || lonelyMap.has(l))
     .map((lingName) => {
       return { id: lingName };
@@ -40,11 +40,16 @@ const SimilarityLingResults = ({ data, resultData }) => {
   return (
     <>
       <h1>
-        Plotting similarity for {resultData.lings.length}{" "}
+        Plotting similarity for {resultData[accessor].length}{" "}
         {CapitalCase(
-          TargetToPlural(resultData.lings.length, data.overviewData.ling0_name)
+          TargetToPlural(
+            resultData[accessor].length,
+            data.overviewData[`ling${accessor === "lings" ? "0" : "1"}_name`]
+          )
         )}
-        {resultData.lings.length <= 6 ? `: ${resultData.lings.join(", ")}` : ""}
+        {resultData[accessor].length <= 6
+          ? `: ${resultData[accessor].join(", ")}`
+          : ""}
       </h1>
       {resultData.pairs.length === 0 ? (
         <>
@@ -74,80 +79,25 @@ const SimilarityLingResults = ({ data, resultData }) => {
     </>
   );
 };
-const SimilarityLingletResults = ({ data, resultData }) => {
-  const max = resultData.pairs.reduce(
-    (a, c) => (a > c.common_property_values ? a : c.common_property_values),
-    0
-  );
-  const [filterThreshold, setFilterThreshold] = React.useState(
-    Math.floor(max / 2)
-  );
-  const [showLonely, setShowLonely] = React.useState(false);
-
-  const lonelyMap = new Map();
-  const links = resultData.pairs
-    .filter((p) => p.common_property_values > filterThreshold)
-    .map((pair) => {
-      lonelyMap.set(pair.linglets[0], 1);
-      lonelyMap.set(pair.linglets[1], 1);
-      return {
-        source: pair.linglets[0],
-        target: pair.linglets[1],
-        value: parseInt(pair.common_property_values),
-      };
-    });
-  const nodes = resultData.linglets
-    .filter((l) => showLonely || lonelyMap.has(l))
-    .map((lingletName) => {
-      return { id: lingletName };
-    });
-
-  return (
-    <>
-      <h1>
-        Plotting similarity for {resultData.linglets.length}{" "}
-        {CapitalCase(
-          TargetToPlural(
-            resultData.linglets.length,
-            data.overviewData.ling1_name
-          )
-        )}
-        {resultData.linglets.length <= 6
-          ? `: ${resultData.linglets.join(", ")}`
-          : ""}
-      </h1>
-      {resultData.pairs.length === 0 ? (
-        <>
-          <h2>No pairs found!</h2>
-          <Link to="new">Try again?</Link>
-        </>
-      ) : (
-        <>
-          <h2>Similarity Graph (click and drag to reposition)</h2>
-          <SimilarityGraph nodes={nodes} links={links} />
-          <Divider />
-          <h2>
-            Showing connections with more than {filterThreshold} common property
-            values
-          </h2>
-          <RangeInput
-            min="0"
-            max={links.reduce((a, c) => (a > c.value ? a : c.value), 0)}
-            value={filterThreshold}
-            setValue={setFilterThreshold}
-          />
-        </>
-      )}
-    </>
-  );
-};
 
 function SimilarityResults({ data, resultData }) {
   switch (resultData.on) {
     case "lings":
-      return <SimilarityLingResults data={data} resultData={resultData} />;
+      return (
+        <SimilarityResultsInner
+          data={data}
+          resultData={resultData}
+          accessor="lings"
+        />
+      );
     case "linglets":
-      return <SimilarityLingletResults data={data} resultData={resultData} />;
+      return (
+        <SimilarityResultsInner
+          data={data}
+          resultData={resultData}
+          accessor="linglets"
+        />
+      );
     default:
       return <Redirect to="new" />;
   }
