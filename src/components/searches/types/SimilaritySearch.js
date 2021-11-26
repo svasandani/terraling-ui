@@ -40,9 +40,6 @@ function SimilaritySearch({ data, reset, setSearchData, searchPath }) {
     let searchData = {
       group: parseInt(data.id),
       linglets: lingletArr.map((linglet) => parseInt(linglet.id)),
-      linglet_properties: lingletPropertyArr.map((property) =>
-        parseInt(property.id)
-      ),
     };
 
     setSearchData({

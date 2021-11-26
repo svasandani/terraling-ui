@@ -7,21 +7,34 @@ import Divider from "../../shared/Divider";
 import SimilarityGraph from "../visualizers/SimilarityGraph";
 
 import { CapitalCase, TargetToPlural } from "../../helpers/Helpers";
+import CheckboxInput from "../../shared/CheckboxInput";
 
 const SimilarityLingResults = ({ data, resultData }) => {
-  const [filterThreshold, setFilterThreshold] = React.useState(100);
+  const max = resultData.pairs.reduce(
+    (a, c) => (a > c.common_property_values ? a : c.common_property_values),
+    0
+  );
+  const [filterThreshold, setFilterThreshold] = React.useState(
+    Math.floor(max / 2)
+  );
+  const [showLonely, setShowLonely] = React.useState(false);
 
-  const nodes = resultData.lings.map((lingName) => {
-    return { id: lingName };
-  });
+  const lonelyMap = new Map();
   const links = resultData.pairs
     .filter((p) => p.common_property_values > filterThreshold)
     .map((pair) => {
+      lonelyMap.set(pair.lings[0], 1);
+      lonelyMap.set(pair.lings[1], 1);
       return {
         source: pair.lings[0],
         target: pair.lings[1],
         value: parseInt(pair.common_property_values),
       };
+    });
+  const nodes = resultData.lings
+    .filter((l) => showLonely || lonelyMap.has(l))
+    .map((lingName) => {
+      return { id: lingName };
     });
 
   return (
@@ -53,25 +66,40 @@ const SimilarityLingResults = ({ data, resultData }) => {
             value={filterThreshold}
             setValue={setFilterThreshold}
           />
+          <br />
+          <h2>Show points with no common values?</h2>
+          <CheckboxInput value={showLonely} setValue={setShowLonely} />
         </>
       )}
     </>
   );
 };
 const SimilarityLingletResults = ({ data, resultData }) => {
-  const [filterThreshold, setFilterThreshold] = React.useState(100);
+  const max = resultData.pairs.reduce(
+    (a, c) => (a > c.common_property_values ? a : c.common_property_values),
+    0
+  );
+  const [filterThreshold, setFilterThreshold] = React.useState(
+    Math.floor(max / 2)
+  );
+  const [showLonely, setShowLonely] = React.useState(false);
 
-  const nodes = resultData.linglets.map((lingletName) => {
-    return { id: lingletName };
-  });
+  const lonelyMap = new Map();
   const links = resultData.pairs
     .filter((p) => p.common_property_values > filterThreshold)
     .map((pair) => {
+      lonelyMap.set(pair.linglets[0], 1);
+      lonelyMap.set(pair.linglets[1], 1);
       return {
         source: pair.linglets[0],
         target: pair.linglets[1],
         value: parseInt(pair.common_property_values),
       };
+    });
+  const nodes = resultData.linglets
+    .filter((l) => showLonely || lonelyMap.has(l))
+    .map((lingletName) => {
+      return { id: lingletName };
     });
 
   return (

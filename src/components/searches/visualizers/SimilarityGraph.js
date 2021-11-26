@@ -45,7 +45,7 @@ const SimilarityGraph = ({ nodes, links }) => {
       adjustedMin +
       (adjustedMax - adjustedMin) * ((value - lMin) / (lMax - lMin));
 
-    const widths = d3.map(links, (l) => lLerp(l.value, 1, 10));
+    const widths = d3.map(links, (l) => lLerp(l.value, 1, 5));
 
     // Construct the forces.
     const forceNode = d3.forceManyBody();
@@ -73,7 +73,25 @@ const SimilarityGraph = ({ nodes, links }) => {
       .attr("stroke-linecap", linkStrokeLinecap)
       .selectAll("line")
       .data(links)
-      .join("line");
+      .join("line")
+      .on("mouseover", () => {
+        active = true;
+      })
+      .on("mousemove", (e, d) => {
+        if (active) {
+          tooltip
+            .html(
+              `<strong>${d.source.id} ↔ ${d.target.id}</strong><br />${d.value} common properties`
+            )
+            .style("left", e.pageX + 5 + "px")
+            .style("top", e.pageY + 5 + "px")
+            .style("opacity", 0.9);
+        }
+      })
+      .on("mouseout", () => {
+        tooltip.style("opacity", 0);
+        active = false;
+      });
 
     const tooltip = d3.select("#similarity-graph--tooltip");
 
@@ -96,9 +114,9 @@ const SimilarityGraph = ({ nodes, links }) => {
       .on("mousemove", (e, d) => {
         if (active) {
           tooltip
-            .html(d.id)
-            .style("left", e.pageX + "px")
-            .style("top", e.pageY - 28 + "px")
+            .html(`<strong>${d.id}</strong>`)
+            .style("left", e.pageX + 5 + "px")
+            .style("top", e.pageY + 5 + "px")
             .style("opacity", 0.9);
         }
       })
