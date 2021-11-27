@@ -50,16 +50,16 @@ const SimilarityGraph = ({ nodes, links }) => {
     // Construct the forces.
     const forceNode = d3.forceManyBody();
     const forceLink = d3.forceLink(links).id(({ index: i }) => nodeIds[i]);
-    forceNode.strength(-3);
-    forceLink.strength((l) => lLerp(l.value, 0, 0.05));
+    forceNode.strength(-25);
+    forceLink.strength((l) => lLerp(l.value, 0.25, 1));
 
     const simulation = d3
       .forceSimulation(nodes)
       .force("link", forceLink)
       .force("charge", forceNode)
-      .force("center", d3.forceCenter())
-      // .force("x", d3.forceX())
-      // .force("y", d3.forceY())
+      // .force("center", d3.forceCenter())
+      .force("x", d3.forceX())
+      .force("y", d3.forceY())
       .on("tick", ticked);
 
     doUnmount = () => {
