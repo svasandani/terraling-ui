@@ -50,21 +50,15 @@ function ImplicationSearch({ data, reset, setSearchData, searchPath }) {
 
   let searchDirections = [
     {
-      name: `Show properties that are implied when a ${CapitalCase(
-        data.overviewData.ling0_name
-      )} property has a specific value`,
+      name: `Show properties that are implied when a property has a specific value`,
       id: "antecedent",
     },
     {
-      name: `Show properties that imply a ${CapitalCase(
-        data.overviewData.ling0_name
-      )} property has a specific value`,
+      name: `Show properties that imply a property has a specific value`,
       id: "consequent",
     },
     {
-      name: `Show properties that occur if and only if a ${CapitalCase(
-        data.overviewData.ling0_name
-      )} property has a specific value`,
+      name: `Show properties that occur if and only if a property has a specific value`,
       id: "both",
     },
   ];

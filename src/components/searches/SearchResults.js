@@ -4,9 +4,10 @@ import { Redirect } from "react-router-dom";
 import FilterResults from "./results/FilterResults";
 import CompareResults from "./results/CompareResults";
 import CrossResults from "./results/CrossResults";
+import ImplicationResults from "./results/ImplicationResults";
+import SimilarityResults from "./results/SimilarityResults";
 
 import Loading from "../shared/Loading";
-import SimilarityResults from "./results/SimilarityResults";
 
 function SearchResults({ data, groupId, searchData }) {
   const [ready, setReady] = useState(false);
@@ -52,6 +53,8 @@ function SearchResults({ data, groupId, searchData }) {
     return <CompareResults data={data} resultData={resultData} />;
   } else if (resultData.type === "cross") {
     return <CrossResults data={data} resultData={resultData} />;
+  } else if (resultData.type === "implication") {
+    return <ImplicationResults data={data} resultData={resultData} />;
   } else if (resultData.type === "similarity") {
     return <SimilarityResults data={data} resultData={resultData} />;
   } else {
