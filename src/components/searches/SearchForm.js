@@ -6,6 +6,7 @@ import SelectTable from "../shared/SelectTable";
 import FilterSearch from "./types/FilterSearch";
 import CompareSearch from "./types/CompareSearch";
 import CrossSearch from "./types/CrossSearch";
+import ImplicationSearch from "./types/ImplicationSearch";
 import SimilaritySearch from "./types/SimilaritySearch";
 
 import "../../css/searches/SearchForm.css";
@@ -96,7 +97,12 @@ function SearchForm({ data, searchPath, searchData, setSearchData }) {
           />
         </Route>
         <Route path={`${match.path}/implication`}>
-          <div />
+          <ImplicationSearch
+            data={data}
+            reset={reset}
+            setSearchData={setSearchData}
+            searchPath={searchPath}
+          />
         </Route>
         <Route path={`${match.path}/similarity`}>
           <SimilaritySearch
