@@ -1,0 +1,12 @@
+.link--active {
+  stroke-width: 3px;
+  stroke-linecap: round;
+}
+
+.link-extension--active {
+  stroke-opacity: .6;
+}
+
+.label--active {
+  text-decoration: underline;
+}

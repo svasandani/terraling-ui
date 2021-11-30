@@ -5,11 +5,12 @@ import RangeInput from "../../shared/RangeInput";
 import Divider from "../../shared/Divider";
 
 import SimilarityGraph from "../visualizers/SimilarityGraph";
+import SimilarityTree from "../visualizers/SimilarityTree";
 
 import { CapitalCase, TargetToPlural } from "../../helpers/Helpers";
 import CheckboxInput from "../../shared/CheckboxInput";
 
-const SimilarityResultsInner = ({ data, resultData, accessor }) => {
+const SimilarityGraphResultsInner = ({ data, resultData, accessor }) => {
   const max = resultData.pairs.reduce(
     (a, c) => (a > c.common_property_values ? a : c.common_property_values),
     0
@@ -80,11 +81,11 @@ const SimilarityResultsInner = ({ data, resultData, accessor }) => {
   );
 };
 
-function SimilarityResults({ data, resultData }) {
+function SimilarityGraphResults({ data, resultData }) {
   switch (resultData.on) {
     case "lings":
       return (
-        <SimilarityResultsInner
+        <SimilarityGraphResultsInner
           data={data}
           resultData={resultData}
           accessor="lings"
@@ -92,7 +93,7 @@ function SimilarityResults({ data, resultData }) {
       );
     case "linglets":
       return (
-        <SimilarityResultsInner
+        <SimilarityGraphResultsInner
           data={data}
           resultData={resultData}
           accessor="linglets"
@@ -101,6 +102,231 @@ function SimilarityResults({ data, resultData }) {
     default:
       return <Redirect to="new" />;
   }
+}
+
+const SimilarityTreeResultsInner = ({ data, resultData, accessor }) => {
+  let treeData = {
+    branchset: [
+      {
+        branchset: [
+          {
+            branchset: [
+              {
+                branchset: [
+                  {
+                    length: 1,
+                    name: "Abaza",
+                  },
+                  {
+                    length: 1,
+                    name: "Abdiji",
+                  },
+                ],
+                length: 0,
+                name: "",
+              },
+              {
+                branchset: [
+                  {
+                    length: 1,
+                    name: "Acehnese",
+                  },
+                  {
+                    length: 1,
+                    name: "Agni (Bini)",
+                  },
+                ],
+                length: 0,
+                name: "",
+              },
+            ],
+            length: 0,
+            name: "",
+          },
+          {
+            branchset: [
+              {
+                branchset: [
+                  {
+                    length: 1,
+                    name: "Abaza",
+                  },
+                  {
+                    length: 1,
+                    name: "Abdiji",
+                  },
+                ],
+                length: 0,
+                name: "",
+              },
+              {
+                branchset: [
+                  {
+                    length: 1,
+                    name: "Acehnese",
+                  },
+                  {
+                    length: 1,
+                    name: "Agni (Bini)",
+                  },
+                ],
+                length: 0,
+                name: "",
+              },
+            ],
+            length: 0,
+            name: "",
+          },
+        ],
+        length: 0,
+        name: "",
+      },
+      {
+        branchset: [
+          {
+            branchset: [
+              {
+                branchset: [
+                  {
+                    length: 1,
+                    name: "Abaza",
+                  },
+                  {
+                    length: 1,
+                    name: "Abdiji",
+                  },
+                ],
+                length: 0,
+                name: "",
+              },
+              {
+                branchset: [
+                  {
+                    length: 1,
+                    name: "Acehnese",
+                  },
+                  {
+                    length: 1,
+                    name: "Agni (Bini)",
+                  },
+                ],
+                length: 0,
+                name: "",
+              },
+            ],
+            length: 0,
+            name: "",
+          },
+          {
+            branchset: [
+              {
+                branchset: [
+                  {
+                    length: 1,
+                    name: "Abaza",
+                  },
+                  {
+                    length: 1,
+                    name: "Abdiji",
+                  },
+                ],
+                length: 0,
+                name: "",
+              },
+              {
+                branchset: [
+                  {
+                    length: 1,
+                    name: "Acehnese",
+                  },
+                  {
+                    length: 1,
+                    name: "Agni (Bini)",
+                  },
+                ],
+                length: 0,
+                name: "",
+              },
+            ],
+            length: 0,
+            name: "",
+          },
+        ],
+        length: 0,
+        name: "",
+      },
+    ],
+    length: 0,
+    name: "",
+  };
+  const lingMap = new Map();
+
+  resultData.pairs
+    .sort((a, b) => b.common_property_values - a.common_property_values)
+    .forEach((pair) => {
+      const hasLingZero = lingMap.has(pair[accessor][0]);
+      const hasLingOne = lingMap.has(pair[accessor][1]);
+
+      if (hasLingZero && !hasLingOne) {
+      } else if (hasLingOne && !hasLingZero) {
+      } else if (hasLingZero && hasLingOne) {
+      } else {
+      }
+    });
+  return (
+    <>
+      <h1>
+        Plotting similarity for {resultData[accessor].length}{" "}
+        {CapitalCase(
+          TargetToPlural(
+            resultData[accessor].length,
+            data.overviewData[`ling${accessor === "lings" ? "0" : "1"}_name`]
+          )
+        )}
+        {resultData[accessor].length <= 6
+          ? `: ${resultData[accessor].join(", ")}`
+          : ""}
+      </h1>
+      {resultData.pairs.length === 0 ? (
+        <>
+          <h2>No pairs found!</h2>
+          <Link to="new">Try again?</Link>
+        </>
+      ) : (
+        <>
+          <h2>Similarity Tree</h2>
+          <SimilarityTree data={treeData} />
+        </>
+      )}
+    </>
+  );
+};
+
+function SimilarityTreeResults({ data, resultData }) {
+  switch (resultData.on) {
+    case "lings":
+      return (
+        <SimilarityTreeResultsInner
+          data={data}
+          resultData={resultData}
+          accessor="lings"
+        />
+      );
+    case "linglets":
+      return (
+        <SimilarityTreeResultsInner
+          data={data}
+          resultData={resultData}
+          accessor="linglets"
+        />
+      );
+    default:
+      return <Redirect to="new" />;
+  }
+}
+
+function SimilarityResults({ data, resultData }) {
+  return <SimilarityTreeResults data={data} resultData={resultData} />;
 }
 
 export default SimilarityResults;
