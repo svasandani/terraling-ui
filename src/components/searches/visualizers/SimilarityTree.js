@@ -72,7 +72,7 @@ const SimilarityTree = ({ data }) => {
     setRadius(root, (root.data.length = 0), innerRadius / maxLength(root));
 
     const linkExtension = svg
-      .append("g")
+      .select("#linkext")
       .attr("fill", "none")
       .attr("stroke", "#000")
       .attr("stroke-opacity", 0.25)
@@ -85,7 +85,7 @@ const SimilarityTree = ({ data }) => {
       .attr("d", linkExtensionConstant);
 
     const link = svg
-      .append("g")
+      .select("#link")
       .attr("fill", "none")
       .attr("stroke", "#000")
       .selectAll("path")
@@ -97,10 +97,11 @@ const SimilarityTree = ({ data }) => {
       .attr("d", linkConstant);
 
     svg
-      .append("g")
+      .select("#text")
       .selectAll("text")
       .data(root.leaves())
       .join("text")
+      .style("font-size", "1.5rem")
       .attr("dy", ".31em")
       .attr(
         "transform",
@@ -137,7 +138,8 @@ const SimilarityTree = ({ data }) => {
         viewBox={viewBox}
       >
         <g id="link"></g>
-        <g id="node"></g>
+        <g id="linkext"></g>
+        <g id="text"></g>
       </svg>
       <div id="similarity-graph--tooltip"></div>
     </>
