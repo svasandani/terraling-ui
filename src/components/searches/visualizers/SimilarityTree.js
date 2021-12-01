@@ -19,11 +19,13 @@ const SimilarityTree = ({ data }) => {
       d.radius = (y0 += d.data.length) * k;
       if (d.children) d.children.forEach((d) => setRadius(d, y0, k));
     };
-    const linkConstant = (d) => {
-      return linkStep(d.source.x, d.source.y, d.target.x, d.target.y);
+    const linkFormula = (d) => {
+      // return linkStep(d.source.x, d.source.y, d.target.x, d.target.y);
+      return linkStep(d.source.x, d.source.radius, d.target.x, d.target.radius);
     };
-    const linkExtensionConstant = (d) => {
-      return linkStep(d.target.x, d.target.y, d.target.x, innerRadius);
+    const linkExtensionFormula = (d) => {
+      // return linkStep(d.target.x, d.target.y, d.target.x, innerRadius);
+      return linkStep(d.target.x, d.target.radius, d.target.x, innerRadius);
     };
     const linkStep = (startAngle, startRadius, endAngle, endRadius) => {
       const c0 = Math.cos((startAngle = ((startAngle - 90) / 180) * Math.PI));
@@ -60,6 +62,7 @@ const SimilarityTree = ({ data }) => {
       .cluster()
       .size([360, innerRadius])
       .separation((a, b) => 1);
+    const tooltip = d3.select("#similarity-tree--tooltip");
 
     const root = d3
       .hierarchy(data, (d) => d.branchset)
@@ -83,7 +86,7 @@ const SimilarityTree = ({ data }) => {
       .each(function (d) {
         d.target.linkExtensionNode = this;
       })
-      .attr("d", linkExtensionConstant);
+      .attr("d", linkExtensionFormula);
 
     const link = svg
       .select("#link")
@@ -95,7 +98,9 @@ const SimilarityTree = ({ data }) => {
       .each(function (d) {
         d.target.linkNode = this;
       })
-      .attr("d", linkConstant);
+      .attr("d", linkFormula);
+
+    let active = false;
 
     svg
       .select("#text")
@@ -112,8 +117,24 @@ const SimilarityTree = ({ data }) => {
       )
       .attr("text-anchor", (d) => (d.x < 180 ? "start" : "end"))
       .text((d) => d.data.name.replace(/_/g, " "))
-      .on("mouseover", mouseovered(true))
-      .on("mouseout", mouseovered(false));
+      .on("mouseover", (e, d) => {
+        mouseovered(true)(e, d);
+        active = true;
+      })
+      .on("mousemove", (e, d) => {
+        if (active) {
+          tooltip
+            .html(`<strong>Depth:</strong> ${d.depth}`)
+            .style("left", e.pageX + 5 + "px")
+            .style("top", e.pageY + 5 + "px")
+            .style("opacity", 0.9);
+        }
+      })
+      .on("mouseout", (e, d) => {
+        mouseovered(false)(e, d);
+        tooltip.style("opacity", 0);
+        active = false;
+      });
 
     function mouseovered(active) {
       return function (event, d) {
@@ -134,7 +155,7 @@ const SimilarityTree = ({ data }) => {
         <g id="linkext"></g>
         <g id="text"></g>
       </svg>
-      <div id="similarity-graph--tooltip"></div>
+      <div id="similarity-tree--tooltip"></div>
     </>
   );
 };

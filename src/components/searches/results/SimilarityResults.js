@@ -117,12 +117,12 @@ const SimilarityTreeResultsInner = ({
   resultData[accessor].forEach((ling) => {
     lingMap.set(ling, {
       name: ling,
-      length: 1,
+      length: 0,
     });
     containMap.set(ling, [ling]);
   });
 
-  const updateRoot = (ling1, ling2) => {
+  const updateRoot = (ling1, ling2, value) => {
     const contain1 = containMap.get(ling1);
     const contain2 = containMap.get(ling2);
     if (contain1.includes(ling2) || contain2.includes(ling1)) {
@@ -131,7 +131,7 @@ const SimilarityTreeResultsInner = ({
 
     const newRoot = {
       branchset: [lingMap.get(ling1), lingMap.get(ling2)],
-      length: 0,
+      length: value,
       name: "",
     };
 
@@ -158,7 +158,11 @@ const SimilarityTreeResultsInner = ({
     .filter((pair) => pair.common_property_values > filterThreshold)
     .sort((a, b) => b.common_property_values - a.common_property_values)
     .forEach((pair) => {
-      updateRoot(pair[accessor][0], pair[accessor][1]);
+      updateRoot(
+        pair[accessor][0],
+        pair[accessor][1],
+        pair.common_property_values
+      );
     });
 
   if (
@@ -182,7 +186,7 @@ const SimilarityTreeResultsInner = ({
 
     for (const [_, ling] of distinctParts) {
       if (lastLing !== null) {
-        updateRoot(lastLing, ling);
+        updateRoot(lastLing, ling, 0);
       }
 
       lastLing = ling;
@@ -352,7 +356,7 @@ function SimilarityResults({ data, resultData }) {
       </h3>
       <RangeInput
         min={0}
-        max={max}
+        max={max - 1}
         value={filterThreshold}
         setValue={setFilterThreshold}
       />

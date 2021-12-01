@@ -26,7 +26,7 @@ function SearchForm({ data, searchPath, searchData, setSearchData }) {
     { name: "Compare", id: "compare" },
     { name: "Cross", id: "cross" },
     { name: "Implication", id: "implication" },
-    { name: "Similarity Graph", id: "similarity" },
+    { name: "Similarity", id: "similarity" },
   ];
 
   useEffect(() => {

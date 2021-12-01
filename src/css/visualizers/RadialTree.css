@@ -11,3 +11,19 @@
   font-weight: bold;
   cursor: pointer;
 }
+
+#similarity-tree--tooltip {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+
+  padding: 16px;
+
+  border-radius: 8px;
+  background: var(--body-bg);
+
+  border: 1px solid var(--gray2);
+  opacity: 0;
+
+  pointer-events: none;
+}
