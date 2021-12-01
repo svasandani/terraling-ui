@@ -11,7 +11,7 @@ const SimilarityTree = ({ data }) => {
   }`;
 
   const ref = useD3((svg) => {
-    const width = viewBoxWidth * 2;
+    const width = viewBoxWidth * 1.5;
     const outerRadius = width / 2;
     const innerRadius = outerRadius - 170;
     const setRadius = (d, y0, k) => {
@@ -101,7 +101,6 @@ const SimilarityTree = ({ data }) => {
       .selectAll("text")
       .data(root.leaves())
       .join("text")
-      .style("font-size", "1.5rem")
       .attr("dy", ".31em")
       .attr(
         "transform",

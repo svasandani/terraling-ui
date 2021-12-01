@@ -9,17 +9,16 @@ import SimilarityTree from "../visualizers/SimilarityTree";
 
 import { CapitalCase, TargetToPlural } from "../../helpers/Helpers";
 import CheckboxInput from "../../shared/CheckboxInput";
+import { filter } from "d3-array";
 
-const SimilarityGraphResultsInner = ({ data, resultData, accessor }) => {
-  const max = resultData.pairs.reduce(
-    (a, c) => (a > c.common_property_values ? a : c.common_property_values),
-    0
-  );
-  const [filterThreshold, setFilterThreshold] = React.useState(
-    Math.floor(max / 2)
-  );
-  const [showLonely, setShowLonely] = React.useState(false);
-
+const SimilarityGraphResultsInner = ({
+  data,
+  resultData,
+  accessor,
+  max,
+  filterThreshold,
+  showLonely,
+}) => {
   const lonelyMap = new Map();
   const links = resultData.pairs
     .filter((p) => p.common_property_values > filterThreshold)
@@ -61,27 +60,19 @@ const SimilarityGraphResultsInner = ({ data, resultData, accessor }) => {
         <>
           <h2>Similarity Graph (click and drag to reposition)</h2>
           <SimilarityGraph nodes={nodes} links={links} />
-          <Divider />
-          <h2>
-            Showing connections with more than {filterThreshold} common property
-            values
-          </h2>
-          <RangeInput
-            min="0"
-            max={links.reduce((a, c) => (a > c.value ? a : c.value), 0)}
-            value={filterThreshold}
-            setValue={setFilterThreshold}
-          />
-          <br />
-          <h2>Show points with no common values?</h2>
-          <CheckboxInput value={showLonely} setValue={setShowLonely} />
         </>
       )}
     </>
   );
 };
 
-function SimilarityGraphResults({ data, resultData }) {
+function SimilarityGraphResults({
+  data,
+  resultData,
+  max,
+  filterThreshold,
+  showLonely,
+}) {
   switch (resultData.on) {
     case "lings":
       return (
@@ -89,6 +80,9 @@ function SimilarityGraphResults({ data, resultData }) {
           data={data}
           resultData={resultData}
           accessor="lings"
+          max={max}
+          filterThreshold={filterThreshold}
+          showLonely={showLonely}
         />
       );
     case "linglets":
@@ -97,6 +91,9 @@ function SimilarityGraphResults({ data, resultData }) {
           data={data}
           resultData={resultData}
           accessor="linglets"
+          max={max}
+          filterThreshold={filterThreshold}
+          showLonely={showLonely}
         />
       );
     default:
@@ -104,175 +101,93 @@ function SimilarityGraphResults({ data, resultData }) {
   }
 }
 
-const SimilarityTreeResultsInner = ({ data, resultData, accessor }) => {
-  let treeData = {
-    branchset: [
-      {
-        branchset: [
-          {
-            branchset: [
-              {
-                branchset: [
-                  {
-                    length: 1,
-                    name: "Abaza",
-                  },
-                  {
-                    length: 1,
-                    name: "Abdiji",
-                  },
-                ],
-                length: 0,
-                name: "",
-              },
-              {
-                branchset: [
-                  {
-                    length: 1,
-                    name: "Acehnese",
-                  },
-                  {
-                    length: 1,
-                    name: "Agni (Bini)",
-                  },
-                ],
-                length: 0,
-                name: "",
-              },
-            ],
-            length: 0,
-            name: "",
-          },
-          {
-            branchset: [
-              {
-                branchset: [
-                  {
-                    length: 1,
-                    name: "Abaza",
-                  },
-                  {
-                    length: 1,
-                    name: "Abdiji",
-                  },
-                ],
-                length: 0,
-                name: "",
-              },
-              {
-                branchset: [
-                  {
-                    length: 1,
-                    name: "Acehnese",
-                  },
-                  {
-                    length: 1,
-                    name: "Agni (Bini)",
-                  },
-                ],
-                length: 0,
-                name: "",
-              },
-            ],
-            length: 0,
-            name: "",
-          },
-        ],
-        length: 0,
-        name: "",
-      },
-      {
-        branchset: [
-          {
-            branchset: [
-              {
-                branchset: [
-                  {
-                    length: 1,
-                    name: "Abaza",
-                  },
-                  {
-                    length: 1,
-                    name: "Abdiji",
-                  },
-                ],
-                length: 0,
-                name: "",
-              },
-              {
-                branchset: [
-                  {
-                    length: 1,
-                    name: "Acehnese",
-                  },
-                  {
-                    length: 1,
-                    name: "Agni (Bini)",
-                  },
-                ],
-                length: 0,
-                name: "",
-              },
-            ],
-            length: 0,
-            name: "",
-          },
-          {
-            branchset: [
-              {
-                branchset: [
-                  {
-                    length: 1,
-                    name: "Abaza",
-                  },
-                  {
-                    length: 1,
-                    name: "Abdiji",
-                  },
-                ],
-                length: 0,
-                name: "",
-              },
-              {
-                branchset: [
-                  {
-                    length: 1,
-                    name: "Acehnese",
-                  },
-                  {
-                    length: 1,
-                    name: "Agni (Bini)",
-                  },
-                ],
-                length: 0,
-                name: "",
-              },
-            ],
-            length: 0,
-            name: "",
-          },
-        ],
-        length: 0,
-        name: "",
-      },
-    ],
-    length: 0,
-    name: "",
-  };
+const SimilarityTreeResultsInner = ({
+  data,
+  resultData,
+  accessor,
+  max,
+  filterThreshold,
+  showLonely,
+}) => {
+  let treeData = {};
   const lingMap = new Map();
+  const containMap = new Map();
+
+  resultData[accessor].forEach((ling) => {
+    lingMap.set(ling, {
+      name: ling,
+      length: 1,
+    });
+    containMap.set(ling, [ling]);
+  });
+
+  const updateRoot = (ling1, ling2) => {
+    const contain1 = containMap.get(ling1);
+    const contain2 = containMap.get(ling2);
+    if (contain1.includes(ling2) || contain2.includes(ling1)) {
+      return;
+    }
+
+    const newRoot = {
+      branchset: [lingMap.get(ling1), lingMap.get(ling2)],
+      length: 0,
+      name: "",
+    };
+
+    const contains = [...containMap.get(ling1), ...containMap.get(ling2)];
+
+    lingMap.set(ling1, newRoot);
+    lingMap.set(ling2, newRoot);
+    containMap.set(ling1, contains);
+    containMap.set(ling2, contains);
+
+    contain1.forEach((ling) => {
+      lingMap.set(ling, newRoot);
+      containMap.set(ling, contains);
+    });
+    contain2.forEach((ling) => {
+      lingMap.set(ling, newRoot);
+      containMap.set(ling, contains);
+    });
+
+    treeData = newRoot;
+  };
 
   resultData.pairs
+    .filter((pair) => pair.common_property_values > filterThreshold)
     .sort((a, b) => b.common_property_values - a.common_property_values)
     .forEach((pair) => {
-      const hasLingZero = lingMap.has(pair[accessor][0]);
-      const hasLingOne = lingMap.has(pair[accessor][1]);
-
-      if (hasLingZero && !hasLingOne) {
-      } else if (hasLingOne && !hasLingZero) {
-      } else if (hasLingZero && hasLingOne) {
-      } else {
-      }
+      updateRoot(pair[accessor][0], pair[accessor][1]);
     });
+
+  if (
+    !resultData[accessor].every((item) =>
+      containMap.get(resultData[accessor][0]).includes(item)
+    )
+  ) {
+    const distinctParts = new Map();
+
+    for (const [ling, contains] of containMap) {
+      if (
+        (!showLonely && contains.length === 1) ||
+        distinctParts.has(contains.sort().join(","))
+      )
+        continue;
+
+      distinctParts.set(contains.sort().join(","), ling);
+    }
+
+    let lastLing = null;
+
+    for (const [_, ling] of distinctParts) {
+      if (lastLing !== null) {
+        updateRoot(lastLing, ling);
+      }
+
+      lastLing = ling;
+    }
+  }
+
   return (
     <>
       <h1>
@@ -302,13 +217,22 @@ const SimilarityTreeResultsInner = ({ data, resultData, accessor }) => {
   );
 };
 
-function SimilarityTreeResults({ data, resultData }) {
+function SimilarityTreeResults({
+  data,
+  resultData,
+  max,
+  filterThreshold,
+  showLonely,
+}) {
   switch (resultData.on) {
     case "lings":
       return (
         <SimilarityTreeResultsInner
           data={data}
           resultData={resultData}
+          max={max}
+          filterThreshold={filterThreshold}
+          showLonely={showLonely}
           accessor="lings"
         />
       );
@@ -317,6 +241,9 @@ function SimilarityTreeResults({ data, resultData }) {
         <SimilarityTreeResultsInner
           data={data}
           resultData={resultData}
+          max={max}
+          filterThreshold={filterThreshold}
+          showLonely={showLonely}
           accessor="linglets"
         />
       );
@@ -326,7 +253,40 @@ function SimilarityTreeResults({ data, resultData }) {
 }
 
 function SimilarityResults({ data, resultData }) {
-  return <SimilarityTreeResults data={data} resultData={resultData} />;
+  const max = resultData.pairs.reduce(
+    (a, c) => (a > c.common_property_values ? a : c.common_property_values),
+    0
+  );
+  const [filterThreshold, setFilterThreshold] = React.useState(
+    Math.floor(max / 2)
+  );
+  const [showLonely, setShowLonely] = React.useState(false);
+
+  return (
+    <>
+      <SimilarityTreeResults
+        data={data}
+        resultData={resultData}
+        max={max}
+        filterThreshold={filterThreshold}
+        showLonely={showLonely}
+      />
+      <Divider />
+      <h2>
+        Showing connections with more than {filterThreshold} common property
+        values
+      </h2>
+      <RangeInput
+        min="0"
+        max={max}
+        value={filterThreshold}
+        setValue={setFilterThreshold}
+      />
+      <br />
+      <h2>Show points with no common values?</h2>
+      <CheckboxInput value={showLonely} setValue={setShowLonely} />
+    </>
+  );
 }
 
 export default SimilarityResults;
