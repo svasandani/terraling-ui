@@ -23,15 +23,7 @@ const SimilarityGraph = ({ nodes, links }) => {
   const ref = useD3((svg) => {
     const nodeIds = d3.map(nodes, (d) => d.id);
 
-    const nodeFill = "currentColor";
-    const nodeStroke = "#fff";
-    const nodeStrokeWidth = 1.5;
-    const nodeStrokeOpacity = 1;
     const nodeRadius = 5;
-
-    const linkStroke = "#999";
-    const linkStrokeOpacity = 0.6;
-    const linkStrokeLinecap = "round";
 
     const lMin = links.reduce(
       (acc, curr) => (acc < curr.value ? acc : curr.value),
@@ -46,7 +38,7 @@ const SimilarityGraph = ({ nodes, links }) => {
       adjustedMin +
       (adjustedMax - adjustedMin) * ((value - lMin) / (lMax - lMin));
 
-    const widths = d3.map(links, (l) => lLerp(l.value, 1, 5));
+    const widths = d3.map(links, (l) => lLerp(l.value, 0.5, 2));
 
     // Construct the forces.
     const forceNode = d3.forceManyBody();
@@ -69,9 +61,6 @@ const SimilarityGraph = ({ nodes, links }) => {
 
     const link = svg
       .select("#link")
-      .attr("stroke", linkStroke)
-      .attr("stroke-opacity", linkStrokeOpacity)
-      .attr("stroke-linecap", linkStrokeLinecap)
       .selectAll("line")
       .data(links)
       .join("line")
@@ -100,10 +89,6 @@ const SimilarityGraph = ({ nodes, links }) => {
 
     const node = svg
       .select("#node")
-      .attr("fill", nodeFill)
-      .attr("stroke", nodeStroke)
-      .attr("stroke-opacity", nodeStrokeOpacity)
-      .attr("stroke-width", nodeStrokeWidth)
       .selectAll("circle")
       .data(nodes)
       .join("circle")
