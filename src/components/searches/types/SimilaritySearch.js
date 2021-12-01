@@ -144,7 +144,7 @@ function SimilaritySearch({ data, reset, setSearchData, searchPath }) {
           <List
             data={lingArr}
             field="name"
-            heading={`Comparing ${lingArr.length} ${CapitalCase(
+            heading={`Plotting ${lingArr.length} ${CapitalCase(
               TargetToPlural(lingArr.length, data.overviewData.ling0_name)
             )}:`}
           />
