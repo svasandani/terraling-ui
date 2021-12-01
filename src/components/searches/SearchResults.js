@@ -18,7 +18,7 @@ function SearchResults({ data, groupId, searchData }) {
     if (Object.keys(searchData).length === 0) return;
 
     // fetch(process.env.REACT_APP_API + "groups/" + groupId + "/searches/get_results", {
-    fetch(`http://localhost:7107/api/search/${searchData.href}`, {
+    fetch(`/api/search/${searchData.href}`, {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
