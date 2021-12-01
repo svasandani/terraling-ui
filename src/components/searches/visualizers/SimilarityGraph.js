@@ -44,7 +44,7 @@ const SimilarityGraph = ({ nodes, links }) => {
     const forceNode = d3.forceManyBody();
     const forceLink = d3.forceLink(links).id(({ index: i }) => nodeIds[i]);
     forceNode.strength(-25);
-    forceLink.strength((l) => lLerp(l.value, 0.25, 1));
+    forceLink.strength((l) => lLerp(l.value, 0.025, 0.1));
 
     const simulation = d3
       .forceSimulation(nodes)
