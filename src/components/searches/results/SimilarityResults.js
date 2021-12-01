@@ -3,6 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 
 import RangeInput from "../../shared/RangeInput";
 import Divider from "../../shared/Divider";
+import SelectTable from "../../shared/SelectTable";
 
 import SimilarityGraph from "../visualizers/SimilarityGraph";
 import SimilarityTree from "../visualizers/SimilarityTree";
@@ -258,33 +259,114 @@ function SimilarityResults({ data, resultData }) {
     0
   );
   const [filterThreshold, setFilterThreshold] = React.useState(
-    Math.floor(max / 2)
+    Math.floor((2 * max) / 3)
   );
-  const [showLonely, setShowLonely] = React.useState(false);
+
+  const showLonelies = [
+    {
+      name: `Show lonely points`,
+      id: true,
+    },
+    {
+      name: `Hide lonely points`,
+      id: false,
+    },
+  ];
+  const [showLonelyArr, setShowLonelyArr] = React.useState([
+    {
+      name: `Hide lonely points`,
+      id: false,
+    },
+  ]);
+
+  const visualizationTypes = [
+    {
+      name: `Similarity Graph`,
+      id: "graph",
+    },
+    {
+      name: `Similarity Tree`,
+      id: "tree",
+    },
+  ];
+  const [visualizationTypeArr, setVisualizationTypeArr] = React.useState([
+    {
+      name: `Similarity Graph`,
+      id: "graph",
+    },
+  ]);
 
   return (
     <>
-      <SimilarityTreeResults
-        data={data}
-        resultData={resultData}
-        max={max}
-        filterThreshold={filterThreshold}
-        showLonely={showLonely}
-      />
+      {(() => {
+        switch (visualizationTypeArr[0].id) {
+          case "graph":
+            return (
+              <SimilarityGraphResults
+                data={data}
+                resultData={resultData}
+                max={max}
+                filterThreshold={filterThreshold}
+                showLonely={showLonelyArr[0].id}
+              />
+            );
+            break;
+          case "tree":
+            return (
+              <SimilarityTreeResults
+                data={data}
+                resultData={resultData}
+                max={max}
+                filterThreshold={filterThreshold}
+                showLonely={showLonelyArr[0].id}
+              />
+            );
+            break;
+          default:
+            return (
+              <SimilarityTreeResults
+                data={data}
+                resultData={resultData}
+                max={max}
+                filterThreshold={filterThreshold}
+                showLonely={showLonelyArr[0].id}
+              />
+            );
+        }
+      })()}
       <Divider />
-      <h2>
+      <h2>Visualization Type</h2>
+      <SelectTable
+        data={visualizationTypes}
+        columnMap={["name"]}
+        selectArr={visualizationTypeArr}
+        find={(el, row) => el.id === row.id}
+        setSelectArr={setVisualizationTypeArr}
+        maxSelect={1}
+        replaceWithNew={true}
+      />
+      <h2>Visualization Options</h2>
+      <h3>
         Showing connections with more than {filterThreshold} common property
         values
-      </h2>
+      </h3>
       <RangeInput
-        min="0"
+        min={0}
         max={max}
         value={filterThreshold}
         setValue={setFilterThreshold}
       />
       <br />
-      <h2>Show points with no common values?</h2>
-      <CheckboxInput value={showLonely} setValue={setShowLonely} />
+      <h3>Lonely points</h3>
+      <SelectTable
+        data={showLonelies}
+        columnMap={["name"]}
+        selectArr={showLonelyArr}
+        find={(el, row) => el.id === row.id}
+        setSelectArr={setShowLonelyArr}
+        maxSelect={1}
+        replaceWithNew={true}
+      />
     </>
   );
 }

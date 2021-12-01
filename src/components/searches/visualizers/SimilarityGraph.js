@@ -3,6 +3,7 @@ import React from "react";
 import * as d3 from "d3";
 
 import "../../../css/visualizers/ForceGraph.css";
+import "../../../css/visualizers/shared.css";
 
 const SimilarityGraph = ({ nodes, links }) => {
   let doUnmount = () => {};
@@ -179,14 +180,7 @@ const SimilarityGraph = ({ nodes, links }) => {
 
   return (
     <>
-      <svg
-        ref={ref}
-        style={{
-          maxHeight: "50vh",
-          width: "auto",
-        }}
-        viewBox={viewBox}
-      >
+      <svg id="visualization" ref={ref} viewBox={viewBox}>
         <g id="link"></g>
         <g id="node"></g>
       </svg>

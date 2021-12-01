@@ -19,27 +19,27 @@ input[type="range"] {
 input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   height: 2rem;
-  width: 2rem;
+  width: 2ch;
   border-radius: 1rem;
-  background: var(--nav-bg);
+  background: var(--light-color);
   cursor: pointer;
 }
 
 /* All the same stuff for Firefox */
 input[type=range]::-moz-range-thumb {
   height: 2rem;
-  width: 2rem;
+  width: 2ch;
   border-radius: 1rem;
-  background: var(--nav-bg);
+  background: var(--light-color);
   cursor: pointer;
 }
 
 /* All the same stuff for IE */
 input[type=range]::-ms-thumb {
   height: 2rem;
-  width: 2rem;
+  width: 2ch;
   border-radius: 1rem;
-  background: var(--nav-bg);
+  background: var(--light-color);
   cursor: pointer;
 }
 

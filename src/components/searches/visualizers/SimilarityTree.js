@@ -3,6 +3,7 @@ import React from "react";
 import * as d3 from "d3";
 
 import "../../../css/visualizers/RadialTree.css";
+import "../../../css/visualizers/shared.css";
 
 const SimilarityTree = ({ data }) => {
   const viewBoxWidth = 500;
@@ -128,14 +129,7 @@ const SimilarityTree = ({ data }) => {
 
   return (
     <>
-      <svg
-        ref={ref}
-        style={{
-          maxHeight: "50vh",
-          width: "auto",
-        }}
-        viewBox={viewBox}
-      >
+      <svg id="visualization" ref={ref} viewBox={viewBox}>
         <g id="link"></g>
         <g id="linkext"></g>
         <g id="text"></g>
