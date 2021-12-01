@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   Switch,
+  Redirect,
   Route,
   Link,
   useHistory,
@@ -13,7 +14,7 @@ import List from "../../shared/List";
 
 import { CapitalCase, TargetToPlural } from "../../helpers/Helpers";
 
-function CrossSearch({ data, reset, setSearchData, searchPath }) {
+function SimilaritySearch({ data, reset, setSearchData, searchPath }) {
   let match = useRouteMatch();
   const history = useHistory();
 
@@ -22,47 +23,44 @@ function CrossSearch({ data, reset, setSearchData, searchPath }) {
   const [lingletArr, setLingletArr] = useState([]);
   const [lingletPropertyArr, setLingletPropertyArr] = useState([]);
 
-  const buildLingPropertySearch = () => {
+  const buildLingSearch = () => {
     let searchData = {
       group: parseInt(data.id),
-      ling_properties: lingPropertyArr.map((property) => parseInt(property.id)),
       lings: lingArr.map((ling) => parseInt(ling.id)),
+      ling_properties: lingPropertyArr.map((property) => parseInt(property.id)),
     };
 
     setSearchData({
-      href: "cross/ling_properties",
+      href: "similarity/lings",
       data: searchData,
     });
   };
 
-  const buildLingletPropertySearch = () => {
+  const buildLingletSearch = () => {
     let searchData = {
       group: parseInt(data.id),
-      linglet_properties: lingletPropertyArr.map((property) =>
-        parseInt(property.id)
-      ),
       linglets: lingletArr.map((linglet) => parseInt(linglet.id)),
     };
 
     setSearchData({
-      href: "cross/linglet_properties",
+      href: "similarity/linglets",
       data: searchData,
     });
   };
 
   let searchTargets = [
     {
-      name: `Cross two or more ${CapitalCase(
-        data.overviewData.ling0_name
-      )} properties`,
+      name: `Plot two or more ${CapitalCase(
+        TargetToPlural(2, data.overviewData.ling0_name)
+      )}`,
       id: "lings",
     },
   ];
   if (data.overviewData.depth_maximum > 0) {
     searchTargets.push({
-      name: `Cross two or more ${CapitalCase(
-        data.overviewData.ling1_name
-      )} properties`,
+      name: `Plot two or more ${CapitalCase(
+        TargetToPlural(2, data.overviewData.ling1_name)
+      )}`,
       id: "linglets",
     });
   }
@@ -115,28 +113,17 @@ function CrossSearch({ data, reset, setSearchData, searchPath }) {
       <Switch>
         <Route path={`${match.path}/lings`}>
           <h2>
-            {CapitalCase(data.overviewData.ling0_name) + " properties"} (up to
-            6){" "}
+            {CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))}{" "}
             <Link
               className="reset-btn"
               to="."
-              onClick={(e) => reset(e, setLingPropertyArr)}
+              onClick={(e) => {
+                e.preventDefault();
+                setLingArr(data.lingData);
+              }}
             >
-              Reset
-            </Link>
-          </h2>
-          <SelectTable
-            data={data.lingPropertyData}
-            columnMap={["name"]}
-            selectArr={lingPropertyArr}
-            setSelectArr={setLingPropertyArr}
-            maxHeight="250px"
-          />
-          <h2>
-            {`${CapitalCase(
-              TargetToPlural(2, data.overviewData.ling0_name)
-            )} to display`}{" "}
-            (defaults to all){" "}
+              Select all
+            </Link>{" "}
             <Link
               className="reset-btn"
               to="."
@@ -150,31 +137,35 @@ function CrossSearch({ data, reset, setSearchData, searchPath }) {
             columnMap={["name"]}
             selectArr={lingArr}
             setSelectArr={setLingArr}
-            maxSelect={-1}
             maxHeight="250px"
+            maxSelect={-1}
           />
           <Divider />
           <List
-            data={lingPropertyArr}
-            field="name"
-            heading={`Crossing ${lingPropertyArr.length} propert${
-              lingPropertyArr.length === 1 ? "y" : "ies"
-            }:`}
-          />
-          <List
             data={lingArr}
             field="name"
-            heading={`Showing ${lingArr.length} ${CapitalCase(
+            heading={`Comparing ${lingArr.length} ${CapitalCase(
               TargetToPlural(lingArr.length, data.overviewData.ling0_name)
             )}:`}
           />
-          {lingPropertyArr.length <= 1 ? (
-            <p>Select at least two properties to cross.</p>
+          <List
+            data={lingPropertyArr}
+            field="name"
+            heading={`Showing ${lingPropertyArr.length} propert${
+              lingPropertyArr.length === 1 ? "y" : "ies"
+            }:`}
+          />
+          {lingArr.length <= 1 ? (
+            <p>
+              Select at least two{" "}
+              {CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))} to
+              plot.
+            </p>
           ) : (
             <Link
               className="cta"
               to={`${searchPath}/results`}
-              onClick={buildLingPropertySearch}
+              onClick={buildLingSearch}
             >
               Search
             </Link>
@@ -184,28 +175,17 @@ function CrossSearch({ data, reset, setSearchData, searchPath }) {
           {data.overviewData.depth_maximum > 0 ? (
             <>
               <h2>
-                {CapitalCase(data.overviewData.ling1_name) + " properties"} (up
-                to 6){" "}
+                {CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))}{" "}
                 <Link
                   className="reset-btn"
                   to="."
-                  onClick={(e) => reset(e, setLingletPropertyArr)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setLingletArr(data.lingletData);
+                  }}
                 >
-                  Reset
-                </Link>
-              </h2>
-              <SelectTable
-                data={data.lingletPropertyData}
-                columnMap={["name"]}
-                selectArr={lingletPropertyArr}
-                setSelectArr={setLingletPropertyArr}
-                maxHeight="250px"
-              />
-              <h2>
-                {`${CapitalCase(
-                  TargetToPlural(2, data.overviewData.ling1_name)
-                )} to display`}{" "}
-                (defaults to all){" "}
+                  Select all
+                </Link>{" "}
                 <Link
                   className="reset-btn"
                   to="."
@@ -219,44 +199,43 @@ function CrossSearch({ data, reset, setSearchData, searchPath }) {
                 columnMap={["name"]}
                 selectArr={lingletArr}
                 setSelectArr={setLingletArr}
-                maxSelect={-1}
                 maxHeight="250px"
+                maxSelect={-1}
               />
               <Divider />
               <List
-                data={lingletPropertyArr}
-                field="name"
-                heading={`Crossing ${lingletPropertyArr.length} propert${
-                  lingletPropertyArr.length === 1 ? "y" : "ies"
-                }:`}
-              />
-              <List
                 data={lingletArr}
                 field="name"
-                heading={`Showing ${lingletArr.length} ${CapitalCase(
+                heading={`Comparing ${lingletArr.length} ${CapitalCase(
                   TargetToPlural(
                     lingletArr.length,
                     data.overviewData.ling1_name
                   )
                 )}:`}
               />
-              {lingletPropertyArr.length <= 1 ? (
-                <p>Select at least two properties to cross.</p>
+              {lingletArr.length <= 1 ? (
+                <p>
+                  Select at least two{" "}
+                  {CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))}{" "}
+                  to plot.
+                </p>
               ) : (
                 <Link
                   className="cta"
                   to={`${searchPath}/results`}
-                  onClick={buildLingletPropertySearch}
+                  onClick={buildLingletSearch}
                 >
                   Search
                 </Link>
               )}
             </>
-          ) : null}
+          ) : (
+            <Redirect to="lings" />
+          )}
         </Route>
       </Switch>
     </>
   );
 }
 
-export default CrossSearch;
+export default SimilaritySearch;

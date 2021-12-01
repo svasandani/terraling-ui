@@ -1,0 +1,54 @@
+.rangeinput {
+  width: 100%;
+}
+
+input[type="range"] {
+  outline: none;
+  appearance: none;
+
+  width: 100%;
+
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid var(--gray2);
+  background: var(--lighter);
+  box-shadow: inset 0 2px 7px -5px var(--gray1);
+}
+
+/* Special styling for WebKit/Blink */
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 2rem;
+  width: 2ch;
+  border-radius: 1rem;
+  background: var(--light-color);
+  cursor: pointer;
+}
+
+/* All the same stuff for Firefox */
+input[type=range]::-moz-range-thumb {
+  height: 2rem;
+  width: 2ch;
+  border-radius: 1rem;
+  background: var(--light-color);
+  cursor: pointer;
+}
+
+/* All the same stuff for IE */
+input[type=range]::-ms-thumb {
+  height: 2rem;
+  width: 2ch;
+  border-radius: 1rem;
+  background: var(--light-color);
+  cursor: pointer;
+}
+
+.min, .max {
+  font-weight: bold;
+}
+
+.ranges {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+}

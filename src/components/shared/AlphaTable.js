@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link, useRouteMatch } from "react-router-dom";
 
-import Loading from '../shared/Loading';
+import Loading from "../shared/Loading";
 
-import '../../css/shared/Table.css';
-import '../../css/shared/AlphaTable.css';
+import "../../css/shared/Table.css";
+import "../../css/shared/AlphaTable.css";
 
 /*
   data - Set of data to be displayed as a table, must be an Array
@@ -32,16 +32,16 @@ function AlphaTable({ data, sort, link, columnMap }) {
 
   const [filter, setFilter] = useState("");
 
-  if (data.length === 0) return (
-    <Loading />
-  );
+  if (data.length === 0) return <Loading />;
 
   if (sort !== undefined) {
     data = data.sort(sort);
   }
 
   if (link === undefined) {
-    link = (url, id) => { return url + "/" + id; }
+    link = (url, id) => {
+      return url + "/" + id;
+    };
   }
 
   let dataReduce = {};
@@ -62,74 +62,84 @@ function AlphaTable({ data, sort, link, columnMap }) {
   const filterBy = (e, letter) => {
     e.preventDefault();
     setFilter(letter);
-  }
+  };
 
   return (
     <>
       <div className="card filter">
-        <a href="#container" onClick={(e) => { filterBy(e, "") }}>ALL</a>
-        { Object.keys(dataReduce).map(letter => {
+        <a
+          href="#container"
+          onClick={(e) => {
+            filterBy(e, "");
+          }}
+        >
+          ALL
+        </a>
+        {Object.keys(dataReduce).map((letter) => {
           return (
-            <a key={letter} href="#container" onClick={(e) => { filterBy(e, letter) }}>{letter}</a>
-          )
+            <a
+              key={letter}
+              href="#container"
+              onClick={(e) => {
+                filterBy(e, letter);
+              }}
+            >
+              {letter}
+            </a>
+          );
         })}
       </div>
-      { Object.keys(dataReduce).map(letter => {
+      {Object.keys(dataReduce).map((letter) => {
         if (filter.length > 0 && filter !== letter) return null;
 
         return (
           <div key={letter} className="letter grouped-card">
             <h3>{letter}</h3>
             <div className={`card ${headers ? "header-card" : ""}`}>
-              {
-                headers ?
-                (
-                  <>
-                    <div className={`headers row row-${keys.length}`}>
-                      {
-                        keys.map((col, i) => {
-                          return (
-                            <span key={i} className="header name">{columnMap[col]}</span>
-                          )
-                        })
-                      }
-                    </div>
-                  </>
-                ) :
-                (
-                  null
-                )
-              }
-              { dataReduce[letter].map((row, i) => {
+              {headers ? (
+                <>
+                  <div className={`headers row row-${keys.length}`}>
+                    {keys.map((col, i) => {
+                      return (
+                        <span key={i} className="header name">
+                          {columnMap[col]}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </>
+              ) : null}
+              {dataReduce[letter].map((row, i) => {
                 return (
                   <React.Fragment key={i}>
                     <div className={`row row-${keys.length}`}>
-                      {
-                        keys.map((col, i) => {
-                          if (i === 0) return (
-                            <span key={i} className="name"><Link to={link(match.url, row.id)}>{row[col]}</Link></span>
-                          ); else return (
-                            <span key={i} className="name">{row[col]}</span>
+                      {keys.map((col, i) => {
+                        if (i === 0)
+                          return (
+                            <span key={i} className="name">
+                              <Link to={link(match.url, row.id)}>
+                                {row[col]}
+                              </Link>
+                            </span>
                           );
-                        })
-                      }
-
+                        else
+                          return (
+                            <span key={i} className="name">
+                              {row[col]}
+                            </span>
+                          );
+                      })}
                     </div>
-                    { dataReduce[letter].length - i > 1 ?
-                      (
-                        <span className="h-divider" />
-                      ) :
-                      (
-                        null
-                      )
-                    }
+                    {dataReduce[letter].length - i > 1 ? (
+                      <span className="h-divider" />
+                    ) : null}
                   </React.Fragment>
-                )
-              }) }
+                );
+              })}
             </div>
           </div>
-        )
-      }) }
+        );
+      })}
     </>
   );
 }

@@ -1,0 +1,11 @@
+svg#visualization {
+  max-height: 80vh;
+  width: auto;
+}
+
+@media (max-width: 1000px) {
+  svg#visualization {
+    max-height: 50vh;
+    width: auto;
+  }
+}

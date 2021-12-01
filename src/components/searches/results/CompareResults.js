@@ -1,68 +1,102 @@
-import React from 'react';
+import React, { useEffect } from "react";
+import { Link, Redirect } from "react-router-dom";
 
-import HeadingTable from '../../shared/HeadingTable';
+import HeadingTable from "../../shared/HeadingTable";
 
-import { CapitalCase, TargetToPlural } from '../../helpers/Helpers';
+import { CapitalCase, TargetToPlural } from "../../helpers/Helpers";
 
-function CompareResults({ data, resultData }) {
-  let lings = resultData.rows[0].lings;
-  let num = lings.length;
-  let depth = lings[0].depth;
+const CompareResultsInner = ({ data, resultData, nameSort, accessor }) => {
+  const distinctData = resultData.distinct.map((row) => {
+    row[`${accessor}_value_pairs`].forEach((pair) => {
+      row[pair.name] = pair.value;
+    });
 
-  lings = lings.reduce((arr, ling) => { arr.push(ling.name); return arr; }, []);
-
-  const idSort = (a, b) => { return a.id > b.id ? 1 : -1; }
-
-  let diffColumnMap = { name: resultData.header.differents.compare_property };
-  resultData.header.differents.ling_value.forEach((value, i) => {
-    diffColumnMap["value_" + i] = value;
+    return row;
   });
 
-  let separatedData = resultData.rows.reduce((arr, row) => {
-    if (row.child.length > 1) {
-      let diffObj = { name: row.parent[0].property.name, id: row.parent[0].property.id };
-
-      for ( let i = 0; i < num; i++ ) {
-        diffObj["value_" + i] = row.child[i] === null ? "" : row.child[i].value;
-      }
-
-      arr.differents.push(diffObj);
-    } else {
-      arr.commons.push({ name: row.parent[0].property.name, id: row.parent[0].property.id, value: row.child[0].value });
-    }
-
-    return arr;
-  }, { commons: [], differents: [] })
+  const diffColumnMap = { name: "Property" };
+  resultData[`${accessor}s`].forEach((ling) => {
+    diffColumnMap[ling] = ling;
+  });
 
   return (
     <>
-      <h1>Comparing {num} {CapitalCase(TargetToPlural(2, (depth > 0 ? data.overviewData.ling1_name : data.overviewData.ling0_name)))}: {lings.join(", ")}</h1>
-      {
-        Object.keys(resultData.header.commons).length > 0 ?
-        (
-          <>
-            <h2>Common Property Values</h2>
-            <HeadingTable data={separatedData.commons} sort={idSort} link={(url, id) => { return "/groups/" + data.id + "/properties/" + id; }} columnMap={{ "name": resultData.header.commons.compare_property, "value": resultData.header.commons.common_values }} />
-          </>
-        ) :
-        (
-          null
-        )
-      }
-      {
-        Object.keys(resultData.header.differents).length > 0 ?
-        (
-          <>
-            <h2>Different Property Values</h2>
-            <HeadingTable data={separatedData.differents} sort={idSort} link={(url, id) => { return "/groups/" + data.id + "/properties/" + id; }} columnMap={diffColumnMap} />
-          </>
-        ) :
-        (
-          null
-        )
-      }
+      <h1>
+        Comparing {resultData[`${accessor}s`].length}{" "}
+        {CapitalCase(
+          TargetToPlural(
+            resultData[`${accessor}s`].length,
+            data.overviewData[`ling${accessor === "ling" ? "0" : "1"}_name`]
+          )
+        )}
+        : {resultData[`${accessor}s`].join(", ")}
+      </h1>
+      {resultData.common.length === 0 && resultData.distinct.length === 0 ? (
+        <>
+          <h2>No results found!</h2>
+          <Link to="new">Try again?</Link>
+        </>
+      ) : (
+        <>
+          {resultData.common.length > 0 ? (
+            <>
+              <h2>Common Property Values</h2>
+              <HeadingTable
+                data={resultData.common}
+                sort={nameSort}
+                link={(_, id) => {
+                  return "/groups/" + data.id + "/properties/" + id;
+                }}
+                columnMap={{ name: "Property", value: "Common Value" }}
+              />
+            </>
+          ) : null}
+          {resultData.distinct.length > 0 ? (
+            <>
+              <h2>Distinct Property Values</h2>
+              <HeadingTable
+                data={distinctData}
+                sort={nameSort}
+                link={(_, id) => {
+                  return "/groups/" + data.id + "/properties/" + id;
+                }}
+                columnMap={diffColumnMap}
+              />
+            </>
+          ) : null}
+        </>
+      )}
     </>
-  )
+  );
+};
+
+function CompareResults({ data, resultData }) {
+  const nameSort = (a, b) => {
+    return a.name > b.name ? 1 : -1;
+  };
+
+  switch (resultData.on) {
+    case "lings":
+      return (
+        <CompareResultsInner
+          data={data}
+          resultData={resultData}
+          nameSort={nameSort}
+          accessor="ling"
+        />
+      );
+    case "linglets":
+      return (
+        <CompareResultsInner
+          data={data}
+          resultData={resultData}
+          nameSort={nameSort}
+          accessor="linglet"
+        />
+      );
+    default:
+      return <Redirect to="new" />;
+  }
 }
 
 export default CompareResults;

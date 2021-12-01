@@ -1,10 +1,10 @@
-import React from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import React from "react";
+import { Link, useRouteMatch } from "react-router-dom";
 
-import Loading from '../shared/Loading';
+import Loading from "../shared/Loading";
 
-import '../../css/shared/Table.css';
-import '../../css/shared/SelectTable.css';
+import "../../css/shared/Table.css";
+import "../../css/shared/SelectTable.css";
 
 /*
   data - Set of data to be displayed as a table, must be an Array
@@ -22,19 +22,29 @@ import '../../css/shared/SelectTable.css';
   disabled - Whether to gray out card
   replaceWithNew - Replace old values with new values, or simply stop any more selections
 */
-function SelectTable({ data, sort, link, find, selectArr, setSelectArr, maxSelect=6, columnMap, maxHeight, disabled, replaceWithNew }) {
+function SelectTable({
+  data,
+  sort,
+  link,
+  find,
+  selectArr,
+  setSelectArr,
+  maxSelect = 6,
+  columnMap,
+  maxHeight,
+  disabled,
+  replaceWithNew,
+}) {
   let match = useRouteMatch();
 
-  if (data.length === 0) return (
-    <Loading />
-  );
+  if (data.length === 0) return <Loading />;
 
   if (sort !== undefined) {
     data = data.sort(sort);
   }
 
   if (find === undefined) {
-    find = (el, row) => el.name === row.name
+    find = (el, row) => el.name === row.name;
   }
 
   const toggle = (index, row) => {
@@ -43,7 +53,8 @@ function SelectTable({ data, sort, link, find, selectArr, setSelectArr, maxSelec
     let newSelectArr = [...selectArr];
 
     if (index >= 0) newSelectArr.splice(index, 1);
-    else if (selectArr.length < maxSelect) newSelectArr.push(row);
+    else if (maxSelect == -1 || selectArr.length < maxSelect)
+      newSelectArr.push(row);
     else {
       if (replaceWithNew) {
         newSelectArr.shift();
@@ -55,53 +66,65 @@ function SelectTable({ data, sort, link, find, selectArr, setSelectArr, maxSelec
   };
 
   return (
-    <div className={`card ${disabled ? "disabled" : ""}`} style={{ "maxHeight": maxHeight ? maxHeight : "auto", "overflowY": maxHeight ? "scroll" : "visible" }} >
-      { data.map((row, i) => {
-        let index = selectArr.findIndex((el) => { return find(el, row); });
+    <div
+      className={`card ${disabled ? "disabled" : ""}`}
+      style={{
+        maxHeight: maxHeight ? maxHeight : "auto",
+        overflowY: maxHeight ? "scroll" : "visible",
+      }}
+    >
+      {data.map((row, i) => {
+        let index = selectArr.findIndex((el) => {
+          return find(el, row);
+        });
 
         return (
           <React.Fragment key={i}>
-            { link ?
-              (
-                <Link to={link(match.url, row.id)}>
-                  <div key={i} className={`select-row row row-${columnMap.length} ${index >= 0 ? "active" : ""}`} onClick={() => {toggle(index, row)}}>
-                    {
-                      columnMap.map((col, i) => {
-                        return (
-                          <span key={i} className="name">{row[col]}</span>
-                        );
-                      })
-                    }
-
-                  </div>
-                </Link>
-              ) :
-              (
-                <div key={i} className={`select-row row row-${columnMap.length} ${index >= 0 ? "active" : ""}`} onClick={() => {toggle(index, row)}}>
-                  {
-                    columnMap.map((col, i) => {
-                      return (
-                        <span key={i} className="name">{row[col]}</span>
-                      );
-                    })
-                  }
-
+            {link ? (
+              <Link to={link(match.url, row.id)}>
+                <div
+                  key={i}
+                  className={`select-row row row-${columnMap.length} ${
+                    index >= 0 ? "active" : ""
+                  }`}
+                  onClick={() => {
+                    toggle(index, row);
+                  }}
+                >
+                  {columnMap.map((col, i) => {
+                    return (
+                      <span key={i} className="name">
+                        {row[col]}
+                      </span>
+                    );
+                  })}
                 </div>
-              )
-            }
-            { data.length - i > 1 ?
-              (
-                <span className="h-divider" />
-              ) :
-              (
-                null
-              )
-            }
+              </Link>
+            ) : (
+              <div
+                key={i}
+                className={`select-row row row-${columnMap.length} ${
+                  index >= 0 ? "active" : ""
+                }`}
+                onClick={() => {
+                  toggle(index, row);
+                }}
+              >
+                {columnMap.map((col, i) => {
+                  return (
+                    <span key={i} className="name">
+                      {row[col]}
+                    </span>
+                  );
+                })}
+              </div>
+            )}
+            {data.length - i > 1 ? <span className="h-divider" /> : null}
           </React.Fragment>
-        )
-      }) }
+        );
+      })}
     </div>
-  )
+  );
 }
 
 export default SelectTable;

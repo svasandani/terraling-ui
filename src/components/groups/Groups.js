@@ -1,27 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Switch,
   Route,
   Redirect,
   useRouteMatch,
-  useParams
-} from 'react-router-dom';
+  useParams,
+} from "react-router-dom";
 
-import UserGroups from '../landing/UserGroups';
+import UserGroups from "../landing/UserGroups";
 
-import GroupTabs from './GroupTabs';
-import GroupOverview from './GroupOverview';
+import GroupTabs from "./GroupTabs";
+import GroupOverview from "./GroupOverview";
 
-import Ling from '../lings/Ling';
-import Property from '../properties/Property';
+import Ling from "../lings/Ling";
+import Property from "../properties/Property";
 
-import Search from '../searches/Search';
+import Search from "../searches/Search";
 
-import AlphaTable from '../shared/AlphaTable';
+import AlphaTable from "../shared/AlphaTable";
 
-import Loading from '../shared/Loading';
+import Loading from "../shared/Loading";
 
-import { CapitalCase, TargetToPlural } from '../helpers/Helpers';
+import { CapitalCase, TargetToPlural } from "../helpers/Helpers";
+import ConditionalReload from "../helpers/ConditionalReload";
 
 function Groups() {
   let match = useRouteMatch();
@@ -35,35 +36,47 @@ function Groups() {
         <UserGroups />
       </Route>
     </Switch>
-  )
+  );
 }
 
 function Group() {
   let match = useRouteMatch();
 
   let arr = window.location.pathname.split("/");
-  let activeTab = arr.length >= 4 ? window.location.pathname.split("/")[3].toLowerCase() : "";
+  let activeTab =
+    arr.length >= 4 ? window.location.pathname.split("/")[3].toLowerCase() : "";
 
   let tabToProp = {
-    "overview": "overviewData",
-    "lings": "lingData",
-    "linglets": "lingletData",
-    "properties": "propertyData",
-    "memberships": "memberData"
-  }
+    overview: "overviewData",
+    lings: "lingData",
+    linglets: "lingletData",
+    properties: "propertyData",
+    memberships: "memberData",
+  };
 
   const [ready, setReady] = useState(false);
 
-  const [data, setData] = useState({ id: 0, overviewData: {}, lingData: [], lingletData: [], propertyData: [], lingPropertyData: [], lingletPropertyData: [], memberData: [] })
+  const [data, setData] = useState({
+    id: 0,
+    overviewData: {},
+    lingData: [],
+    lingletData: [],
+    propertyData: [],
+    lingPropertyData: [],
+    lingletPropertyData: [],
+    memberData: [],
+  });
 
-  const nameSort = (a, b) => { return a.name.trim() > b.name.trim() ? 1 : -1; }
+  const nameSort = (a, b) => {
+    return a.name.trim() > b.name.trim() ? 1 : -1;
+  };
 
   const columnMap = ["name"];
 
   let { groupId } = useParams();
 
   useEffect(() => {
-    let cachedData = localStorage.getItem('groupData');
+    let cachedData = localStorage.getItem("groupData");
 
     let obj = JSON.parse(cachedData) || {};
 
@@ -72,57 +85,76 @@ function Group() {
       setReady(true);
     }
 
-    const overviewData =
-      fetch(process.env.REACT_APP_API + "groups/" + groupId, { headers:{'accept': 'application/json'} })
-        .then(response => response.json());
+    const overviewData = fetch(
+      process.env.REACT_APP_API + "groups/" + groupId,
+      { headers: { accept: "application/json" } }
+    ).then((response) => response.json());
 
-    const lingData =
-      fetch(process.env.REACT_APP_API + "groups/" + groupId + "/lings/depth/0/list", { headers:{'accept': 'application/json'} })
-        .then(response => response.json())
-        .then(data => {
-          data = data.sort(nameSort);
-          return data;
-        });
+    const lingData = fetch(
+      process.env.REACT_APP_API + "groups/" + groupId + "/lings/depth/0/list",
+      { headers: { accept: "application/json" } }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        data = data.sort(nameSort);
+        return data;
+      });
 
-    const lingletData =
-      fetch(process.env.REACT_APP_API + "groups/" + groupId + "/lings/depth/1/list", { headers:{'accept': 'application/json'} })
-        .then(response => response.json())
-        .then(data => {
-          data = data.sort(nameSort);
-          return data;
-        });
+    const lingletData = fetch(
+      process.env.REACT_APP_API + "groups/" + groupId + "/lings/depth/1/list",
+      { headers: { accept: "application/json" } }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        data = data.sort(nameSort);
+        return data;
+      });
 
-    const propertyData =
-      fetch(process.env.REACT_APP_API + "groups/" + groupId + "/properties/list", { headers:{'accept': 'application/json'} })
-        .then(response => response.json())
-        .then(data => {
-          data = data.sort(nameSort);
-          return data;
-        });
+    const propertyData = fetch(
+      process.env.REACT_APP_API + "groups/" + groupId + "/properties/list",
+      { headers: { accept: "application/json" } }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        data = data.sort(nameSort);
+        return data;
+      });
 
-    const lingPropertyData =
-      fetch(process.env.REACT_APP_API + "groups/" + groupId + "/properties/depth/0/list", { headers:{'accept': 'application/json'} })
-        .then(response => response.json())
-        .then(data => {
-          data = data.sort(nameSort);
-          return data;
-        });
+    const lingPropertyData = fetch(
+      process.env.REACT_APP_API +
+        "groups/" +
+        groupId +
+        "/properties/depth/0/list",
+      { headers: { accept: "application/json" } }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        data = data.sort(nameSort);
+        return data;
+      });
 
-    const lingletPropertyData =
-      fetch(process.env.REACT_APP_API + "groups/" + groupId + "/properties/depth/1/list", { headers:{'accept': 'application/json'} })
-        .then(response => response.json())
-        .then(data => {
-          data = data.sort(nameSort);
-          return data;
-        });
+    const lingletPropertyData = fetch(
+      process.env.REACT_APP_API +
+        "groups/" +
+        groupId +
+        "/properties/depth/1/list",
+      { headers: { accept: "application/json" } }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        data = data.sort(nameSort);
+        return data;
+      });
 
-    const memberData =
-      fetch(process.env.REACT_APP_API + "groups/" + groupId + "/memberships/list", { headers:{'accept': 'application/json'} })
-        .then(response => response.json())
-        .then(data => {
-          data = data.sort(nameSort);
-          return data;
-        });
+    const memberData = fetch(
+      process.env.REACT_APP_API + "groups/" + groupId + "/memberships/list",
+      { headers: { accept: "application/json" } }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        data = data.sort(nameSort);
+        return data;
+      });
 
     let firstPromise = overviewData;
 
@@ -138,7 +170,15 @@ function Group() {
       firstPromise = memberData;
     }
 
-    Promise.all([overviewData, lingData, lingletData, propertyData, lingPropertyData, lingletPropertyData, memberData]).then((values) => {
+    Promise.all([
+      overviewData,
+      lingData,
+      lingletData,
+      propertyData,
+      lingPropertyData,
+      lingletPropertyData,
+      memberData,
+    ]).then((values) => {
       const newData = { id: groupId };
 
       newData.overviewData = values[0];
@@ -153,19 +193,19 @@ function Group() {
 
       obj[groupId] = newData;
 
-      localStorage.setItem('groupData', JSON.stringify(obj));
+      localStorage.setItem("groupData", JSON.stringify(obj));
       setReady(true);
     });
-
   }, [groupId]);
 
-  if (!ready) return(
-    <main>
-      <section id="container">
-        <Loading />
-      </section>
-    </main>
-  );
+  if (!ready)
+    return (
+      <main>
+        <section id="container">
+          <Loading />
+        </section>
+      </main>
+    );
 
   return (
     <main>
@@ -174,55 +214,77 @@ function Group() {
         <section id="data">
           <Switch>
             <Route path={`${match.path}/overview`}>
-              <GroupOverview overviewData={data.overviewData} columnMap={columnMap} />
+              <ConditionalReload />
+              <GroupOverview
+                overviewData={data.overviewData}
+                columnMap={columnMap}
+              />
             </Route>
             <Route path={`${match.path}/searches`}>
               <Search groupId={groupId} data={data} />
             </Route>
             <Route path={`${match.path}/lings/:lingId`}>
+              <ConditionalReload />
               <Ling groupId={groupId} />
             </Route>
             <Route path={`${match.path}/lings`}>
-              <h1>{CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))}</h1>
+              <ConditionalReload />
+              <h1>
+                {CapitalCase(TargetToPlural(2, data.overviewData.ling0_name))}
+              </h1>
               <AlphaTable data={data.lingData} columnMap={columnMap} />
             </Route>
             <Route path={`${match.path}/linglets/:lingId`}>
-              {
-                data.overviewData.depth_maximum > 0 ?
-                (
-                  <Ling groupId={groupId} />
-                ) :
-                (
-                  <Redirect to={`${match.url}/lings`} />
-                )
-              }
+              <ConditionalReload />
+              {data.overviewData.depth_maximum > 0 ? (
+                <Ling groupId={groupId} />
+              ) : (
+                <Redirect to={`${match.url}/lings`} />
+              )}
             </Route>
             <Route path={`${match.path}/linglets`}>
-              {
-                data.overviewData.depth_maximum > 0 ?
-                (
-                  <>
-                    <h1>{CapitalCase(TargetToPlural(2, data.overviewData.ling1_name))}</h1>
-                    <AlphaTable data={data.lingletData} link={(url, id) => { return "linglets/" + id; }} columnMap={columnMap} />
-                  </>
-                ) :
-                (
-                  <Redirect to={`${match.url}/lings`} />
-                )
-              }
+              <ConditionalReload />
+              {data.overviewData.depth_maximum > 0 ? (
+                <>
+                  <h1>
+                    {CapitalCase(
+                      TargetToPlural(2, data.overviewData.ling1_name)
+                    )}
+                  </h1>
+                  <AlphaTable
+                    data={data.lingletData}
+                    link={(url, id) => {
+                      return "linglets/" + id;
+                    }}
+                    columnMap={columnMap}
+                  />
+                </>
+              ) : (
+                <Redirect to={`${match.url}/lings`} />
+              )}
             </Route>
             <Route path={`${match.path}/properties/:propertyId`}>
+              <ConditionalReload />
               <Property groupId={groupId} />
             </Route>
             <Route path={`${match.path}/properties`}>
+              <ConditionalReload />
               <h1>Properties</h1>
               <AlphaTable data={data.propertyData} columnMap={columnMap} />
             </Route>
             <Route path={`${match.path}/members`}>
+              <ConditionalReload />
               <h1>Members</h1>
-              <AlphaTable data={data.memberData} link={(url, id) => { return "/users/" + id; }} columnMap={columnMap} />
+              <AlphaTable
+                data={data.memberData}
+                link={(url, id) => {
+                  return "/users/" + id;
+                }}
+                columnMap={columnMap}
+              />
             </Route>
             <Route exact path={match.path}>
+              <ConditionalReload />
               <div className="no-tab-selected">
                 <h2>No tab selected. Please select a tab.</h2>
               </div>
