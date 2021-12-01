@@ -1,6 +1,7 @@
 .link--active {
-  stroke-width: 3px;
+  stroke-width: 2px;
   stroke-linecap: round;
+  stroke-opacity: 1;
 }
 
 .link-extension--active {
