@@ -18,14 +18,17 @@ function SearchResults({ data, groupId, searchData }) {
     if (Object.keys(searchData).length === 0) return;
 
     // fetch(process.env.REACT_APP_API + "groups/" + groupId + "/searches/get_results", {
-    fetch(`${process.env.REACT_APP_SEARCH_API}/api/search/${searchData.href}`, {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify(searchData.data),
-    })
+    fetch(
+      `${process.env.REACT_APP_SEARCH_API || ""}/api/search/${searchData.href}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(searchData.data),
+      }
+    )
       .then((response) => response.json())
       .then((resultData) => {
         setResultData(resultData);
