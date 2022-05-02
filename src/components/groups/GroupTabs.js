@@ -16,11 +16,11 @@ function GroupTabs({ data }) {
     <aside>
       <div className="sidebar tab-sidebar">
         <h1>{data.name}</h1>
-        {/* <Link to={`${match.url}/overview`}><div className={`tab ${activeTab === "overview" ? "active" : ""}`}>
-          <h2>
-            Overview
-          </h2>
-        </div></Link> */}
+        <Link to={`${match.url}/overview`}>
+          <div className={`tab ${activeTab === "overview" ? "active" : ""}`}>
+            <h2>Overview</h2>
+          </div>
+        </Link>
         <Link to={`${match.url}/searches/new`}>
           <div className={`tab ${activeTab === "searches" ? "active" : ""}`}>
             <h2>Search</h2>
