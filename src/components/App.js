@@ -12,7 +12,6 @@ import Feed from "./landing/Feed";
 import Homepage from "./landing/Homepage";
 
 function App() {
-  console.log(process.env);
   const [signedin, setSignedIn] = useState(false);
   return (
     <Router>

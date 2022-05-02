@@ -24,12 +24,21 @@
   transition: 0.06s linear;
 }
 
-.sidebar.tab-sidebar a {
-  box-shadow: none;
+.sidebar .sidebar--header {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  margin-bottom: 2em;
+  gap: 2ch;
 }
 
-.sidebar.tab-sidebar a:hover {
-  box-shadow: none;
+.sidebar .sidebar--header a {
+  height: min-content;
+  white-space: nowrap;
+}
+
+.sidebar .sidebar--header h1 {
+  margin-bottom: 0;
 }
 
 .group-sidebar h3 {

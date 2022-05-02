@@ -15,7 +15,10 @@ function GroupTabs({ data }) {
   return (
     <aside>
       <div className="sidebar tab-sidebar">
-        <h1>{data.name}</h1>
+        <div className="sidebar--header">
+          <h1>{data.name}</h1>
+          <Link to="/groups">back to groups</Link>
+        </div>
         <Link to={`${match.url}/overview`}>
           <div className={`tab ${activeTab === "overview" ? "active" : ""}`}>
             <h2>Overview</h2>
