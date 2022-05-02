@@ -24,6 +24,10 @@
   transition: 0.06s linear;
 }
 
+.sidebar > a {
+  box-shadow: none;
+}
+
 .sidebar .sidebar--header {
   display: flex;
   flex-flow: row nowrap;
