@@ -11,8 +11,6 @@ import Groups from "./groups/Groups";
 import Feed from "./landing/Feed";
 import Homepage from "./landing/Homepage";
 
-import ConditionalReload from "./helpers/ConditionalReload";
-
 function App() {
   const [signedin, setSignedIn] = useState(false);
   return (
@@ -20,16 +18,12 @@ function App() {
       <Header signedin={signedin} setSignedIn={setSignedIn} />
       <Switch>
         <Route path="/about">
-          <ConditionalReload />
           <div />
         </Route>
         <Route path="/groups">
           <Groups />
         </Route>
-        <Route path="/">
-          <ConditionalReload />
-          {signedin ? <Feed user={{}} /> : <Homepage />}
-        </Route>
+        <Route path="/">{signedin ? <Feed user={{}} /> : <Homepage />}</Route>
       </Switch>
       <Footer />
     </Router>
