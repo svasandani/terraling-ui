@@ -17,7 +17,7 @@ import "../../css/shared/AlphaTable.css";
               If it is an array, the table will have no headers. If it is an object, the keys represent
               the data keys, and the values represent the name of the header.
 */
-function AlphaTable({ data, sort, link, columnMap }) {
+function AlphaTable({ data, sort, link, linkIsExternal, columnMap }) {
   let keys = [];
   let headers = false;
 
@@ -117,9 +117,13 @@ function AlphaTable({ data, sort, link, columnMap }) {
                         if (i === 0)
                           return (
                             <span key={i} className="name">
-                              <Link to={link(match.url, row.id)}>
-                                {row[col]}
-                              </Link>
+                              {linkIsExternal ? (
+                                <a href={link(match.url, row.id)}>{row[col]}</a>
+                              ) : (
+                                <Link to={link(match.url, row.id)}>
+                                  {row[col]}
+                                </Link>
+                              )}
                             </span>
                           );
                         else

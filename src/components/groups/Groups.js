@@ -271,6 +271,7 @@ function Group() {
                 link={(url, id) => {
                   return "/users/" + id;
                 }}
+                linkIsExternal={true}
                 columnMap={columnMap}
               />
             </Route>
